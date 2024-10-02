@@ -70,7 +70,7 @@ function useSubscribeToWS(
     if (status === "authenticated") {
       const activeUser: any = session.user;
       const client = new Client({
-        brokerURL: `ws://localhost:8080/ws`,
+        brokerURL: `${process.env.NEXT_PUBLIC_WS_BACKEND}/ws`,
         onConnect: () => {
           client.subscribe(
             `/topic/orders/${activeUser.userProfileId}`,

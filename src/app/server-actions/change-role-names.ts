@@ -1,5 +1,4 @@
 "use server";
-import { auth } from "@/commons/auth";
 import z from "zod";
 
 export async function handleRolesChange(prevState: any, formData: FormData) {
@@ -20,7 +19,7 @@ export async function handleRolesChange(prevState: any, formData: FormData) {
       message: `${validatedFields.error.flatten().fieldErrors.user}${validatedFields.error.flatten().fieldErrors.admin}${validatedFields.error.flatten().fieldErrors.president}`,
     };
   }
-  const res = await fetch("http://localhost:3000/api/roles", {
+  const res = await fetch("/api/roles", {
     headers: {
       "Content-Type": "application/json",
     },

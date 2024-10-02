@@ -40,7 +40,7 @@ export default function DragAndDropProfilePicture({
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:8080/api/profiles/edit`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/edit`,
           {
             method: "PATCH",
             headers: {

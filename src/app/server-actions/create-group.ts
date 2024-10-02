@@ -23,7 +23,7 @@ export async function handleGroupCreate(prevState: any, formData: FormData) {
     };
   }
   try {
-    await fetch("http://localhost:8080/api/groups/create", {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/create`, {
       headers: {
         authorization: `Bearer ${activeUser.accessToken}`,
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export async function handleGroupCreate(prevState: any, formData: FormData) {
       body: JSON.stringify(validatedFields.data),
     });
 
-    await fetch("http://localhost:8080/api/groups/join", {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/join`, {
       headers: {
         authorization: `Bearer ${activeUser.accessToken}`,
         "Content-Type": "application/json",

@@ -58,7 +58,7 @@ function handleInvite(setUrl: any, session: any, toast: any) {
         const lista = data.split("/");
         const code = lista[lista.length - 1];
         navigator.clipboard.writeText(
-          `http://localhost:3000/join?code=${code}`,
+          `${process.env.NEXT_PUBLIC_DOMAIN}/join?code=${code}`,
         );
       }
     })

@@ -160,7 +160,7 @@ function useMemberRole(
       .catch((error) => {
         console.error("Error fetching user roles:", error);
       });
-    fetch(`http://localhost:3000/api/roles/${localStorage.getItem("GroupId")}`)
+    fetch(`/api/roles/${localStorage.getItem("GroupId")}`)
       .then((res) => res.json())
       .then((data) => {
         setTransfromRoles(data[0]);
