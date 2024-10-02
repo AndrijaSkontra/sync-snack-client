@@ -1,0 +1,83 @@
+{
+  "HomePage": {
+    "title": "Nema ništa za vidjeti ovdje."
+  },
+  "RegisterPage": {
+    "title": "Registracija",
+    "email": "E-adresa",
+    "password": "Lozinka",
+    "confirmPassword": "Potvrdi lozinku"
+  },
+  "SetUpProfilePage": {
+    "title": "Registracija",
+    "loading": "Učitavanje..."
+  },
+  "SetProfileComponentPage": {
+    "BackButton": "Nazad",
+    "SetupProfile": "Postavi profil",
+    "Next": "Dalje",
+    "stepOneTitle": "Profil",
+    "stepTwoTitle": "Grupa"
+  },
+  "StepOneUserProfile": {
+    "firstName": "Ime",
+    "lastName": "Prezime"
+  },
+  "StepTwoGroupInformaiton": {
+    "GroupChoice": "Izbor grupe",
+    "JoinGroup": "Pridruži se grupi",
+    "CreateGroup": "Stvori grupu",
+    "GroupName": "Ime grupe",
+    "GroupPassword": "Lozinka grupe",
+    "GroupDescription": "Opis grupe"
+  },
+  "ChangePasswordPage": {
+    "title": "Resetirajte lozinku",
+    "enterPassword": "Unesite novu lozinku ",
+    "confirmPassword": "Potvrdite novu lozinku",
+    "resetPasswdButton": "Resetirajte lozinku",
+    "enterEmail": "Unesite E-adresu",
+    "email": "E-adresa"
+  },
+  "LoginPage": {
+    "Login": "Ulogiraj se",
+    "Forgotpassword": "Zaboravljena lozinka?",
+    "CreateAccount": "Novi Račun"
+  },
+  "Footer": {
+    "SignOutButton": "Odjavi se"
+  },
+  "GroupJoinCreateModal": {
+    "Header": "Opcije",
+    "Tab1": "Učlani se",
+    "Tab2": "Kreiraj grupu"
+  },
+  "Group events page": {
+    "Create event": "Napravi Event",
+    "Make Order": "Naruči"
+  },
+  "OrdersPage": {
+    "Searchbartext": "Pretraživanje",
+    "Select-option-all": "Sve",
+    "Select-option-completed": "Rješeno",
+    "Select-option-in-progress": "U izradi",
+    "Select-option-cancelled": "Otkazano",
+    "Type": "Tip",
+    "Created": "Napravljeno",
+    "Status": "Status",
+    "Description": "Opis",
+    "Rating": "Ocjena",
+    "RateButton": "Ocjeni",
+    "Today": "Danas",
+    "Yesterday": "Jučer",
+    "A-few-days-ago": "Prije nekoliko dana",
+    "Last-week": "Prošli tjedan",
+    "Last-month": "Prošli mjesec",
+    "More-than-a-month-ago": "Prije mjesec dana",
+    "More-than-3-months-ago": "Prije 3 mjeseca",
+    "More-than-6-months-ago": "Prije 6 mjeseci",
+    "More-than-a-year-ago": "Prije godinu dana",
+    "Cant-rate-yet": "Can't rate yet",
+    "Cant-rate": "Can't rate"
+  }
+}

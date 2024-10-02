@@ -1,0 +1,46 @@
+{
+  "name": "syncsnack",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource/lilita-one": "^5.0.21",
+    "@fontsource/titillium-web": "^5.0.21",
+    "@heroicons/react": "^2.1.5",
+    "@lottiefiles/dotlottie-react": "^0.8.10",
+    "@stomp/stompjs": "^7.0.0",
+    "clsx": "^2.1.1",
+    "force": "^0.0.3",
+    "framer-motion": "^11.3.31",
+    "lodash": "^4.17.21",
+    "lottie-react": "^2.4.0",
+    "mongodb": "^6.8.1",
+    "next": "14.2.7",
+    "next-auth": "^5.0.0-beta.20",
+    "next-intl": "^3.18.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-drag-drop-files": "^2.3.10",
+    "react-dropzone": "^14.2.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
