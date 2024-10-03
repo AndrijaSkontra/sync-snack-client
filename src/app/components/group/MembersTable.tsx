@@ -66,7 +66,7 @@ export default function MembersTable({ session }: any) {
               <Th>Name</Th>
               <Th>Role</Th>
               {userRoles.includes("PRESIDENT") ||
-              userRoles.includes("ADMIN") ? (
+                userRoles.includes("ADMIN") ? (
                 <Th>Actions</Th>
               ) : null}
             </Tr>
@@ -81,6 +81,7 @@ export default function MembersTable({ session }: any) {
                     border="solid 1px"
                     objectFit="cover"
                     src={member.photoUrl}
+                    alt="no-picture"
                     fallbackSrc="/fallback-group.png"
                     boxSize={14}
                   />
@@ -110,7 +111,7 @@ export default function MembersTable({ session }: any) {
                 </Td>
                 {(userRoles.includes("PRESIDENT") ||
                   userRoles.includes("ADMIN")) &&
-                member.userProfileId !== session.user.userProfileId ? (
+                  member.userProfileId !== session.user.userProfileId ? (
                   <Td className="space-x-1">
                     <Button
                       variant="outline"

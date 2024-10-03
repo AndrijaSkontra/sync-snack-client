@@ -1,7 +1,6 @@
 "use client";
 import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 
 export default function ProfileInfo({ userProfileData }: any) {
@@ -25,6 +24,7 @@ export default function ProfileInfo({ userProfileData }: any) {
           boxSize={44}
           borderRadius="full"
           border="solid"
+          alt="no-pic"
           borderColor="xblue.400"
           borderWidth={3}
           src={profilePicture}

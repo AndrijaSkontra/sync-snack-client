@@ -80,23 +80,23 @@ function useSubscribeToWS(
               console.log(JSON.parse(message.body).userProfileId)
               console.log(activeUser.userProfileId)
 
-              if (
-                JSON.parse(message.body).userProfileId !==
-                activeUser.userProfileId
-              ) {
-                setIsBellNotified(true);
-                toast({
-                  title: "Order",
-                  description: "New order on your event",
-                  status: "info",
-                  duration: 5000,
-                  isClosable: true,
-                  position: "top",
-                  colorScheme: "xblue",
-                });
-              } else {
-                console.log("not the user for this web socket")
-              }
+              // if (
+              //   JSON.parse(message.body).userProfileId !==
+              //   activeUser.userProfileId
+              // ) {
+              setIsBellNotified(true);
+              toast({
+                title: "Order",
+                description: "New order on your event",
+                status: "info",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+                colorScheme: "xblue",
+              });
+              // } else {
+              //   console.log("not the user for this web socket")
+              // }
             },
           );
           client.subscribe(
@@ -104,45 +104,41 @@ function useSubscribeToWS(
             `/topic/users/${activeUser.userProfileId}`,
             (message: any) => {
               console.log("message", JSON.parse(message.body));
-              if (
-                JSON.parse(message.body).userProfileId !==
-                activeUser.userProfileId
-              ) {
-                setIsBellNotified(true);
-                const bodyObject = JSON.parse(message.body);
-                const groupEventObject = {
-                  eventId: bodyObject.eventId,
-                  title: bodyObject.title,
-                  eventType: bodyObject.eventType,
-                  description: bodyObject.description,
-                  userProfileFirstName: bodyObject.firstName,
-                  userProfileLastName: bodyObject.lastName,
-                  pendingUntil: bodyObject.pendingUntil,
-                  createdAt: bodyObject.createdAt,
-                };
-                setGroupEvents((prev: any) => [...prev, groupEventObject]);
-                // add message.body to be the first in the list of notifications...
-                setNotifications((prev: any) => [
-                  JSON.parse(message.body),
-                  ...prev,
-                ]);
-                setNotifications((prev: any) => [
-                  JSON.parse(message.body),
-                  ...prev,
-                ]);
-                toast({
-                  title: "Event",
-                  description: "New event in your group",
-                  status: "info",
-                  duration: 5000,
-                  isClosable: true,
-                  position: "top",
-                  colorScheme: "xblue",
-                });
-              }
+              setIsBellNotified(true);
+              const bodyObject = JSON.parse(message.body);
+              const groupEventObject = {
+                eventId: bodyObject.eventId,
+                title: bodyObject.title,
+                eventType: bodyObject.eventType,
+                description: bodyObject.description,
+                userProfileFirstName: bodyObject.firstName,
+                userProfileLastName: bodyObject.lastName,
+                pendingUntil: bodyObject.pendingUntil,
+                createdAt: bodyObject.createdAt,
+              };
+              setGroupEvents((prev: any) => [...prev, groupEventObject]);
+              // add message.body to be the first in the list of notifications...
+              setNotifications((prev: any) => [
+                JSON.parse(message.body),
+                ...prev,
+              ]);
+              setNotifications((prev: any) => [
+                JSON.parse(message.body),
+                ...prev,
+              ]);
+              toast({
+                title: "Event",
+                description: "New event in your group",
+                status: "info",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+                colorScheme: "xblue",
+              });
             },
           );
         },
+        reconnectDelay: 200,
         onDisconnect: () => {
           console.log("Disconnected");
         },
