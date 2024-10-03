@@ -65,7 +65,6 @@ function useSubscribeToWS(
   setNotifications: any,
   setGroupEvents: any,
 ) {
-  const clientRef = useRef<Client | null>(null);
   useEffect(() => {
     if (status === "authenticated") {
       const activeUser: any = session.user;
@@ -77,6 +76,10 @@ function useSubscribeToWS(
           client.subscribe(
             `/topic/orders/${activeUser.userProfileId}`,
             (message: any) => {
+              console.log("message", JSON.parse(message.body));
+              console.log(JSON.parse(message.body).userProfileId)
+              console.log(activeUser.userProfileId)
+
               if (
                 JSON.parse(message.body).userProfileId !==
                 activeUser.userProfileId
@@ -149,12 +152,7 @@ function useSubscribeToWS(
         },
       });
 
-      clientRef.current = client;
       client.activate();
-
-      return () => {
-        client.deactivate();
-      };
     }
   }, [status]);
 }
