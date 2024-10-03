@@ -72,6 +72,8 @@ function useSubscribeToWS(
       const client = new Client({
         brokerURL: `${process.env.NEXT_PUBLIC_WS_BACKEND}/ws`,
         onConnect: () => {
+          console.log("CONNECTED TO THE WEB SOCKET")
+          console.log("active user ws", activeUser.userProfileId)
           client.subscribe(
             `/topic/orders/${activeUser.userProfileId}`,
             (message: any) => {
@@ -89,6 +91,8 @@ function useSubscribeToWS(
                   position: "top",
                   colorScheme: "xblue",
                 });
+              } else {
+                console.log("not the user for this web socket")
               }
             },
           );
