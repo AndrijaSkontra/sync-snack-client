@@ -73,7 +73,7 @@ export function useMembersData(
         }
 
         fetch(
-          `/api/roles/${localStorage.getItem("GroupId")}`,
+          `${process.env.NEXT_PUBLIC_DOMAIN}/api/roles/${localStorage.getItem("GroupId")}`,
         )
           .then((res) => res.json())
           .then((data) => {

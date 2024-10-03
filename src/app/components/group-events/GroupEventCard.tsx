@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { GroupEvent } from "@/commons/types";
 import {
   Box,
@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import CreateOrderModal from "../modals/CreateOrderModal";
+import { GroupEventsContext } from "../Providers";
 
 export default function GroupEventCard({
   groupEvent,
@@ -20,7 +21,8 @@ export default function GroupEventCard({
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [progressValue, setProgressValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useCalculateRemainingTime(setProgressValue, setRemainingSeconds, groupEvent);
+  const groupEventsContext = useContext(GroupEventsContext)
+  useCalculateRemainingTime(setProgressValue, setRemainingSeconds, groupEvent, groupEventsContext);
 
   return (
     <Box className="border rounded-lg p-4 w-full mx-auto h-44 shadow-lg">
@@ -62,29 +64,32 @@ function useCalculateRemainingTime(
   setProgressValue: any,
   setRemainingSeconds: any,
   groupEvent: any,
+  groupEventsContext: any,
 ) {
   useEffect(() => {
     const updateRemainingTime = () => {
-      const now = new Date();
-      const pendingUntil = new Date(groupEvent.pendingUntil);
+      let now = new Date();
+      const pendingUntil = new Date(groupEvent.pendingUntil + "Z");
       const totalDuration = pendingUntil.getTime() - now.getTime();
       const remaining = Math.max(0, totalDuration);
       const seconds = Math.floor(remaining / 1000);
-
       setRemainingSeconds(seconds);
 
-      // Calculate progress value (percentage of time elapsed)
       const elapsedTime =
-        now.getTime() - new Date(groupEvent.createdAt).getTime();
+        now.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
       const totalTime =
-        pendingUntil.getTime() - new Date(groupEvent.createdAt).getTime();
+        pendingUntil.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
       const progress = (elapsedTime / totalTime) * 100;
+      console.log(progress, " - ", elapsedTime, " - ", totalTime)
       setProgressValue(Math.min(100, Math.max(0, progress)));
+      if (progress > 100 && groupEventsContext.groupEvents.some((group: any) => group.eventId === groupEvent.eventId)) {
+        groupEventsContext.setGroupEvents([])
+      }
     };
 
     updateRemainingTime();
     const intervalId = setInterval(updateRemainingTime, 1000);
 
     return () => clearInterval(intervalId);
-  }, [groupEvent.pendingUntil, groupEvent.createdAt]);
+  }, [groupEvent.pendingUntil, groupEvent.createdAt, setRemainingSeconds, setProgressValue]);
 }
