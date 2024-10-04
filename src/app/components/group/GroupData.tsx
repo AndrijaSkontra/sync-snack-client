@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -11,9 +11,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import EditGroupModal from "../modals/EditGroupModal";
+import { UserRolesContext } from "../Providers";
 
 export default function GroupData({ session }: any) {
   const [reload, setReload] = useState("");
+  const rolesContext: any = useContext(UserRolesContext);
   const jwtToken = session.user.accessToken;
   const [group, setGroup]: any = useState();
   const [isLoading, setLoading] = useState(true);
@@ -29,6 +31,8 @@ export default function GroupData({ session }: any) {
     setIsLoadingRoles,
     setTransfromRoles,
   );
+
+  console.log("user roles: ", rolesContext.userRoles);
 
   useEffect(() => {
     if (transfromRoles) {
@@ -59,6 +63,7 @@ export default function GroupData({ session }: any) {
               border="solid"
               borderColor="xblue.400"
               borderWidth={3}
+              alt="nopic"
               src={group.photoUrl}
               fallbackSrc="/fallback-group.png"
             />
@@ -89,14 +94,17 @@ export default function GroupData({ session }: any) {
                   );
                 })}
             </Box>
-            <Button
-              onClick={onOpen}
-              variant="outline"
-              colorScheme="xblue"
-              className="mt-10"
-            >
-              Edit Group
-            </Button>
+            {rolesContext.userRoles &&
+              rolesContext.userRoles.includes("PRESIDENT") && (
+                <Button
+                  onClick={onOpen}
+                  variant="outline"
+                  colorScheme="xblue"
+                  className="mt-10"
+                >
+                  Edit Group
+                </Button>
+              )}
           </Box>
           <EditGroupModal
             onClose={onClose}
@@ -135,7 +143,7 @@ function useGroupData(
       .catch((error) => {
         console.log("Error fetching group data:", error);
       });
-  }, [session, jwtToken, reload]);
+  }, [session, jwtToken, reload, setGroup, setLoading]);
 }
 function useMemberRole(
   jwtToken: any,
@@ -160,13 +168,15 @@ function useMemberRole(
       .catch((error) => {
         console.error("Error fetching user roles:", error);
       });
-    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/roles/${localStorage.getItem("GroupId")}`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_DOMAIN}/api/roles/${localStorage.getItem("GroupId")}`,
+    )
       .then((res) => res.json())
       .then((data) => {
         setTransfromRoles(data[0]);
       })
       .catch((error) => console.log("FAILED TO GET NEW ROLES", error.message));
-  }, [session, jwtToken]);
+  }, [session, jwtToken, setUserRoles, setIsLoadingRoles, setTransfromRoles]);
 }
 
 function transformingRoles(userRoles: any, transfromObject: any): string[] {

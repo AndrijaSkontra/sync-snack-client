@@ -28,7 +28,6 @@ export default async function Layout({
       </Box>
       <Box className="fixed top-4 right-4 flex items-center space-x-6">
         <MenuLayout />
-        <SignOutButton />
         <NotificationBell />
       </Box>
     </>

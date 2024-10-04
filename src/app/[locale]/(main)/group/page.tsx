@@ -11,7 +11,7 @@ export default async function GroupPage() {
     <Box className="pt-16 md:pt-4 md:grid md:grid-cols-2 md:gap-10 md:grid-rows-[1fr_70%] md:h-screen md:ml-6">
       <GroupData session={session} />
       <AdminButtons />
-      <Box className="flex flex-col h-4/5 p-10 border rounded-2xl shadow-lg">
+      <Box className="flex flex-col p-10 border rounded-2xl shadow-lg">
         <MembersTable session={session} />
       </Box>
     </Box>

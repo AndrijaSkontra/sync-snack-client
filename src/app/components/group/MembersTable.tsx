@@ -16,6 +16,7 @@ import { useColorModeValue, TableContainer, Image } from "@chakra-ui/react";
 import { Button, Spinner, IconButton } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { UserRolesContext } from "../Providers";
+import { hardcodedMembers } from "@/commons/hardcoded-data";
 
 /**
  * Table component that displays group members.
@@ -33,7 +34,7 @@ export default function MembersTable({ session }: any) {
   const [transformRoles, setTransformRoles]: any = useState();
   const [userRoles, setUserRoles]: any = useState([]);
   const userRolesContext = useContext(UserRolesContext);
-  const pageSize = 4;
+  const pageSize = 3;
   useMembersData(
     currentPage,
     jwtToken,
@@ -66,7 +67,7 @@ export default function MembersTable({ session }: any) {
               <Th>Name</Th>
               <Th>Role</Th>
               {userRoles.includes("PRESIDENT") ||
-                userRoles.includes("ADMIN") ? (
+              userRoles.includes("ADMIN") ? (
                 <Th>Actions</Th>
               ) : null}
             </Tr>
@@ -111,7 +112,7 @@ export default function MembersTable({ session }: any) {
                 </Td>
                 {(userRoles.includes("PRESIDENT") ||
                   userRoles.includes("ADMIN")) &&
-                  member.userProfileId !== session.user.userProfileId ? (
+                member.userProfileId !== session.user.userProfileId ? (
                   <Td className="space-x-1">
                     <Button
                       variant="outline"

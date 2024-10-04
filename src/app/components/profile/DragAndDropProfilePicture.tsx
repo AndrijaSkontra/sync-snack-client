@@ -14,9 +14,6 @@ import { useDropzone } from "react-dropzone";
 import { DownloadIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 
-/**
- * Gpt generated file, good luck
- */
 export default function DragAndDropProfilePicture({
   setProfilePicture,
   onClose,
