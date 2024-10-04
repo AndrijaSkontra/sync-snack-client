@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Input, Button, VStack, Text, Box, Spinner, useToast } from "@chakra-ui/react";
+import {
+  Input,
+  Button,
+  VStack,
+  Text,
+  Box,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 import { DownloadIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
@@ -17,13 +25,13 @@ export default function DragAndDropProfilePicture({
   const [uploadStatus, setUploadStatus] = useState<string>("");
   const [errorDetails, setErrorDetails] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const toast = useToast()
+  const toast = useToast();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop: (files) => handleFileUpload(files),
   });
 
-  const handleFileUpload = async (files: File[]) => {
+  const handleFileUpload = (files: File[]) => {
     if (files.length === 0) {
       setUploadStatus("No file selected.");
       return;
@@ -40,55 +48,51 @@ export default function DragAndDropProfilePicture({
 
       try {
         setLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`,
-          {
-            method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${session.user.accessToken}`,
-              // "Content-Type": "multipart/form-data"
-            },
-            body: formData,
+        console.log("does this exe");
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${session.user.accessToken}`,
+            // "Content-Type": "multipart/form-data"
           },
-        );
-
-        if (response.ok) {
-          setUploadStatus("File uploaded successfully!");
-          const data = await response.json();
-          setProfilePicture(data.photoUrl);
-          setLoading(false);
-          onClose();
-        } else {
-          const errorResponse = await tryParseJSON(response); // Safely parse JSON
-          setUploadStatus("File upload failed.");
-          setErrorDetails(
-            `Error ${response.status}: ${JSON.stringify(errorResponse)}`,
-          );
-          onClose()
-          setLoading(false)
-          toast({
-            title: "Failed to update profile picture",
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-            colorScheme: "xred",
-            position: "top"
+          body: formData,
+        })
+          .then((response) => {
+            setUploadStatus("File uploaded successfully!");
+            return response.json();
+          })
+          .then((data) => {
+            setProfilePicture(data.photoUrl);
+            setLoading(false);
+            onClose();
+          })
+          .catch(() => {
+            setUploadStatus("File upload failed.");
+            setErrorDetails(`Error`);
+            onClose();
+            setLoading(false);
+            toast({
+              title: "Failed to update profile picture",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              colorScheme: "xred",
+              position: "top",
+            });
           });
-
-        }
       } catch (error: any) {
         console.error("Error uploading file:", error); // Log error details
         setUploadStatus("An error occurred while uploading the file.");
         setErrorDetails(`custom er:${error.message}`);
-        setLoading(false)
-        onClose()
+        setLoading(false);
+        onClose();
         toast({
           title: "Failed to update profile picture",
           status: "error",
           duration: 3000,
           isClosable: true,
           colorScheme: "xred",
-          position: "top"
+          position: "top",
         });
       }
     }
