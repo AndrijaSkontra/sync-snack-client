@@ -10,11 +10,10 @@ import {
 import SidebarGroupDrawer from "./SidebarDrawer";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import JoinCreateGroupModal from "../modals/JoinCreateGroupModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGroups } from "@/commons/custom-hooks";
 import { useFormState } from "react-dom";
 import { handleGroupCreate } from "@/app/server-actions/create-group";
-import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { handleGroupJoin } from "@/app/server-actions/group-join";
 
@@ -68,6 +67,7 @@ export default function SidebarGroups({ accessToken }: any) {
         <Image
           key={index}
           borderRadius="full"
+          alt="nopic"
           border={
             localStorage.getItem("GroupId") === group.groupId ? "solid 4px" : ""
           }
@@ -83,6 +83,7 @@ export default function SidebarGroups({ accessToken }: any) {
           onClick={() => {
             setActiveGroup(group);
             onDrawerOpen();
+            localStorage.setItem("GroupId", group.groupId);
           }}
         />
       ))}

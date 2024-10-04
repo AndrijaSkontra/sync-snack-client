@@ -12,6 +12,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function MenuLayout() {
   const router = useRouter();
@@ -19,7 +20,16 @@ export default function MenuLayout() {
     <Menu>
       <MenuButton as={HamburgerIcon} boxSize={10}></MenuButton>
       <MenuList>
-        <MenuItem onClick={() => router.push("/settings")}>Settings</MenuItem>
+        <MenuItem
+          onClick={() => {
+            signOut({
+              redirect: true,
+              callbackUrl: "/login",
+            });
+          }}
+        >
+          Sign out
+        </MenuItem>
         <MenuItem onClick={() => router.push("/profile")}>Profile</MenuItem>
       </MenuList>
     </Menu>

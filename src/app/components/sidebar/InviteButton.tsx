@@ -44,7 +44,6 @@ function handleInvite(setUrl: any, session: any, toast: any) {
       return res.text();
     })
     .then((data: any) => {
-      console.log("data in the invite button", data);
       if (data) {
         setUrl(data);
         toast({
