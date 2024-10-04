@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/routing";
 
 export default function HomePage() {
-  const t = useTranslations("HomePage");
-  return <h1>{t("title")}</h1>;
+  console.log("just hit the home page");
+  return <h1>landing page TODO</h1>;
 }

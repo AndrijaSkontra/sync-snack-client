@@ -13,10 +13,11 @@ import { useTranslations } from "next-intl";
 import CustomPasswordInput from "../change-password/CustomPasswordInput";
 import { useFormState } from "react-dom";
 import { handleRegisterUser } from "@/app/server-actions/register-user";
+import { useRouter } from "next/navigation";
 
 export default function RegisterComponent() {
   const t = useTranslations("RegisterPage");
-
+  const router = useRouter();
   const toast = useToast();
 
   const initialState: any = {
@@ -57,6 +58,7 @@ export default function RegisterComponent() {
           duration: 5000,
           isClosable: true,
         });
+        router.push("/login");
       } else {
         toast({
           title: state.message,

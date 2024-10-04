@@ -15,6 +15,7 @@
   "SetProfileComponentPage": {
     "BackButton": "Nazad",
     "SetupProfile": "Postavi profil",
+    "SubmitWithoutGroupButton": "Postavi profil bez grupe",
     "Next": "Dalje",
     "stepOneTitle": "Profil",
     "stepTwoTitle": "Grupa"

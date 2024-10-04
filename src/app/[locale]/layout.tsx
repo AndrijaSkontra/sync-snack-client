@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { ColorModeScript } from "@chakra-ui/react";
 import Footer from "../components/footer/Footer";
 import { Providers } from "../components/Providers";
 
