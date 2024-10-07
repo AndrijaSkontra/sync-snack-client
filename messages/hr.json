@@ -80,5 +80,8 @@
     "More-than-a-year-ago": "Prije godinu dana",
     "Cant-rate-yet": "Can't rate yet",
     "Cant-rate": "Can't rate"
+  },
+  "landing-page": {
+    "login-button": "ulogiraj se"
   }
 }

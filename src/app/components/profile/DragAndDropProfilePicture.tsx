@@ -28,6 +28,39 @@ export default function DragAndDropProfilePicture({
     onDrop: (files) => handleFileUpload(files),
   });
 
+  function handleClick(): void {
+    const formData = new FormData();
+
+    formData.append("file", groupProfileImage);
+
+    setLoading(true);
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/edit`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${session.user.accessToken}`,
+        groupId: `${localStorage.getItem("GroupId")}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        onClose();
+        setReload((prev: any) => prev + "1");
+        setLoading(false);
+        updateSidebarContext.setUpdateString((prev: any) => prev + "1");
+        toast({
+          title: "Group image uploaded successfully!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("Error when uploading group image:", error);
+      });
+  }
+
   const handleFileUpload = (files: File[]) => {
     if (files.length === 0) {
       setUploadStatus("No file selected.");

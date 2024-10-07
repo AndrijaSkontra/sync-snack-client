@@ -81,5 +81,8 @@
     "More-than-a-year-ago": "More than a year ago",
     "Cant-rate-yet": "Can't rate yet",
     "Cant-rate": "Can't rate"
+  },
+  "landing-page": {
+    "login-button": "log in"
   }
 }

@@ -30,9 +30,13 @@ export default function NotificationDrawer({
         <DrawerCloseButton />
         <DrawerHeader>Notifications</DrawerHeader>
         <DrawerBody>
-          {notifications.map((notification: any, index: number) => (
-            <NotificationCard key={index} notification={notification} />
-          ))}
+          {notifications.lenght === 0 ? (
+            notifications.map((notification: any, index: number) => (
+              <NotificationCard key={index} notification={notification} />
+            ))
+          ) : (
+            <Text className="text-center">So empty here</Text>
+          )}
         </DrawerBody>
       </DrawerContent>
     </Drawer>
