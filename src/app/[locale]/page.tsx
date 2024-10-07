@@ -12,10 +12,14 @@ export default function HomePage() {
     <>
       <Box className="flex justify-end p-4 space-x-2">
         <Link href="/login">
-          <Button colorScheme="xorange">Log in</Button>
+          <Button colorScheme="xorange" variant="outline">
+            Log in
+          </Button>
         </Link>
         <Link href="/register">
-          <Button colorScheme="xorange">Sign in</Button>
+          <Button colorScheme="xorange" variant="outline">
+            Sign in
+          </Button>
         </Link>
       </Box>
       <Box className="flex flex-col items-center mb-10">

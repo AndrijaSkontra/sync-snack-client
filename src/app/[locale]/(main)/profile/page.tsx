@@ -11,7 +11,7 @@ export default async function ProfilePage() {
 
   return (
     <Box className="flex h-4/5 justify-center items-center">
-      <ProfileInfo userProfileData={userProfileData} />
+      <ProfileInfo userProfileData={userProfileData} session={session} />
       <ProfileStats stats={userProfileOrderStats} />
     </Box>
   );

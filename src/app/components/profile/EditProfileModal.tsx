@@ -4,18 +4,16 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
-  Button,
 } from "@chakra-ui/react";
-import DragAndDropProfilePicture from "./DragAndDropProfilePicture";
+import EditProfileForm from "./EditProfileForm";
 
 export default function EditProfileModal({
   isOpen,
   onClose,
   setProfilePicture,
+  session,
 }: any) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -24,17 +22,12 @@ export default function EditProfileModal({
         <ModalHeader>Change profile image</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <DragAndDropProfilePicture
+          <EditProfileForm
             setProfilePicture={setProfilePicture}
             onClose={onClose}
+            session={session}
           />
         </ModalBody>
-
-        <ModalFooter>
-          <Button colorScheme="xred" mr={3} onClick={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

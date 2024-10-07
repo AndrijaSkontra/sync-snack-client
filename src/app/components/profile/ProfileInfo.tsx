@@ -3,7 +3,7 @@ import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 
-export default function ProfileInfo({ userProfileData }: any) {
+export default function ProfileInfo({ userProfileData, session }: any) {
   // how should i handle if userProfile data doesnt have photoUrl?
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -37,6 +37,7 @@ export default function ProfileInfo({ userProfileData }: any) {
           onClose={onClose}
           isOpen={isOpen}
           setProfilePicture={setProfilePicture}
+          session={session}
         />
       </Box>
     </>
