@@ -38,6 +38,7 @@ export default function NotificationCard({
               <Image
                 src={photoUri}
                 objectFit="cover"
+                alt="nopic"
                 fallbackSrc="/template-user.png"
                 boxSize="50px"
                 borderRadius="full"
@@ -47,7 +48,7 @@ export default function NotificationCard({
               <Image
                 src={notification.profilePhoto}
                 objectFit="cover"
-                alt={`${firstName} ${lastName}`}
+                alt={`${firstName}`}
                 boxSize="50px"
                 borderRadius="full"
                 mr="4"

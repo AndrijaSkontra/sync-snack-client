@@ -71,7 +71,7 @@ export default function UserEventCard({ event, orders }: any) {
 
   return (
     <Box
-      className="mt-20 mx-2 md:mt-2 border shadow-lg rounded-lg p-6 w-96"
+      className="mt-20 mx-2 md:mt-2 border shadow-lg rounded-lg py-6 px-12 w-max"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"

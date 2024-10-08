@@ -20,7 +20,6 @@ import {
 
 export default function OrderRow({ order, accessToken }: any) {
   const t = useTranslations("OrdersPage");
-  const [isRateModalOpened, setRateModalOpen] = useState(false);
   const [isDescriptionModalOpened, setDescriptionModalOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 

@@ -10,7 +10,7 @@ export default async function ProfilePage() {
   const userProfileOrderStats = await fetchProfileOrdersStats(activeUser);
 
   return (
-    <Box className="flex h-4/5 justify-center items-center">
+    <Box className="space-y-4 mt-14 md:mt-0 md:flex h-4/5 justify-center items-center">
       <ProfileInfo userProfileData={userProfileData} session={session} />
       <ProfileStats stats={userProfileOrderStats} />
     </Box>

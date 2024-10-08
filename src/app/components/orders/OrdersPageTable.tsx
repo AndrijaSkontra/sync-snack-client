@@ -24,6 +24,10 @@ export default function OrdersPageTable({
   const router = useRouter();
 
   useEffect(() => {
+    console.log(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/all?size=${calculateOrderSizeBasedOnScreenHeight()}&page=${currentPage}&search=${input}&rating=${rateFilter}&status=${statusFilter}`,
+    );
+    console.log(`${localStorage.getItem("GroupId")}`);
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/all?size=${calculateOrderSizeBasedOnScreenHeight()}&page=${currentPage}&search=${input}&rating=${rateFilter}&status=${statusFilter}`;
     fetch(url, {
       headers: {

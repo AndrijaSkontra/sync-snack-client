@@ -10,8 +10,7 @@ import { useTranslations } from "next-intl";
 import { formatDate } from "@/commons/formatDate";
 
 export default function OrderRowMobile({ order, accessToken }: any) {
-
-  const t = useTranslations('OrdersPage');
+  const t = useTranslations("OrdersPage");
   const [isRateModalOpened, setRateModalOpen] = useState(false);
   const [isDescriptionModalOpened, setDescriptionModalOpen] = useState(false);
   const [orderRating, setOrderRating] = useState(order.rating);
@@ -20,11 +19,9 @@ export default function OrderRowMobile({ order, accessToken }: any) {
     setRateModalOpen(false);
   };
 
-  
-
   const bgGradient = useColorModeValue(
     "linear(to-r, white.200, white.400)",
-    "linear(to-r, gray.700, gray.900)"
+    "linear(to-r, gray.700, gray.900)",
   );
   const boxShadowColor = useColorModeValue("xorange.400", "xorange.600");
   const textColor = useColorModeValue("gray.900", "white");
@@ -83,7 +80,7 @@ export default function OrderRowMobile({ order, accessToken }: any) {
               }}
               fontFamily="heading"
             >
-              {t('RateButton')}
+              {t("RateButton")}
             </Button>
           )}
         </Box>
@@ -99,10 +96,6 @@ export default function OrderRowMobile({ order, accessToken }: any) {
           />
         </Modal>
       )}
-
-      
     </>
   );
 }
-
-

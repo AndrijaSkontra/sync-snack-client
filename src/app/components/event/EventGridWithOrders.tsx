@@ -23,7 +23,9 @@ export default function EventGridWithOrders() {
               <Text>{order.firstName}</Text>
               <Text>{order.lastName}</Text>
               <Text>{order.additionalOptions.description}</Text>
-              <Button colorScheme="xblue">Finish</Button>
+              <Button className="mr-2" colorScheme="xblue">
+                Finish
+              </Button>
               <Button colorScheme="xred">Cancel</Button>
             </Box>
           );

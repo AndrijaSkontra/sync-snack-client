@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/react";
 
 export default async function GroupEventsPage() {
   return (
-    <Box className="m-2">
+    <Box className="m-2 mt-20">
       <CreateEventButtonModal />
       <GroupEvents />
     </Box>

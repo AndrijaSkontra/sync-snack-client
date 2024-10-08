@@ -23,6 +23,8 @@ export default function NotificationDrawer({
   const { data: session, status } = useSession();
   useNotifications(setNotifications, status, session);
 
+  console.log("notifications", notifications);
+
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
@@ -30,7 +32,7 @@ export default function NotificationDrawer({
         <DrawerCloseButton />
         <DrawerHeader>Notifications</DrawerHeader>
         <DrawerBody>
-          {notifications.lenght === 0 ? (
+          {notifications.lenght !== 0 ? (
             notifications.map((notification: any, index: number) => (
               <NotificationCard key={index} notification={notification} />
             ))

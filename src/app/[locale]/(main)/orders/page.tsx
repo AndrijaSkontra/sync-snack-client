@@ -32,7 +32,7 @@ export default async function OrdersPage({
   }
 
   return (
-    <Box className="h-full pt-12 flex flex-col">
+    <Box className="h-full pt-12 flex flex-col mt-14 md:mt-0">
       <OrdersPageTable
         currentPage={currentPage}
         input={input}

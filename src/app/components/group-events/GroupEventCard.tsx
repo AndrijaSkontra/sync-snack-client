@@ -21,20 +21,29 @@ export default function GroupEventCard({
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [progressValue, setProgressValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const groupEventsContext = useContext(GroupEventsContext)
-  useCalculateRemainingTime(setProgressValue, setRemainingSeconds, groupEvent, groupEventsContext);
+  const groupEventsContext = useContext(GroupEventsContext);
+  useCalculateRemainingTime(
+    setProgressValue,
+    setRemainingSeconds,
+    groupEvent,
+    groupEventsContext,
+  );
 
   return (
-    <Box className="border rounded-lg p-4 w-full mx-auto h-44 shadow-lg">
+    <Box className="border rounded-lg p-4 w-full mx-auto shadow-lg">
       <Box className="flex justify-between mb-4">
         <Box>
-          <Box className="flex space-x-2">
+          <Box className="flex md:flex-row flex-col md:space-x-2 space-y-2 md:space-y-0">
             <Text fontWeight="bold" fontSize="lg">
               {groupEvent.title}
             </Text>
-            <Tag colorScheme="xblue">{groupEvent.eventType}</Tag>
+            <Tag className="w-min" colorScheme="xblue">
+              {groupEvent.eventType}
+            </Tag>
           </Box>
-          <Text fontSize="sm">{groupEvent.description}</Text>
+          <Text className="mt-2" fontSize="sm">
+            {groupEvent.description}
+          </Text>
         </Box>
         <Box>
           <Text fontSize="sm">{groupEvent.userProfileFirstName}</Text>
@@ -80,10 +89,15 @@ function useCalculateRemainingTime(
       const totalTime =
         pendingUntil.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
       const progress = (elapsedTime / totalTime) * 100;
-      console.log(progress, " - ", elapsedTime, " - ", totalTime)
+      console.log(progress, " - ", elapsedTime, " - ", totalTime);
       setProgressValue(Math.min(100, Math.max(0, progress)));
-      if (progress > 100 && groupEventsContext.groupEvents.some((group: any) => group.eventId === groupEvent.eventId)) {
-        groupEventsContext.setGroupEvents([])
+      if (
+        progress > 100 &&
+        groupEventsContext.groupEvents.some(
+          (group: any) => group.eventId === groupEvent.eventId,
+        )
+      ) {
+        groupEventsContext.setGroupEvents([]);
       }
     };
 
@@ -91,5 +105,10 @@ function useCalculateRemainingTime(
     const intervalId = setInterval(updateRemainingTime, 1000);
 
     return () => clearInterval(intervalId);
-  }, [groupEvent.pendingUntil, groupEvent.createdAt, setRemainingSeconds, setProgressValue]);
+  }, [
+    groupEvent.pendingUntil,
+    groupEvent.createdAt,
+    setRemainingSeconds,
+    setProgressValue,
+  ]);
 }
