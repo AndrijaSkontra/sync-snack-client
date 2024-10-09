@@ -1,13 +1,12 @@
 "use client";
 import { Text, useToast } from "@chakra-ui/react";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import NextLink from "next/link";
 import { useTranslations } from "next-intl";
-import Modal from "../../modals/Modal";
-import PasswordChangeCard from "../password-change-card-component/PasswordChangeCardComponent";
-import { title } from "process";
+import ChangePasswordRequestModal from "../../modals/ChangePasswordRequestModal";
 
-export default function ForgotYourPasswordModal() {
+
+export default function ForgotYourPasswordLink() {
   const t = useTranslations("LoginPage");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toast = useToast();
@@ -23,15 +22,7 @@ export default function ForgotYourPasswordModal() {
   return (
     <>
       <Text
-        onClick={() => {
-          toast({
-            title: "TODO",
-            description: "implement forgot password ui",
-            duration: 5000,
-            isClosable: true,
-            position: "top",
-          });
-        }}
+        onClick={handleOpenModal}
         as={NextLink}
         href="#"
         color="xblue.100"
@@ -41,7 +32,11 @@ export default function ForgotYourPasswordModal() {
       >
         {t("Forgotpassword")}
       </Text>
+      <ChangePasswordRequestModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        event={null} // You can pass any relevant event data here if needed
+      />
     </>
   );
 }
-
