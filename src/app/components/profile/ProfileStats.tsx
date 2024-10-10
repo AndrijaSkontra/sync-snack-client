@@ -1,6 +1,14 @@
 "use client";
 import { WarningIcon } from "@chakra-ui/icons";
 import { Box, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 export default function ProfileStats({ stats }: any) {
   const bgColorOut = useColorModeValue("xblue.500", "xblue.400");
@@ -25,6 +33,22 @@ export default function ProfileStats({ stats }: any) {
           textColor={textColor}
         />
       </Box>
+      <ChartContainer config={chartConfig} className="min-h-[200px]">
+        <BarChart accessibilityLayer data={chartData}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => value.slice(0, 3)}
+          />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <ChartLegend content={<ChartLegendContent />} />
+          <Bar dataKey="orders" fill="var(--color-orders)" radius={4} />
+          <Bar dataKey="events" fill="var(--color-events)" radius={4} />
+        </BarChart>
+      </ChartContainer>
     </Box>
   );
 }
@@ -51,11 +75,22 @@ function DataOrderBox({
   );
 }
 
-// <DonutChart className="flex justify-center md:w-72 md:items-center md:h-full md:p-10"
-//   data={typeData}
-//   category="count"
-//   index="type"
-//   showAnimation={true}
-//   variant="donut"
-//   colors={['#d98068', '#8c3331', '#681615']}
-//   valueFormatter={dataFormatter} />
+const chartData = [
+  { month: "January", events: 186, orders: 80 },
+  { month: "February", events: 305, orders: 200 },
+  { month: "March", events: 237, orders: 120 },
+  { month: "April", events: 73, orders: 190 },
+  { month: "May", events: 209, orders: 130 },
+  { month: "June", events: 214, orders: 140 },
+];
+
+const chartConfig = {
+  events: {
+    label: "events",
+    color: "var(--chart-1)",
+  },
+  orders: {
+    label: "orders",
+    color: "var(--chart-2)",
+  },
+} satisfies ChartConfig;
