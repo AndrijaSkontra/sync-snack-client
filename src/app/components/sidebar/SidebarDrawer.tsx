@@ -22,7 +22,7 @@ export default function SidebarGroupDrawer({ isOpen, onClose, group }: any) {
   return (
     // make the placement 20 px from  the left edge of the view
     <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-      <DrawerContent style={{ marginLeft: "70px", width: "calc(100% - 20px)" }}>
+      <DrawerContent>
         <DrawerCloseButton />
         <DrawerHeader>{name}</DrawerHeader>
         <DrawerBody className="flex flex-col">
