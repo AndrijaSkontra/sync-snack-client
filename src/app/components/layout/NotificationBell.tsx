@@ -71,14 +71,14 @@ function useSubscribeToWS(
       const client = new Client({
         brokerURL: `${process.env.NEXT_PUBLIC_WS_BACKEND}/ws`,
         onConnect: () => {
-          console.log("CONNECTED TO THE WEB SOCKET")
-          console.log("active user ws", activeUser.userProfileId)
+          console.log("CONNECTED TO THE WEB SOCKET");
+          console.log("active user ws", activeUser.userProfileId);
           client.subscribe(
             `/topic/orders/${activeUser.userProfileId}`,
             (message: any) => {
               console.log("message", JSON.parse(message.body));
-              console.log(JSON.parse(message.body).userProfileId)
-              console.log(activeUser.userProfileId)
+              console.log(JSON.parse(message.body).userProfileId);
+              console.log(activeUser.userProfileId);
 
               // if (
               //   JSON.parse(message.body).userProfileId !==

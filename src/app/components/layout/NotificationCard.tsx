@@ -1,6 +1,10 @@
 import React from "react";
 import { Box, Image, Text, Tag } from "@chakra-ui/react";
 
+/**
+ * This code is absolute garbage, for some reason order and event notification
+ * have their own Jsx so the code is duplicated, should refactor this in the future.
+ */
 export default function NotificationCard({
   notification,
 }: {
@@ -48,7 +52,8 @@ export default function NotificationCard({
               <Image
                 src={notification.profilePhoto}
                 objectFit="cover"
-                alt={`${firstName}`}
+                fallbackSrc="/template-user.png"
+                alt={`${firstName} Profile`}
                 boxSize="50px"
                 borderRadius="full"
                 mr="4"
@@ -83,6 +88,7 @@ export default function NotificationCard({
               <Image
                 src={photoUri}
                 objectFit="cover"
+                fallbackSrc="/template-user.png"
                 alt={`${firstName} ${lastName}`}
                 boxSize="50px"
                 borderRadius="full"
@@ -92,6 +98,7 @@ export default function NotificationCard({
               <Image
                 src={notification.profilePhoto}
                 objectFit="cover"
+                fallbackSrc="/template-user.png"
                 alt={`${firstName} ${lastName}`}
                 boxSize="50px"
                 borderRadius="full"
