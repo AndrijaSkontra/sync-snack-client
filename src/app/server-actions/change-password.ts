@@ -1,51 +1,40 @@
 "use server";
-import { redirect } from "next/navigation";
-import z from "zod";
+import { z } from "zod";
 
-/**
- * This is server function that handles change of the password when user forgets his password.
- * @param prevState
- * @param formData
- * @returns
- */
+const passwordSchema = z.string()
+  .min(6, "Password must be at least 6 characters long")
+  .regex(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+    "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)"
+  );
 
-export async function handleChangePassword(prevState: any, formData: FormData) {
-  /**
-   * Zod is checking if everything is ok about inputs
-   */
-  const schema = z.object({
-    newPassword: z
-      .string()
-      .min(6, "Password must be at least 6 characters long"),
-    confirmPassword: z.string().min(6),
+const schema = z
+  .object({
+    newPassword: passwordSchema,
+    confirmPassword: passwordSchema,
     passwordResetTokenId: z.string(),
     resetCode: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
   });
 
-  /**
-   * Validate fields will make sure all data that is needed for updating password is ready
-   */
-  const validatedFields = {
+export async function handleChangePassword(prevState: any, formData: FormData) {
+  const validatedFields = schema.safeParse({
     newPassword: formData.get("newPassword"),
     confirmPassword: formData.get("confirmPassword"),
     passwordResetTokenId: formData.get("passwordResetTokenId"),
     resetCode: formData.get("resetCode"),
-  };
+  });
 
-  if (
-    validatedFields.passwordResetTokenId === "undefined" ||
-    validatedFields.confirmPassword === "undefined"
-  ) {
+  if (!validatedFields.success) {
     return {
-      message: "Not valid tokens provided",
+      success: false,
+      message: validatedFields.error.errors[0].message,
     };
   }
 
-  if (validatedFields.newPassword !== validatedFields.confirmPassword) {
-    return {
-      message: "Passwords do not match",
-    };
-  }
+  const { newPassword, passwordResetTokenId, resetCode } = validatedFields.data;
 
   try {
     const response = await fetch(
@@ -56,26 +45,30 @@ export async function handleChangePassword(prevState: any, formData: FormData) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          passwordResetTokenId: validatedFields.passwordResetTokenId,
-          resetCode: validatedFields.resetCode,
-          newPassword: validatedFields.newPassword,
+          passwordResetTokenId,
+          resetCode,
+          newPassword,
         }),
-      },
+      }
     );
 
     if (response.ok) {
       return {
-        message: "Success, password changed",
+        success: true,
+        message: "Password successfully changed. You can now log in with your new password.",
       };
-      redirect("/login");
     } else {
+      const errorData = await response.json();
       return {
-        message: "Failed to reset password",
+        success: false,
+        message: errorData.message || "Failed to reset password. Please try again.",
       };
     }
-  } catch (e: any) {
+  } catch (error) {
+    console.error("Error during password reset:", error);
     return {
-      message: "Error occurred during password reset",
+      success: false,
+      message: "An error occurred during password reset. Please try again later.",
     };
   }
 }

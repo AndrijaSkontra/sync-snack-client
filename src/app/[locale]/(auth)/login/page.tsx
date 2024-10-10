@@ -5,7 +5,7 @@ import { Box, Button, Divider, Heading, Link } from "@chakra-ui/react";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/commons/auth";
 import { redirect } from "next/navigation";
-import ForgotYourPasswordModal from "@/app/components/login/forgot-password-modal/ForgotYourPasswordModal";
+import ForgotYourPasswordLink from "@/app/components/login/forgot-password-modal/ForgotYourPasswordLink";
 
 export default async function LoginPage() {
   const t = await getTranslations("LoginPage");
@@ -25,7 +25,7 @@ export default async function LoginPage() {
         borderWidth="1px"
       >
         <LoginForm />
-        <ForgotYourPasswordModal />
+        <ForgotYourPasswordLink />
         <Divider className="mt-2" />
         <Link href="/register" as={NextLink}>
           <Button className="mt-6" colorScheme="xorange">
