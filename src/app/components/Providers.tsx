@@ -31,7 +31,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <UserRolesContext.Provider value={{ userRoles, setUserRoles }}>
         <GroupEventsContext.Provider value={{ groupEvents, setGroupEvents }}>
           <SessionProvider>
-            <ColorModeScript initialColorMode={"light"} />
+            <ColorModeScript initialColorMode={"system"} />
             <ChakraProvider theme={theme}>{children}</ChakraProvider>
           </SessionProvider>
         </GroupEventsContext.Provider>
