@@ -27,7 +27,7 @@ export async function handleLogin(prevState: any, formData: FormData) {
       redirect(`/setprofile?userId=${messageList[2]}`);
     }
     console.log("error:", e.message[0])
-    if (e.message[0] === "E") {
+    if (e.message[0] === "E" || e.message[0] === "W") {
       return { message: "Wrong credentials" }
     }
     return { message: e.message[0] };

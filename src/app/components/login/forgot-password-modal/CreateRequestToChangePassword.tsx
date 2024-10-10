@@ -1,14 +1,19 @@
 // File: CreateRequestToChangePassword.tsx
 "use client";
-import { Input, Button, useToast } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { handleChangePasswordRequest } from '@/app/server-actions/handleChangePasswordRequest';
+import { Input, Button, useToast } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { handleChangePasswordRequest } from "@/app/server-actions/handle-change-password-request";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className="w-full mt-4" colorScheme="xblue" isLoading={pending}>
+    <Button
+      type="submit"
+      className="w-full mt-4"
+      colorScheme="xblue"
+      isLoading={pending}
+    >
       Change Password Request
     </Button>
   );
@@ -24,8 +29,15 @@ const initialState: State = {
   success: null,
 };
 
-export default function CreateRequestToChangePassword({ onCloseModal }: { onCloseModal: () => void }) {
-  const [state, formAction] = useFormState<State, FormData>(handleChangePasswordRequest, initialState);
+export default function CreateRequestToChangePassword({
+  onCloseModal,
+}: {
+  onCloseModal: () => void;
+}) {
+  const [state, formAction] = useFormState<State, FormData>(
+    handleChangePasswordRequest,
+    initialState,
+  );
   const toast = useToast();
 
   useEffect(() => {
@@ -61,3 +73,4 @@ export default function CreateRequestToChangePassword({ onCloseModal }: { onClos
     </form>
   );
 }
+
