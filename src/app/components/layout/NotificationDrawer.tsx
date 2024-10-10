@@ -90,7 +90,7 @@ function useNotifications(
           if (typeof data !== "undefined") {
             data.map((notification: any) => {
               // const stringNotification = JSON.stringify(notification);
-              setNotifications((prev) => [...prev, notification]);
+              setNotifications((prev: any) => [...prev, notification]);
             });
           }
         })
