@@ -74,7 +74,7 @@ function useSubscribeToWS(
           console.log("CONNECTED TO THE WEB SOCKET");
           console.log("active user ws", activeUser.userProfileId);
           client.subscribe(
-            `/topic/orders/${activeUser.userProfileId}`,
+            `/topic/orders.${activeUser.userProfileId}`,
             (message: any) => {
               console.log("message", JSON.parse(message.body));
               console.log(JSON.parse(message.body).userProfileId);
@@ -101,7 +101,7 @@ function useSubscribeToWS(
           );
           client.subscribe(
             // this is for the event
-            `/topic/users/${activeUser.userProfileId}`,
+            `/topic/users.${activeUser.userProfileId}`,
             (message: any) => {
               console.log("message", JSON.parse(message.body));
               setIsBellNotified(true);
