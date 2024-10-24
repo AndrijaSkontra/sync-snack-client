@@ -69,9 +69,6 @@ export function ProfileSettings() {
             className="w-[--radix-dropdown-menu-trigger-width]"
             align="start"
           >
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem
               onSelect={() => {
                 toggleColorMode();
@@ -90,6 +87,12 @@ export function ProfileSettings() {
                 </div>
               )}
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

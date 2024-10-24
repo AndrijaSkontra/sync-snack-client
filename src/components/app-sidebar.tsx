@@ -1,7 +1,7 @@
 import * as React from "react";
 
+import { GroupSwitcher } from "./group-switcher";
 import { ProfileSettings } from "./profile-settings.jsx";
-import { VersionSwitcher } from "@/components/version-switcher";
 import {
   CommandLineIcon,
   UserGroupIcon,
@@ -20,42 +20,47 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 const data = {
-  groups: ["Kodelab", "Coin", "Rimac"],
   navMain: [
     {
-      title: "Actions",
+      title: "Group Details",
       url: "#",
       items: [
         {
-          title: "Event",
+          title: "Events",
           icon: <CommandLineIcon />,
-          url: "/event",
+          url: "/group-events",
         },
         {
-          title: "Start Events",
+          title: "Orders",
           icon: <CalendarIcon />,
-          url: "#",
+          url: "/orders",
+        },
+        {
+          title: "Information",
+          icon: <CalendarIcon />,
+          url: "/group",
+        },
+        {
+          title: "Your Event",
+          icon: <CommandLineIcon />,
+          url: "/event",
         },
       ],
     },
     {
-      title: "Admin Actions",
+      title: "Group Management",
       url: "#",
       items: [
         {
-          title: "All Users",
-          icon: <UserGroupIcon />,
-          url: "#",
-        },
-        {
-          title: "List Orders",
+          title: "Create Group",
           icon: <CommandLineIcon />,
           url: "#",
         },
         {
-          title: "Show Events",
+          title: "Join Group",
           icon: <CalendarIcon />,
           url: "#",
         },
@@ -68,10 +73,7 @@ export function AppSidebar({ ...props }) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.groups}
-          defaultVersion={data.groups[0]}
-        />
+        <GroupSwitcher />
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
@@ -83,10 +85,10 @@ export function AppSidebar({ ...props }) {
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>
+                      <Link href={item.url}>
                         {item.icon}
                         {item.title}
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
