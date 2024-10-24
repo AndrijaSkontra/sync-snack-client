@@ -116,7 +116,7 @@ export default function PasswordResetForm() {
   return (
     <form onSubmit={handleSubmit}>
       <VStack spacing={4}>
-        <FormControl isInvalid={!!formErrors.newPassword}>
+        <FormControl isInvalid={!!formErrors.newPassword || !!formErrors.confirmPassword}>
           <InputGroup size="md">
             <Input
               pr="4.5rem"
@@ -131,7 +131,9 @@ export default function PasswordResetForm() {
               </Button>
             </InputRightElement>
           </InputGroup>
-          {formErrors.newPassword && <FormErrorMessage>{formErrors.newPassword}</FormErrorMessage>}
+          {formErrors.newPassword && formErrors.newPassword !== formErrors.confirmPassword && (
+            <FormErrorMessage>{formErrors.newPassword}</FormErrorMessage>
+          )}
         </FormControl>
 
         <FormControl isInvalid={!!formErrors.confirmPassword}>
@@ -149,8 +151,16 @@ export default function PasswordResetForm() {
               </Button>
             </InputRightElement>
           </InputGroup>
-          {formErrors.confirmPassword && <FormErrorMessage>{formErrors.confirmPassword}</FormErrorMessage>}
+          {formErrors.confirmPassword && (
+            <FormErrorMessage>
+              {formErrors.confirmPassword === formErrors.newPassword
+                ? formErrors.confirmPassword
+                : formErrors.confirmPassword}
+            </FormErrorMessage>
+          )}
         </FormControl>
+
+          
 
         <Box width="full">
           <SubmitButton />
