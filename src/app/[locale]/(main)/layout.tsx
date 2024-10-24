@@ -21,10 +21,9 @@ export default async function Layout({
   return (
     <>
       <Box className="flex h-screen items-stretch">
-        <Box>
-          <SidebarGroups accessToken={activeUser.accessToken} />
-        </Box>
-        <Box className="grow">{children}</Box>
+        {/*<SidebarGroups accessToken={activeUser.accessToken} />*/}
+        <Box></Box>
+        <Box className="grow p-10">{children}</Box>
       </Box>
       <Box className="fixed top-4 right-4 flex items-center space-x-6">
         <MenuLayout />

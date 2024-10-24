@@ -1,6 +1,7 @@
 import ProfileInfo from "@/app/components/profile/ProfileInfo";
 import ProfileStats from "@/app/components/profile/ProfileStats";
 import { auth } from "@/commons/auth";
+import { Button } from "@/components/ui/button";
 import { Box } from "@chakra-ui/react";
 
 export default async function ProfilePage() {
@@ -13,7 +14,6 @@ export default async function ProfilePage() {
     <Box className="space-y-4 mt-14 md:mt-0 md:flex h-4/5 justify-center items-center">
       <ProfileInfo userProfileData={userProfileData} session={session} />
       <ProfileStats stats={userProfileOrderStats} />
-      <div className="bg-red-500 dark:bg-green-500">test</div>
     </Box>
   );
 }

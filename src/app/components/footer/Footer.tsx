@@ -14,6 +14,10 @@ export default async function Footer() {
   }
 
   return (
-    <ExpendableFooter isSignOutButtonVisible={isSignOutButtonVisible}></ExpendableFooter>
+    <div className="hidden">
+      <ExpendableFooter
+        isSignOutButtonVisible={isSignOutButtonVisible}
+      ></ExpendableFooter>
+    </div>
   );
 }
