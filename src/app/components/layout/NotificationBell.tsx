@@ -85,6 +85,10 @@ function useSubscribeToWS(
               //   activeUser.userProfileId
               // ) {
               setIsBellNotified(true);
+              setNotifications((prev: any) => [
+                JSON.parse(message.body),
+                ...prev,
+              ]);
               toast({
                 title: "Order",
                 description: "New order on your event",
@@ -122,10 +126,7 @@ function useSubscribeToWS(
                 JSON.parse(message.body),
                 ...prev,
               ]);
-              setNotifications((prev: any) => [
-                JSON.parse(message.body),
-                ...prev,
-              ]);
+              
               toast({
                 title: "Event",
                 description: "New event in your group",
