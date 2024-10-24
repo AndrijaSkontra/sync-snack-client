@@ -8,6 +8,7 @@ import {
   Button,
   Collapse,
   ScaleFade,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import SignOutButton from "./SignOutButton";
 import FooterLanguageButtons from "./FooterLanguageButtons";
@@ -47,6 +48,8 @@ const ExpandableFooter: React.FC<ExpandableFooterProps> = ({
     };
   }, [isExpanded]);
 
+  const drawerBgColor = useColorModeValue("gray.200", "gray.700");
+
   return (
     <>
       <Collapse in={isExpanded} animateOpacity>
@@ -63,6 +66,7 @@ const ExpandableFooter: React.FC<ExpandableFooterProps> = ({
           zIndex={1000}
           borderRadius="md" // Rounded corners for the dropdown
           transition="all 0.3s ease-in-out"
+          bgColor={drawerBgColor}
         >
           <Flex justify="space-between" align="center">
             <ScaleFade initialScale={0.9} in={isSignOutButtonVisible}>

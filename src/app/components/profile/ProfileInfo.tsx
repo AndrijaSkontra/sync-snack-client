@@ -13,7 +13,7 @@ export default function ProfileInfo({ userProfileData, session }: any) {
 
   return (
     <>
-      <Box className="flex flex-col justify-center items-center space-y-2">
+      <Box className="flex flex-col items-center justify-center space-y-2">
         <Box className="flex space-x-1">
           <Text className="font-semibold">{userProfileData.firstName}</Text>
           <Text className="font-semibold">{userProfileData.lastName}</Text>

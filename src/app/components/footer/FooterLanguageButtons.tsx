@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
 
 /**
@@ -18,7 +18,7 @@ export default function FooterLanguageButtons() {
   }
 
   return (
-    <>
+    <Box className="flex space-x-2">
       <Button
         colorScheme="xblue"
         onClick={() => {
@@ -43,6 +43,6 @@ export default function FooterLanguageButtons() {
       >
         ENG
       </Button>
-    </>
+    </Box>
   );
 }
