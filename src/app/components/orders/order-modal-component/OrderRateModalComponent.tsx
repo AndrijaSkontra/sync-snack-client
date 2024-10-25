@@ -18,7 +18,7 @@ function Star({ value, handleClick, isFull }: StarProps) {
   return (
     <StarIcon
       boxSize={10}
-      color={isFull ? "yellow.400" : "gray.300"}
+      color={isFull ? "blue.400" : "gray.300"}
       cursor="pointer"
       onClick={() => handleClick(value)}
       _hover={{ transform: "scale(1.1)" }}

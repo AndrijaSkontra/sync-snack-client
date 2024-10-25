@@ -66,12 +66,7 @@ export default function SidebarLinks() {
               url="group-events"
               icon={<CalendarIcon />}
             />
-            <LinkItem
-              title="Orders"
-              context={selectedGroupContext}
-              url="orders"
-              icon={<CommandLineIcon />}
-            />
+            <LinkItem title="Orders" url="orders" icon={<CommandLineIcon />} />
             {isMyEventVisibleContext.isMyEventVisible && (
               <LinkItem
                 context={selectedGroupContext}

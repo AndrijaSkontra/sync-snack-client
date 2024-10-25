@@ -1,11 +1,21 @@
 "use client";
-import { Box, Button, Input, InputGroup, InputRightElement, VStack, FormControl, FormErrorMessage, useToast } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import {
+  Box,
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  VStack,
+  FormControl,
+  FormErrorMessage,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { z } from "zod";
-import { handleChangePassword } from '@/app/server-actions/change-password';
-import { redirect, useSearchParams } from 'next/navigation';
+import { handleChangePassword } from "@/app/server-actions/change-password";
+import { redirect, useSearchParams } from "next/navigation";
 
 interface State {
   message: string | null;
@@ -17,11 +27,15 @@ const initialState: State = {
   success: null,
 };
 
-const passwordSchema = z.string()
+const passwordSchema = z
+  .string()
   .min(6, "Password must be at least 6 characters long")
   .regex(/^(?=.*[A-Z])/, "Password must contain at least one uppercase letter")
   .regex(/^(?=.*[0-9])/, "Password must contain at least one number")
-  .regex(/^(?=.*[!@#$%^&*])/, "Password must contain at least one special character (!@#$%^&*)");
+  .regex(
+    /^(?=.*[!@#$%^&*])/,
+    "Password must contain at least one special character (!@#$%^&*)",
+  );
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -33,8 +47,14 @@ function SubmitButton() {
 }
 
 export default function PasswordResetForm() {
-  const [state, formAction] = useFormState<State, FormData>(handleChangePassword, initialState);
-  const [formErrors, setFormErrors] = useState<{ newPassword?: string; confirmPassword?: string }>({});
+  const [state, formAction] = useFormState<State, FormData>(
+    handleChangePassword,
+    initialState,
+  );
+  const [formErrors, setFormErrors] = useState<{
+    newPassword?: string;
+    confirmPassword?: string;
+  }>({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const toast = useToast();
@@ -51,8 +71,8 @@ export default function PasswordResetForm() {
         position: "top",
       });
 
-      if(state.success) {
-        redirect('/login')
+      if (state.success) {
+        redirect("/login");
       }
     }
   }, [state, toast]);
@@ -88,18 +108,19 @@ export default function PasswordResetForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    
+
     // Add URL parameters to the form data
-    const passwordResetTokenId = searchParams.get('passwordResetTokenId');
-    const resetCode = searchParams.get('resetCode');
-    
+    const passwordResetTokenId = searchParams.get("passwordResetTokenId");
+    const resetCode = searchParams.get("resetCode");
+
     if (passwordResetTokenId && resetCode) {
       formData.append("passwordResetTokenId", passwordResetTokenId);
       formData.append("resetCode", resetCode);
     } else {
       toast({
         title: "Error",
-        description: "Missing required reset information. Please check your reset link.",
+        description:
+          "Missing required reset information. Please check your reset link.",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -116,7 +137,9 @@ export default function PasswordResetForm() {
   return (
     <form onSubmit={handleSubmit}>
       <VStack spacing={4}>
-        <FormControl isInvalid={!!formErrors.newPassword || !!formErrors.confirmPassword}>
+        <FormControl
+          isInvalid={!!formErrors.newPassword || !!formErrors.confirmPassword}
+        >
           <InputGroup size="md">
             <Input
               pr="4.5rem"
@@ -126,14 +149,23 @@ export default function PasswordResetForm() {
               id="newPassword"
             />
             <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <EyeIcon className="size-5" /> : <EyeSlashIcon className="size-5" />}
+              <Button
+                h="1.75rem"
+                size="sm"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeIcon className="size-5" />
+                ) : (
+                  <EyeSlashIcon className="size-5" />
+                )}
               </Button>
             </InputRightElement>
           </InputGroup>
-          {formErrors.newPassword && formErrors.newPassword !== formErrors.confirmPassword && (
-            <FormErrorMessage>{formErrors.newPassword}</FormErrorMessage>
-          )}
+          {formErrors.newPassword &&
+            formErrors.newPassword !== formErrors.confirmPassword && (
+              <FormErrorMessage>{formErrors.newPassword}</FormErrorMessage>
+            )}
         </FormControl>
 
         <FormControl isInvalid={!!formErrors.confirmPassword}>
@@ -146,8 +178,16 @@ export default function PasswordResetForm() {
               id="confirmPassword"
             />
             <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                {showConfirmPassword ? <EyeIcon className="size-5" /> : <EyeSlashIcon className="size-5" />}
+              <Button
+                h="1.75rem"
+                size="sm"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <EyeIcon className="size-5" />
+                ) : (
+                  <EyeSlashIcon className="size-5" />
+                )}
               </Button>
             </InputRightElement>
           </InputGroup>
@@ -160,8 +200,6 @@ export default function PasswordResetForm() {
           )}
         </FormControl>
 
-          
-
         <Box width="full">
           <SubmitButton />
         </Box>
@@ -169,3 +207,4 @@ export default function PasswordResetForm() {
     </form>
   );
 }
+
