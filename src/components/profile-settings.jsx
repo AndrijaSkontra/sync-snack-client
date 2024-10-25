@@ -52,10 +52,10 @@ export function ProfileSettings() {
             >
               <Avatar>
                 <AvatarImage
-                  src="/pic1.png"
+                  src="/template-user.png"
                   className="h-10 w-10 rounded-full border-2 border-black object-cover dark:border-gray-300"
                 />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>User</AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="dark:font-normal font-semibold">
