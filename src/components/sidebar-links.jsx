@@ -19,7 +19,11 @@ import {
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { IsMyEventVisibleContext } from "@/app/components/Providers";
+import {
+  IsMyEventVisibleContext,
+  SelectedGroupContext,
+} from "@/app/components/Providers";
+import { Text } from "@chakra-ui/react";
 
 /**
  * Component that will show all the navigation links.
@@ -30,6 +34,8 @@ export default function SidebarLinks() {
   const isMyEventVisibleContext = useContext(IsMyEventVisibleContext);
   useMyEventVisible(isMyEventVisibleContext);
 
+  const selectedGroupContext = useContext(SelectedGroupContext);
+
   return (
     <>
       <SidebarGroup>
@@ -37,15 +43,27 @@ export default function SidebarLinks() {
         <SidebarGroupContent>
           <SidebarMenu>
             <LinkItem
-              title="Events"
+              title={"Events"}
+              context={selectedGroupContext}
               url="group-events"
               icon={<CalendarIcon />}
             />
-            <LinkItem title="Orders" url="orders" icon={<CommandLineIcon />} />
+            <LinkItem
+              title="Orders"
+              context={selectedGroupContext}
+              url="orders"
+              icon={<CommandLineIcon />}
+            />
             {isMyEventVisibleContext.isMyEventVisible && (
-              <LinkItem title="My Event" url="event" icon={<CakeIcon />} />
+              <LinkItem
+                context={selectedGroupContext}
+                title="My Event"
+                url="event"
+                icon={<CakeIcon />}
+              />
             )}
             <LinkItem
+              context={selectedGroupContext}
               title="Information"
               url="group"
               icon={<UserGroupIcon />}
@@ -68,13 +86,16 @@ export default function SidebarLinks() {
   );
 }
 
-function LinkItem({ title, icon, url }) {
+function LinkItem({ title, icon, url, context }) {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
         <Link href={url}>
           {icon}
           {title}
+          <p className="text-xs dark:text-gray-600 text-gray-300">
+            {context?.selectedGroup ? context.selectedGroup.name : ""}
+          </p>
         </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>

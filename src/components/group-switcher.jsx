@@ -18,11 +18,13 @@ import {
 } from "@/components/ui/sidebar";
 import { Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { SelectedGroupContext } from "@/app/components/Providers";
 
 export function GroupSwitcher({ accessToken }) {
   const router = useRouter();
 
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const selectedGroupContext = useContext(SelectedGroupContext);
   const [userGroups, setUserGroups] = useState([]);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export function GroupSwitcher({ accessToken }) {
         },
       )
         .then((res) => res.json())
-        .then((data) => setSelectedGroup(data))
+        .then((data) => selectedGroupContext.setSelectedGroup(data))
         .catch((e) => console.log("error!", e.message));
     }
 
@@ -73,7 +75,11 @@ export function GroupSwitcher({ accessToken }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Image
-                src={selectedGroup ? selectedGroup.photoUrl : ""}
+                src={
+                  selectedGroupContext.selectedGroup
+                    ? selectedGroupContext.selectedGroup.photoUrl
+                    : ""
+                }
                 alt="nopic"
                 objectFit="cover"
                 fallbackSrc="/fallback-group.png"
@@ -83,8 +89,12 @@ export function GroupSwitcher({ accessToken }) {
 
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="dark:font-normal font-semibold">Group</span>
-                <span className="dark:text-gray-400 mt-2">
-                  {selectedGroup ? selectedGroup.name : ""}
+                <span className="mt-1">
+                  <p className="text-[#15408c] dark:text-[#5078bf]">
+                    {selectedGroupContext.selectedGroup
+                      ? selectedGroupContext.selectedGroup.name
+                      : ""}
+                  </p>
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -99,7 +109,7 @@ export function GroupSwitcher({ accessToken }) {
                 <DropdownMenuItem
                   key={group.groupId}
                   onSelect={() => {
-                    setSelectedGroup(group);
+                    selectedGroupContext.setSelectedGroup(group);
                     localStorage.setItem("GroupId", group.groupId);
                     router.push("/group");
                     router.refresh();

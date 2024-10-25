@@ -24,28 +24,38 @@ export const IsMyEventVisibleContext = createContext({
   setIsMyEventVisible: (value: any) => {},
 });
 
+export const SelectedGroupContext = createContext({
+  selectedGroup: null,
+  setSelectedGroup: (value: any) => {},
+});
+
 export function Providers({ children }: { children: React.ReactNode }) {
   const [groupEvents, setGroupEvents] = useState([]);
   const [userRoles, setUserRoles] = useState([]);
   const [updateString, setUpdateString] = useState("");
   const [isMyEventVisible, setIsMyEventVisible] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState(null);
 
   return (
-    <UpdateGroupsSidebarContext.Provider
-      value={{ updateString, setUpdateString }}
-    >
-      <UserRolesContext.Provider value={{ userRoles, setUserRoles }}>
-        <IsMyEventVisibleContext.Provider
-          value={{ isMyEventVisible, setIsMyEventVisible }}
-        >
-          <GroupEventsContext.Provider value={{ groupEvents, setGroupEvents }}>
-            <SessionProvider>
-              <ColorModeScript initialColorMode={"system"} />
-              <ChakraProvider theme={theme}>{children}</ChakraProvider>
-            </SessionProvider>
-          </GroupEventsContext.Provider>
-        </IsMyEventVisibleContext.Provider>
-      </UserRolesContext.Provider>
-    </UpdateGroupsSidebarContext.Provider>
+    <SelectedGroupContext.Provider value={{ selectedGroup, setSelectedGroup }}>
+      <UpdateGroupsSidebarContext.Provider
+        value={{ updateString, setUpdateString }}
+      >
+        <UserRolesContext.Provider value={{ userRoles, setUserRoles }}>
+          <IsMyEventVisibleContext.Provider
+            value={{ isMyEventVisible, setIsMyEventVisible }}
+          >
+            <GroupEventsContext.Provider
+              value={{ groupEvents, setGroupEvents }}
+            >
+              <SessionProvider>
+                <ColorModeScript initialColorMode={"system"} />
+                <ChakraProvider theme={theme}>{children}</ChakraProvider>
+              </SessionProvider>
+            </GroupEventsContext.Provider>
+          </IsMyEventVisibleContext.Provider>
+        </UserRolesContext.Provider>
+      </UpdateGroupsSidebarContext.Provider>
+    </SelectedGroupContext.Provider>
   );
 }
