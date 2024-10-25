@@ -6,7 +6,7 @@ import {
   CakeIcon,
   UserGroupIcon,
   PlusCircleIcon,
-  ArrowRightCircleIcon,
+  ArrowLeftCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
   SidebarGroup,
@@ -17,13 +17,17 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import {
   IsMyEventVisibleContext,
   SelectedGroupContext,
 } from "@/app/components/Providers";
-import { Text } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
+import { useFormState } from "react-dom";
+import { handleGroupCreate } from "@/app/server-actions/create-group";
+import { handleGroupJoin } from "@/app/server-actions/group-join";
+import JoinCreateGroupModal from "@/app/components/modals/JoinCreateGroupModal";
 
 /**
  * Component that will show all the navigation links.
@@ -35,6 +39,20 @@ export default function SidebarLinks() {
   useMyEventVisible(isMyEventVisibleContext);
 
   const selectedGroupContext = useContext(SelectedGroupContext);
+  const [state, formAction] = useFormState(handleGroupCreate, {
+    message: null,
+    errors: null,
+  });
+  const [joinState, joinFormAction] = useFormState(handleGroupJoin, {
+    message: null,
+    errors: null,
+  });
+
+  const {
+    isOpen: isGroupModalOpen,
+    onOpen: onGroupModalOpen,
+    onClose: onGroupModalClose,
+  } = useDisclosure();
 
   return (
     <>
@@ -73,15 +91,25 @@ export default function SidebarLinks() {
         <SidebarGroupLabel>Group Management</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
+            <div onClick={onGroupModalOpen}>
+              <LinkItem title="New Group" url="#" icon={<PlusCircleIcon />} />
+            </div>
             <LinkItem
-              title="Join Group"
+              title="Leave Group"
               url="#"
-              icon={<ArrowRightCircleIcon />}
+              icon={<ArrowLeftCircleIcon />}
             />
-            <LinkItem title="Create Group" url="#" icon={<PlusCircleIcon />} />
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
+      <JoinCreateGroupModal
+        state={state}
+        formAction={formAction}
+        joinState={joinState}
+        joinFormAction={joinFormAction}
+        isOpen={isGroupModalOpen}
+        onClose={onGroupModalClose}
+      />
     </>
   );
 }

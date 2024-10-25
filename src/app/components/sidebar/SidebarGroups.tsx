@@ -41,10 +41,6 @@ export default function SidebarGroups({ accessToken }: any) {
   const [activeGroup, setActiveGroup] = useState(null);
   const { data: session, status }: any = useSession();
 
-  /**
-   * This is used for group links drawer and modal
-   * @see https://v2.chakra-ui.com/docs/components/drawer
-   */
   const {
     isOpen: isDrawerOpen,
     onOpen: onDrawerOpen,
