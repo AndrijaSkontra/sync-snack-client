@@ -17,10 +17,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Image } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 export function GroupSwitcher({ accessToken }) {
-  console.log("rendering group switcher");
-  console.log("access 😎", accessToken);
+  const router = useRouter();
 
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [userGroups, setUserGroups] = useState([]);
@@ -100,6 +100,9 @@ export function GroupSwitcher({ accessToken }) {
                   key={group.groupId}
                   onSelect={() => {
                     setSelectedGroup(group);
+                    localStorage.setItem("GroupId", group.groupId);
+                    router.push("/group");
+                    router.refresh();
                   }}
                 >
                   <div className="flex space-x-1 items-center">

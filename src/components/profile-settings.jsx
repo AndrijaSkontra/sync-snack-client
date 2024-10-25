@@ -20,10 +20,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation.js";
 
 export function ProfileSettings() {
   //  TODO: this should be context visible in server components as well
   const [dark, setDark] = useState(true);
+  const router = useRouter();
 
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -89,7 +91,9 @@ export function ProfileSettings() {
               )}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => router.push("/profile")}>
+              Profile
+            </DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <SignOutMenuItem />

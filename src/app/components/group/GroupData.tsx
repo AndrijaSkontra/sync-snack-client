@@ -32,8 +32,6 @@ export default function GroupData({ session }: any) {
     setTransfromRoles,
   );
 
-  console.log("user roles: ", rolesContext.userRoles);
-
   useEffect(() => {
     if (transfromRoles) {
       setUserRoles(transformingRoles(userRoles, transfromRoles));
