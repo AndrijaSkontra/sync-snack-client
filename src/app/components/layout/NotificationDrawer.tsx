@@ -1,7 +1,6 @@
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -12,9 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { NotificationType } from "@/commons/types";
 import NotificationCard from "./NotificationCard";
-import { RepeatIcon } from "@chakra-ui/icons";
 
 export default function NotificationDrawer({
   isOpen,
