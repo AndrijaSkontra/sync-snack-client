@@ -83,7 +83,7 @@ function useCalculateRemainingTime(
       const remaining = Math.max(0, totalDuration);
       const seconds = Math.floor(remaining / 1000);
       setRemainingSeconds(seconds);
-
+    
       const elapsedTime =
         now.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
       const totalTime =
@@ -91,13 +91,19 @@ function useCalculateRemainingTime(
       const progress = (elapsedTime / totalTime) * 100;
       console.log(progress, " - ", elapsedTime, " - ", totalTime);
       setProgressValue(Math.min(100, Math.max(0, progress)));
+    
       if (
         progress > 100 &&
         groupEventsContext.groupEvents.some(
           (group: any) => group.eventId === groupEvent.eventId,
         )
       ) {
-        groupEventsContext.setGroupEvents([]);
+        // Filter out the event with matching eventId
+        groupEventsContext.setGroupEvents((prevEvents: any) =>
+          prevEvents.filter(
+            (group: any) => group.eventId !== groupEvent.eventId
+          )
+        );
       }
     };
 
