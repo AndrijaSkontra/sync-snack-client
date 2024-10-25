@@ -22,6 +22,11 @@ export default function OrderRow({ order, accessToken }: any) {
   const t = useTranslations("OrdersPage");
   const [isDescriptionModalOpened, setDescriptionModalOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isDescOpen,
+    onOpen: onDescOpen,
+    onClose: onDescClose,
+  } = useDisclosure();
 
   const [orderRating, setOrderRating] = useState(order.rating);
 
@@ -39,8 +44,8 @@ export default function OrderRow({ order, accessToken }: any) {
       return (
         <Box className="flex">
           <Text
-            className="cursor-pointer hover:text-orange-dark-1"
-            onClick={() => setDescriptionModalOpen(true)}
+            className="cursor-pointer hover:text-orange-dark-1 dark:hover:text-purple-900 hover:text-purple-300"
+            onClick={onDescOpen}
           >
             {desc}
           </Text>
@@ -103,17 +108,19 @@ export default function OrderRow({ order, accessToken }: any) {
         </ModalContent>
       </Modal>
 
-      {isDescriptionModalOpened && (
-        <Modal
-          isOpen={isDescriptionModalOpened}
-          onClose={handleDescriptionCloseModal}
-        >
-          <OrderDescriptionModalComponent
-            description={order.additionalOptions.description}
-            onClose={handleDescriptionCloseModal}
-          ></OrderDescriptionModalComponent>
-        </Modal>
-      )}
+      <Modal isOpen={isDescOpen} onClose={onDescClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Rate Order</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <OrderDescriptionModalComponent
+              description={order.additionalOptions.description}
+              onClose={onDescClose}
+            ></OrderDescriptionModalComponent>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
