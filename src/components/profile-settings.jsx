@@ -1,5 +1,6 @@
 "use client";
 
+import SignOutMenuItem from "./sign-out-menu-item.jsx";
 import * as React from "react";
 import { ChevronsUpDown } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
@@ -49,7 +50,7 @@ export function ProfileSettings() {
             >
               <Avatar>
                 <AvatarImage
-                  src="/picture (1).jpg"
+                  src="/pic1.png"
                   className="h-10 w-10 rounded-full border-2 border-black object-cover dark:border-gray-300"
                 />
                 <AvatarFallback>CN</AvatarFallback>
@@ -91,7 +92,7 @@ export function ProfileSettings() {
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <SignOutMenuItem />
             <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>

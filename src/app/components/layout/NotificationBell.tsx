@@ -31,8 +31,8 @@ export default function NotificationBell() {
     groupEventContext.setGroupEvents,
   );
 
-  const bgColor = useColorModeValue("xblue.500", "xblue.400");
-  const bgColorN = useColorModeValue("yellow.500", "yellow.400");
+  const bellIsNotNotifiedColors = useColorModeValue("gray.100", "gray.700");
+  const bellNotifiedColors = useColorModeValue("yellow.500", "yellow.400");
   const bellColor = useColorModeValue("white", "black");
 
   return (
@@ -41,7 +41,7 @@ export default function NotificationBell() {
         onOpen();
         setIsBellNotified(false);
       }}
-      bgColor={isBellNotified ? bgColorN : bgColor}
+      bgColor={isBellNotified ? bellNotifiedColors : bellIsNotNotifiedColors}
       className={clsx("py-2 px-4 rounded-md shadow-md", {
         "shadow-md animate-[wiggle_0.3s_ease-in-out_infinite]": isBellNotified,
       })}

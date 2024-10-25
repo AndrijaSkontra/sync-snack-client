@@ -18,19 +18,21 @@ import {
 } from "@/components/ui/sidebar";
 import { Image } from "@chakra-ui/react";
 
-export function GroupSwitcher() {
+export function GroupSwitcher({ accessToken }) {
+  console.log("rendering group switcher");
+  console.log("access 😎", accessToken);
+
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [userGroups, setUserGroups] = useState([]);
-  const { data: session, status } = useSession();
 
   useEffect(() => {
     function fetchCurrentGroup() {
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/66d5a7ca1c7c7255cb87aacb`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/${localStorage.getItem("GroupId")}`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session.user.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         },
       )
@@ -39,37 +41,27 @@ export function GroupSwitcher() {
         .catch((e) => console.log("error!", e.message));
     }
 
-    if (status === "authenticated") {
-      fetchCurrentGroup();
-    }
-  }, [status]);
+    fetchCurrentGroup();
+  }, []);
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/me`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session.user.accessToken}`,
-            },
-          },
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch groups");
-        }
-        const data = await response.json();
-        setUserGroups(data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-
-    if (status === "authenticated") {
-      fetchGroups();
+    function fetchGroups() {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/me`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUserGroups(data);
+        })
+        .catch(() => console.log(err.message, "-> failed to fetch groups ❌"));
     }
-  }, [status]);
+
+    console.log("fetching groups x");
+    fetchGroups();
+  }, []);
 
   return (
     <SidebarMenu>
@@ -107,7 +99,6 @@ export function GroupSwitcher() {
                 <DropdownMenuItem
                   key={group.groupId}
                   onSelect={() => {
-                    console.log("selected group", group);
                     setSelectedGroup(group);
                   }}
                 >

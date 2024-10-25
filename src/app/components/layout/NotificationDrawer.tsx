@@ -25,7 +25,6 @@ export default function NotificationDrawer({
   const { data: session, status } = useSession();
   const [page, setPage] = useState(0);
   const [isLoadMoreDisplayed, setIsLoadMoreDisplayed] = useState(true);
-  console.log(page);
   useNotifications(
     setNotifications,
     status,

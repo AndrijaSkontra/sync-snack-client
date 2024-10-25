@@ -124,7 +124,9 @@
   body {
     @apply bg-background text-foreground;
   }
-  /* svg { */
-  /*   @apply stroke-blue-500; */
-  /* } */
+  svg {
+    @apply stroke-[#234089];
+    @apply dark:stroke-[#5978bc];
+    @apply dark:stroke-2;
+  }
 }

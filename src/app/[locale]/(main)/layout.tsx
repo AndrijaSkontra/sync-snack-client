@@ -1,3 +1,4 @@
+import AppSidebarProvider from "@/app/components/app-sidebar-provider";
 import SignOutButton from "@/app/components/footer/SignOutButton";
 import MenuLayout from "@/app/components/layout/MenuLayout";
 import NotificationBell from "@/app/components/layout/NotificationBell";
@@ -19,8 +20,11 @@ export default async function Layout({
   }
 
   return (
-    <>
-      <Box className="flex h-screen items-stretch">
+    <AppSidebarProvider>
+      <Box
+        className="flex h-screen items-stretch"
+        style={{ width: "calc(100vw - 18rem)" }}
+      >
         {/*<SidebarGroups accessToken={activeUser.accessToken} />*/}
         <Box></Box>
         <Box className="grow p-10">{children}</Box>
@@ -28,6 +32,6 @@ export default async function Layout({
       <Box className="fixed top-4 right-4 flex items-center space-x-6">
         <NotificationBell />
       </Box>
-    </>
+    </AppSidebarProvider>
   );
 }

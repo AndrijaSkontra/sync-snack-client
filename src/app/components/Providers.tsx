@@ -1,7 +1,5 @@
 "use client";
 import { theme } from "@/commons/chakra-theme";
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import { createContext, useState } from "react";
@@ -21,30 +19,32 @@ export const UpdateGroupsSidebarContext = createContext({
   setUpdateString: (value: any) => {},
 });
 
+export const IsMyEventVisibleContext = createContext({
+  isMyEventVisible: false,
+  setIsMyEventVisible: (value: any) => {},
+});
+
 export function Providers({ children }: { children: React.ReactNode }) {
   const [groupEvents, setGroupEvents] = useState([]);
   const [userRoles, setUserRoles] = useState([]);
   const [updateString, setUpdateString] = useState("");
+  const [isMyEventVisible, setIsMyEventVisible] = useState(false);
 
   return (
     <UpdateGroupsSidebarContext.Provider
       value={{ updateString, setUpdateString }}
     >
       <UserRolesContext.Provider value={{ userRoles, setUserRoles }}>
-        <GroupEventsContext.Provider value={{ groupEvents, setGroupEvents }}>
-          <SessionProvider>
-            <ColorModeScript initialColorMode={"system"} />
-            <ChakraProvider theme={theme}>
-              <SidebarProvider>
-                <AppSidebar />
-                <main>
-                  <SidebarTrigger />
-                  {children}
-                </main>
-              </SidebarProvider>
-            </ChakraProvider>
-          </SessionProvider>
-        </GroupEventsContext.Provider>
+        <IsMyEventVisibleContext.Provider
+          value={{ isMyEventVisible, setIsMyEventVisible }}
+        >
+          <GroupEventsContext.Provider value={{ groupEvents, setGroupEvents }}>
+            <SessionProvider>
+              <ColorModeScript initialColorMode={"system"} />
+              <ChakraProvider theme={theme}>{children}</ChakraProvider>
+            </SessionProvider>
+          </GroupEventsContext.Provider>
+        </IsMyEventVisibleContext.Provider>
       </UserRolesContext.Provider>
     </UpdateGroupsSidebarContext.Provider>
   );

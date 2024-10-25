@@ -1,6 +1,6 @@
 "use client";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export default function PasswordInput() {
