@@ -4,18 +4,20 @@ import { Text, Box, Button, Input, Spinner, Heading } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { UserRolesContext } from "../Providers";
+import { useRouter } from "next/navigation";
 
 const initialState = {
   message: "",
 };
 
 export default function AdminButtons() {
+  const router = useRouter();
   const groupId: any = localStorage.getItem("GroupId");
   const [state, formAction] = useFormState(handleRolesChange, initialState);
   const [userRoleName, setUserRoleName] = useState("");
   const [adminRoleName, setAdminRoleName] = useState("");
   const [presidentRoleName, setPresidentRoleName] = useState("");
-  const changedRoles: boolean = state.message === "Roles changed";
+  let changedRoles: boolean = state.message === "Roles changed";
   const userRolesContext: any = useContext(UserRolesContext);
   const isAdmin =
     userRolesContext.userRoles.includes("ADMIN") ||
@@ -26,6 +28,12 @@ export default function AdminButtons() {
     setPresidentRoleName,
     setUserRoleName,
   );
+
+  if (changedRoles) {
+    changedRoles = false;
+    state.message = "";
+    router.refresh();
+  }
 
   return (
     <Box>
@@ -67,14 +75,26 @@ export default function AdminButtons() {
           />
           <Box className="flex space-x-2 items-center">
             <SubmitButton />
-            <Button variant="outline" colorScheme="xred" type="reset">
+            <Button
+              variant="outline"
+              colorScheme="xred"
+              type="reset"
+              onClick={() => {
+                setAdminRoleName("");
+                setUserRoleName("");
+                setPresidentRoleName("");
+              }}
+            >
               Clear
             </Button>
           </Box>
           {changedRoles ? (
             <Text className="text-green-500 text-sm">{state.message}</Text>
           ) : (
-            <Text className="text-red-500 text-sm">{state.message}</Text>
+            <Text className="text-red-500 text-sm">
+              {state.message &&
+                "Every field should contain at least 3 characters"}
+            </Text>
           )}
         </form>
       )}
