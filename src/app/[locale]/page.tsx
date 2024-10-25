@@ -9,7 +9,7 @@ export default function HomePage() {
   // const t = useTranslations("landing-page");
   console.log("just hit the home page");
   return (
-    <div className="dark:bg-gradient-to-b dark:from-gray-700 to-gray-900 bg-fixed overflow-y-hidden">
+    <div className="bg-gray-100 dark:bg-gradient-to-b dark:from-gray-700 to-gray-900 bg-fixed overflow-y-hidden">
       <Box className="flex justify-end p-4 space-x-2">
         <Link href="/login">
           <Button colorScheme="xorange" variant="outline">
