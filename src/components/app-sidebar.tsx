@@ -9,8 +9,10 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
+import { auth } from "@/commons/auth";
 
-export function AppSidebar({ accessToken, ...props }: any) {
+export async function AppSidebar({ accessToken, ...props }: any) {
+  const session = await auth();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -20,7 +22,8 @@ export function AppSidebar({ accessToken, ...props }: any) {
         <SidebarLinks /> {/* Navigation links */}
       </SidebarContent>
       <SidebarFooter>
-        <ProfileSettings /> {/* Profile options like sign out */}
+        {/* Profile options like sign out */}
+        <ProfileSettings session={session} />{" "}
       </SidebarFooter>
     </Sidebar>
   );

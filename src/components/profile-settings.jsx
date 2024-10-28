@@ -21,8 +21,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation.js";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-export function ProfileSettings() {
+export function ProfileSettings({ session }) {
   //  TODO: this should be context visible in server components as well
   const [dark, setDark] = useState(true);
   const router = useRouter();
@@ -52,18 +54,22 @@ export function ProfileSettings() {
             >
               <Avatar>
                 <AvatarImage
-                  src="/template-user.png"
+                  src={`${session?.user.profileUri}`}
                   className="h-10 w-10 rounded-full border-2 border-black object-cover dark:border-gray-300"
                 />
-                <AvatarFallback>User</AvatarFallback>
+                <AvatarFallback>
+                  {session?.user && session.user.firstName.slice(0, 1)}
+                  {session?.user && session.user.lastName.slice(0, 1)}
+                </AvatarFallback>
               </Avatar>
-              <div className="flex flex-col gap-0.5 leading-none">
+              <div className="flex flex-col gap-0.5 leading-none ml-2">
                 <span className="dark:font-normal font-semibold">
-                  {/*  TODO: get name from db */}
-                  Mate Budimir
+                  {session?.user && session.user.firstName}
+                  &nbsp;
+                  {session?.user && session.user.lastName}
                 </span>
                 <span className="dark:text-gray-400 mt-2">
-                  mbudimir@gmail.com
+                  {session?.user && session.user.email.split("@")[0]}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />

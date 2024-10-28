@@ -28,6 +28,7 @@ import { useFormState } from "react-dom";
 import { handleGroupCreate } from "@/app/server-actions/create-group";
 import { handleGroupJoin } from "@/app/server-actions/group-join";
 import JoinCreateGroupModal from "@/app/components/modals/JoinCreateGroupModal";
+import LeaveGroupModal from "@/app/components/modals/LeaveGroupModal";
 
 /**
  * Component that will show all the navigation links.
@@ -52,6 +53,12 @@ export default function SidebarLinks() {
     isOpen: isGroupModalOpen,
     onOpen: onGroupModalOpen,
     onClose: onGroupModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isLeaveModalOpen,
+    onOpen: onLeaveModalOpen,
+    onClose: onLeaveModalClose,
   } = useDisclosure();
 
   return (
@@ -89,11 +96,14 @@ export default function SidebarLinks() {
             <div onClick={onGroupModalOpen}>
               <LinkItem title="New Group" url="#" icon={<PlusCircleIcon />} />
             </div>
-            <LinkItem
-              title="Leave Group"
-              url="#"
-              icon={<ArrowLeftCircleIcon />}
-            />
+            <div onClick={onLeaveModalOpen}>
+              <LinkItem
+                title="Leave Group"
+                context={selectedGroupContext}
+                url="#"
+                icon={<ArrowLeftCircleIcon />}
+              />
+            </div>
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
@@ -105,6 +115,7 @@ export default function SidebarLinks() {
         isOpen={isGroupModalOpen}
         onClose={onGroupModalClose}
       />
+      <LeaveGroupModal isOpen={isLeaveModalOpen} onClose={onLeaveModalClose} />
     </>
   );
 }

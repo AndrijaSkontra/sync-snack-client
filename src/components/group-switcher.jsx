@@ -61,7 +61,6 @@ export function GroupSwitcher({ accessToken }) {
         .catch(() => console.log(err.message, "-> failed to fetch groups ❌"));
     }
 
-    console.log("fetching groups x");
     fetchGroups();
   }, []);
 

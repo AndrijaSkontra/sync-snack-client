@@ -25,13 +25,15 @@ export const theme = extendTheme({
       700: "#8c3331",
     },
     xred: {
-      100: "#bd6a68",
-      200: "#bd6a68",
-      300: "#bd6a68",
-      400: "#bd6a68",
-      500: "#8c3331",
-      600: "#681615",
-      700: "#000000",
+      100: "hsl(40, 93%, 25%)", // dark mode base color
+      200: "hsl(4, 93%, 25%)", // dark mode base color
+      300: "#890b0b", // dark mode hover
+      400: "#af0e0e", // dark mode click
+      500: "#d51111", // white mode base color
+      600: "#ff3314", // white mode hover
+      700: "#ff4213", // white  mode click
+      800: "hsl(40, 93%, 25%)", // dark mode base color
+      900: "hsl(40, 93%, 25%)", // dark mode base color
     },
   },
   fonts: {

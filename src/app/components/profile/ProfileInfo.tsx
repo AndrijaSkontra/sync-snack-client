@@ -1,5 +1,12 @@
 "use client";
-import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Image,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 
