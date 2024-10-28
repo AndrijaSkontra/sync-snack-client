@@ -15,7 +15,7 @@ export const UserRolesContext = createContext({
 });
 
 export const UpdateGroupsSidebarContext = createContext({
-  updateString: "",
+  updateString: "1",
   setUpdateString: (value: any) => {},
 });
 

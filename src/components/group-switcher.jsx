@@ -19,7 +19,10 @@ import {
 import { Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { SelectedGroupContext } from "@/app/components/Providers";
+import {
+  SelectedGroupContext,
+  UpdateGroupsSidebarContext,
+} from "@/app/components/Providers";
 import { UserGroupContext } from "@/app/components/Providers";
 
 export function GroupSwitcher({ accessToken }) {
@@ -27,6 +30,7 @@ export function GroupSwitcher({ accessToken }) {
 
   const selectedGroupContext = useContext(SelectedGroupContext);
   const userGroupsContext = useContext(UserGroupContext);
+  const updateGroupSidebarContext = useContext(UpdateGroupsSidebarContext);
 
   useEffect(() => {
     function fetchCurrentGroup() {
@@ -63,7 +67,7 @@ export function GroupSwitcher({ accessToken }) {
     }
 
     fetchGroups();
-  }, []);
+  }, [updateGroupSidebarContext.updateString]);
 
   return (
     <SidebarMenu>

@@ -2,9 +2,10 @@ import { Button, Input, Text } from "@chakra-ui/react";
 import PasswordInput from "../login/PasswordInput";
 import { useFormState } from "react-dom";
 import { handleGroupCreate } from "@/app/server-actions/create-group";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
+import { UpdateGroupsSidebarContext } from "../Providers";
 
 const initialState: any = {
   message: null,
@@ -14,11 +15,13 @@ const initialState: any = {
 export default function CreateGroupForm({ onClose, state, formAction }: any) {
   const toast = useToast();
   const t = useTranslations("StepTwoGroupInformaiton");
+  const context = useContext(UpdateGroupsSidebarContext);
 
   useEffect(() => {
     if (state && state.message === "Group created") {
       state.message = "";
       onClose();
+      context.setUpdateString((prev: any) => prev + prev);
       toast({
         title: "Group created",
         description: "You've successfully created a group",

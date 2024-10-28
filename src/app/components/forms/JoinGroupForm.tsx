@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import {
   ChakraProvider,
@@ -8,6 +8,7 @@ import {
   useToast,
   Spinner,
 } from "@chakra-ui/react";
+import { UpdateGroupsSidebarContext } from "../Providers";
 
 export default function JoinGroupForm({
   onClose,
@@ -15,11 +16,14 @@ export default function JoinGroupForm({
   joinFormAction,
 }: any) {
   const toast = useToast();
+  const context = useContext(UpdateGroupsSidebarContext);
 
   useEffect(() => {
     if (joinState && joinState.message === "Group joined") {
       joinState.message = "";
       onClose();
+      const newString = context.updateString + "1";
+      context.setUpdateString(newString);
       toast({
         title: "Group Joined",
         description: "You've successfully joined a group",
