@@ -59,6 +59,7 @@ export function ProfileSettings() {
               </Avatar>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="dark:font-normal font-semibold">
+                  {/*  TODO: get name from db */}
                   Mate Budimir
                 </span>
                 <span className="dark:text-gray-400 mt-2">

@@ -8,7 +8,6 @@ export default async function AppSidebarProvider({
 }) {
   const session = await auth();
   const activeUser: any = session?.user;
-  console.log(activeUser.accessToken, "🤣🤣🤣🤣🤣🤣");
   return (
     <SidebarProvider>
       <AppSidebar accessToken={activeUser.accessToken} />
