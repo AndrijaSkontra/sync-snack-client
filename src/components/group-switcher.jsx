@@ -20,12 +20,13 @@ import { Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { SelectedGroupContext } from "@/app/components/Providers";
+import { UserGroupContext } from "@/app/components/Providers";
 
 export function GroupSwitcher({ accessToken }) {
   const router = useRouter();
 
   const selectedGroupContext = useContext(SelectedGroupContext);
-  const [userGroups, setUserGroups] = useState([]);
+  const userGroupsContext = useContext(UserGroupContext);
 
   useEffect(() => {
     function fetchCurrentGroup() {
@@ -56,7 +57,7 @@ export function GroupSwitcher({ accessToken }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          setUserGroups(data);
+          userGroupsContext.setUserGroups(data);
         })
         .catch(() => console.log(err.message, "-> failed to fetch groups ❌"));
     }
@@ -92,7 +93,7 @@ export function GroupSwitcher({ accessToken }) {
                   <p className="text-[#15408c] dark:text-[#5078bf]">
                     {selectedGroupContext.selectedGroup
                       ? selectedGroupContext.selectedGroup.name
-                      : ""}
+                      : "Select Group"}
                   </p>
                 </span>
               </div>
@@ -103,7 +104,7 @@ export function GroupSwitcher({ accessToken }) {
             className="w-[--radix-dropdown-menu-trigger-width]"
             align="start"
           >
-            {userGroups.map((group, index) => {
+            {userGroupsContext.userGroups.map((group, index) => {
               return (
                 <DropdownMenuItem
                   key={group.groupId}

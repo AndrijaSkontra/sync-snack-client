@@ -6,6 +6,7 @@ export default function SignOutMenuItem() {
   const t = useTranslations("Footer");
 
   const handleSignOut = async () => {
+    localStorage.setItem("GroupId", "");
     await signOut({
       redirect: true,
       callbackUrl: "/login",

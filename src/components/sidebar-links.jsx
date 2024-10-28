@@ -35,7 +35,7 @@ import LeaveGroupModal from "@/app/components/modals/LeaveGroupModal";
  * Hook useMyEventVisible is a fetch to check does the user have an active event.
  * IsMyEventVisibleContext is important if we need to update is the My Event link visible.
  */
-export default function SidebarLinks() {
+export default function SidebarLinks({ session }) {
   const isMyEventVisibleContext = useContext(IsMyEventVisibleContext);
   useMyEventVisible(isMyEventVisibleContext);
 
@@ -115,22 +115,43 @@ export default function SidebarLinks() {
         isOpen={isGroupModalOpen}
         onClose={onGroupModalClose}
       />
-      <LeaveGroupModal isOpen={isLeaveModalOpen} onClose={onLeaveModalClose} />
+      <LeaveGroupModal
+        isOpen={isLeaveModalOpen}
+        onClose={onLeaveModalClose}
+        session={session}
+      />
     </>
   );
 }
 
 function LinkItem({ title, icon, url, context }) {
+  let disable = false;
+  if (
+    context?.selectedGroup === null ||
+    context?.selectedGroup?.name === "Select Group"
+  ) {
+    disable = true;
+  }
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
-        <Link href={url}>
-          {icon}
-          {title}
-          <p className="text-xs dark:text-gray-600 text-gray-300">
-            {context?.selectedGroup ? context.selectedGroup.name : ""}
-          </p>
-        </Link>
+        {!disable ? (
+          <Link href={url}>
+            {icon}
+            {title}
+            <p className="text-xs dark:text-gray-600 text-gray-300">
+              {context?.selectedGroup ? context.selectedGroup.name : ""}
+            </p>
+          </Link>
+        ) : (
+          <Link aria-disabled href={url}>
+            {icon}
+            {title}
+            <p className="text-xs dark:text-gray-600 text-gray-300">
+              {context?.selectedGroup ? context.selectedGroup.name : ""}
+            </p>
+          </Link>
+        )}
       </SidebarMenuButton>
     </SidebarMenuItem>
   );

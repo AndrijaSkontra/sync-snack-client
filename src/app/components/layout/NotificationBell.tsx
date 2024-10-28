@@ -71,8 +71,6 @@ function useSubscribeToWS(
       const client = new Client({
         brokerURL: `${process.env.NEXT_PUBLIC_WS_BACKEND}/ws`,
         onConnect: () => {
-          console.log("CONNECTED TO THE WEB SOCKET");
-          console.log("active user ws", activeUser.userProfileId);
           client.subscribe(
             `/topic/orders.${activeUser.userProfileId}`,
             (message: any) => {
@@ -85,7 +83,6 @@ function useSubscribeToWS(
               //   activeUser.userProfileId
               // ) {
 
-              
               setIsBellNotified(true);
               const bodyObject = JSON.parse(message.body);
               const groupEventObject = {
@@ -98,7 +95,7 @@ function useSubscribeToWS(
                 createdAt: bodyObject.createdAt,
               };
               setGroupEvents((prev: any) => [...prev, groupEventObject]);
-              
+
               toast({
                 title: "Order",
                 description: "New order on your event",
@@ -136,7 +133,7 @@ function useSubscribeToWS(
                 JSON.parse(message.body),
                 ...prev,
               ]);
-              
+
               toast({
                 title: "Event",
                 description: "New event in your group",

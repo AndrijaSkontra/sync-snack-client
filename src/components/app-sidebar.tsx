@@ -19,7 +19,7 @@ export async function AppSidebar({ accessToken, ...props }: any) {
         <GroupSwitcher accessToken={accessToken} /> {/* Change current group */}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarLinks /> {/* Navigation links */}
+        <SidebarLinks session={session} /> {/* Navigation links */}
       </SidebarContent>
       <SidebarFooter>
         {/* Profile options like sign out */}

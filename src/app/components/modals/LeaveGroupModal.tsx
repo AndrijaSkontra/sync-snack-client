@@ -12,19 +12,16 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { SelectedGroupContext, UserGroupContext } from "../Providers";
 
-export default function LeaveGroupModal({ isOpen, onClose }: any) {
-  const { data: session, status }: any = useSession();
+export default function LeaveGroupModal({ isOpen, onClose, session }: any) {
   const toast = useToast();
   const router = useRouter();
+  const selectedGroupContext = useContext(SelectedGroupContext);
+  const userGroupContext = useContext(UserGroupContext);
 
   function leaveGroup() {
-    console.log("😥 data");
-    console.log(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/kick?userProfileId=${session?.user.userProfileId} === link`,
-    );
-    console.log(`Bearer ${session?.user.accessToken} === access token`);
-    console.log(`${localStorage.getItem("GroupId")} === group id`);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/leaveGroup`, {
       method: "DELETE",
       headers: {
@@ -43,7 +40,13 @@ export default function LeaveGroupModal({ isOpen, onClose }: any) {
           colorScheme: "xblue",
         });
         onClose();
+        const groupIdToRemove = localStorage.getItem("GroupId");
+        const newGroups = userGroupContext.userGroups.filter(
+          (group: any) => group.groupId !== groupIdToRemove,
+        );
+        userGroupContext.setUserGroups(newGroups);
         localStorage.setItem("GroupId", "");
+        selectedGroupContext.setSelectedGroup({ name: "Select Group" });
         router.push("/profile");
       } else {
         toast({
