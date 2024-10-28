@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useContext } from "react";
 import {
   Box,
   FormControl,
@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useFormState, useFormStatus } from "react-dom";
 import { handleCreateOrder } from "@/app/server-actions/create-order";
+import { GroupEventsContext } from "../Providers";
 
 const initialState: any = {
   message: "",
@@ -34,7 +35,11 @@ export default function CreateOrderForm({ event, onCloseModal }: any) {
   const isCoffeeEvent = event.eventType === "COFFEE";
   const groupId: any = localStorage.getItem("GroupId");
   const toast = useToast();
-  useOrderCreated(state, toast, onCloseModal);
+  
+  // Access groupEvents and setGroupEvents from context
+  const { groupEvents, setGroupEvents } = useContext(GroupEventsContext);
+
+  useOrderCreated(state, toast, onCloseModal, event, groupEvents, setGroupEvents);
 
   return (
     <Box className="max-w-md mx-auto mt-8 rounded-lg">
@@ -148,9 +153,20 @@ function SubmitButton() {
   );
 }
 
-function useOrderCreated(state: any, toast: any, onCloseModal: any) {
+// Custom hook with event removal logic
+function useOrderCreated(
+  state: any,
+  toast: any,
+  onCloseModal: any,
+  event: any,
+  groupEvents: any[],
+  setGroupEvents: (value: any) => void
+) {
   useLayoutEffect(() => {
     if (state.message === "Order Created") {
+      
+      setGroupEvents(groupEvents.filter((e) => e.eventId !== event.eventId));
+
       onCloseModal();
       toast({
         title: "Order Created",

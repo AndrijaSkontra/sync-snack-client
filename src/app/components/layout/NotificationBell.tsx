@@ -97,7 +97,11 @@ function useSubscribeToWS(
                 userProfileLastName: bodyObject.lastName,
                 createdAt: bodyObject.createdAt,
               };
-              setGroupEvents((prev: any) => [...prev, groupEventObject]);
+              setNotifications((prev: any) => [
+                groupEventObject
+              ]);
+              
+              
               
               toast({
                 title: "Order",
