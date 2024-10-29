@@ -15,6 +15,7 @@ export default function ProfileInfo({ userProfileData, session }: any) {
   // how should i handle if userProfile data doesnt have photoUrl?
   const { isOpen, onOpen, onClose } = useDisclosure();
   const context = useContext(UpdateGroupsSidebarContext);
+  const toast = useToast();
 
   const [profilePicture, setProfilePicture] = useState(
     userProfileData?.photoUrl,
@@ -37,6 +38,14 @@ export default function ProfileInfo({ userProfileData, session }: any) {
           const newString = context.updateString + "1";
           context.setUpdateString(newString);
           localStorage.setItem("code-rem", "DontRun --");
+          toast({
+            title: "Successfully joined the group",
+            description: "Welcome!",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+            colorScheme: "green",
+          });
         }
       });
     }
