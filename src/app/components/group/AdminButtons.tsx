@@ -91,10 +91,7 @@ export default function AdminButtons() {
           {changedRoles ? (
             <Text className="text-green-500 text-sm">{state.message}</Text>
           ) : (
-            <Text className="text-red-500 text-sm">
-              {state.message &&
-                "Every field should contain at least 3 characters"}
-            </Text>
+            <Text className="text-red-500 text-sm">{state.message}</Text>
           )}
         </form>
       )}
