@@ -119,7 +119,12 @@ export default function CreateEventForm({ onCloseModal }: any) {
   );
 }
 
-function useEventCreated(state: any, toast: any, onCloseModal: any, context) {
+function useEventCreated(
+  state: any,
+  toast: any,
+  onCloseModal: any,
+  context: any,
+) {
   useLayoutEffect(() => {
     if (state.message === "Event Created") {
       onCloseModal();
