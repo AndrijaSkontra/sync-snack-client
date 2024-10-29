@@ -85,16 +85,21 @@ function useSubscribeToWS(
 
               setIsBellNotified(true);
               const bodyObject = JSON.parse(message.body);
-              const groupEventObject = {
+              const groupOrderObject = {
                 eventId: bodyObject.eventId,
                 title: "New order on your event",
                 eventType: "ORDER",
-                description: bodyObject.additionalOptions[0],
+                description: bodyObject.additionalOptions.description,
                 userProfileFirstName: bodyObject.firstName,
                 userProfileLastName: bodyObject.lastName,
                 createdAt: bodyObject.createdAt,
               };
-              setGroupEvents((prev: any) => [...prev, groupEventObject]);
+
+              setNotifications((prev: any) => [
+                groupOrderObject,
+                ...prev,
+              ]);
+              
 
               toast({
                 title: "Order",
