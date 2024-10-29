@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export default function HomePage() {
   // const t = useTranslations("landing-page");
-  console.log("just hit the home page");
   return (
     <div className="bg-gray-100 dark:bg-gradient-to-b dark:from-gray-700 dark:to-gray-900 bg-fixed overflow-y-hidden h-screen">
       <Box className="flex justify-end p-4 space-x-2">

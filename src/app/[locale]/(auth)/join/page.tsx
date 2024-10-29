@@ -1,3 +1,4 @@
+import UserNoSession from "@/app/components/user-no-session";
 import { auth } from "@/commons/auth";
 import { Box, Link, Text } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
@@ -5,6 +6,9 @@ import { redirect } from "next/navigation";
 export default async function JoinGroupPage({ searchParams }: any) {
   const session = await auth();
   const activeUser: any = session?.user;
+  if (!activeUser?.accessToken) {
+    return <UserNoSession code={searchParams.code} />;
+  }
   const groupStatus = await fetch(
     `${process.env.BACKEND_URL}/api/groups/joinViaInvitation/${searchParams.code}`,
     {

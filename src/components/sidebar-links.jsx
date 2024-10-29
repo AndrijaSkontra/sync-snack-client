@@ -29,6 +29,7 @@ import { handleGroupCreate } from "@/app/server-actions/create-group";
 import { handleGroupJoin } from "@/app/server-actions/group-join";
 import JoinCreateGroupModal from "@/app/components/modals/JoinCreateGroupModal";
 import LeaveGroupModal from "@/app/components/modals/LeaveGroupModal";
+import InviteButton from "@/app/components/sidebar/InviteButton";
 
 /**
  * Component that will show all the navigation links.
@@ -104,6 +105,7 @@ export default function SidebarLinks({ session }) {
                 icon={<ArrowLeftCircleIcon />}
               />
             </div>
+            <InviteButton context={selectedGroupContext} />
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>

@@ -7,7 +7,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 
 export default function ProfileInfo({ userProfileData, session }: any) {
@@ -17,6 +17,26 @@ export default function ProfileInfo({ userProfileData, session }: any) {
   const [profilePicture, setProfilePicture] = useState(
     userProfileData?.photoUrl,
   );
+
+  const codeRunList = localStorage.getItem("code-rem")?.split(" ");
+
+  if (codeRunList) {
+    if (codeRunList[0] === "Run") {
+      fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/joinViaInvitation/${codeRunList[1]}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user?.accessToken}`,
+          },
+        },
+      ).then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem("code-rem", "DontRun --");
+        }
+      });
+    }
+  }
 
   return (
     <>

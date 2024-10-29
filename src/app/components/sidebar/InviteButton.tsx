@@ -1,20 +1,44 @@
 "use client";
-import { Button, useToast } from "@chakra-ui/react";
+import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { useToast } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
-export default function InviteButton() {
-  const { data: session, status }: any = useSession();
+export default function InviteButton({ context }: any) {
+  const { data: session, _ }: any = useSession();
   const [url, setUrl] = useState("...");
   const toast = useToast();
+  let disable = false;
+  if (
+    context?.selectedGroup === null ||
+    context?.selectedGroup?.name === "Select Group"
+  ) {
+    disable = true;
+  }
 
   return (
-    <Button
-      className="w-full"
-      onClick={() => handleInvite(setUrl, session, toast)}
-    >
-      Invite
-    </Button>
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild>
+        {!disable ? (
+          <Link onClick={() => handleInvite(setUrl, session, toast)} href="#">
+            <ClipboardDocumentCheckIcon />
+            Send Invite Link
+            <p className="text-xs dark:text-gray-600 text-gray-300">
+              {context?.selectedGroup ? context.selectedGroup.name : ""}
+            </p>
+          </Link>
+        ) : (
+          <Link aria-disabled href="#">
+            Send Invite Link
+            <p className="text-xs dark:text-gray-600 text-gray-300">
+              {context?.selectedGroup ? context.selectedGroup.name : ""}
+            </p>
+          </Link>
+        )}
+      </SidebarMenuButton>
+    </SidebarMenuItem>
   );
 }
 

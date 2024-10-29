@@ -21,7 +21,9 @@ export default function CreateGroupForm({ onClose, state, formAction }: any) {
     if (state && state.message === "Group created") {
       state.message = "";
       onClose();
-      context.setUpdateString((prev: any) => prev + prev);
+
+      const newString = context.updateString + "1";
+      context.setUpdateString(newString);
       toast({
         title: "Group created",
         description: "You've successfully created a group",
