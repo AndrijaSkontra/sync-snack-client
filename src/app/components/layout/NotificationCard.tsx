@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Image, Text, Tag } from "@chakra-ui/react";
+import { Box, Image, Text, Tag, useColorMode } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
 interface NotificationProps {
@@ -44,6 +44,8 @@ export default function NotificationCard({ notification }: NotificationProps) {
     router.push(route);
   };
 
+
+  const { colorMode, toggleColorMode } = useColorMode();
   // Common styles for both notification types
   const cardStyles = {
     transition: "all 0.2s ease-in-out",
@@ -51,7 +53,8 @@ export default function NotificationCard({ notification }: NotificationProps) {
     "&:hover": {
       transform: "translateY(-2px)",
       boxShadow: "lg",
-      bg: "gray.50",
+      bg: colorMode === 'light' ?  "gray.100": "gray.800"
+      
     },
   };
 
@@ -110,11 +113,7 @@ export default function NotificationCard({ notification }: NotificationProps) {
       role="button"
       tabIndex={0}
       aria-label={`Notification: ${isOrderNotification ? "Order" : eventType}`}
-      onKeyPress={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          handleNotificationClick();
-        }
-      }}
+      
     >
       {renderContent()}
     </Box>

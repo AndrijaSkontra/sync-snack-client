@@ -23,7 +23,7 @@ export default async function Layout({
     <AppSidebarProvider>
       <Box
         className="flex h-screen items-stretch"
-        style={{ width: "calc(100vw - 18rem)" }}
+        width={{ base: "100vw", md: "calc(100vw - 18rem)" }}
       >
         {/*<SidebarGroups accessToken={activeUser.accessToken} />*/}
         <Box></Box>
