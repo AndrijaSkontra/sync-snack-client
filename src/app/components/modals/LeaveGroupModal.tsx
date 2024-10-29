@@ -71,7 +71,7 @@ export default function LeaveGroupModal({ isOpen, onClose, session }: any) {
           <Text>Are your sure you want to leave this group?</Text>
           <Box className="flex space-x-4 w-full justify-center mt-4">
             <Button onClick={onClose}>No</Button>
-            <Button onClick={leaveGroup} colorScheme="xred" variant={"surface"}>
+            <Button onClick={leaveGroup} colorScheme="xred" variant={"outline"}>
               Yes
             </Button>
           </Box>

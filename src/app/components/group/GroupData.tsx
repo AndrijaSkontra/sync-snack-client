@@ -56,8 +56,9 @@ export default function GroupData({ session }: any) {
             <Image
               objectFit="cover"
               rounded="full"
-              boxSize={44}
               borderRadius="full"
+              maxWidth={150}
+              maxHeight={150}
               border="solid"
               borderColor="xblue.400"
               borderWidth={3}

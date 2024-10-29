@@ -35,6 +35,7 @@ export default function MembersTable({ session }: any) {
   const [userRoles, setUserRoles]: any = useState([]);
   const userRolesContext = useContext(UserRolesContext);
   const pageSize = 3;
+  console.log(window.screen.height, "😀");
   useMembersData(
     currentPage,
     jwtToken,
@@ -93,7 +94,9 @@ export default function MembersTable({ session }: any) {
                   {member.roles.map((role: any, index: any) => (
                     <Text
                       key={index}
-                      className="px-3 py-2 inline rounded-xl font-semibold mr-1"
+                      className="inline rounded-xl font-semibold mr-1"
+                      paddingX={3}
+                      paddingY={2}
                       color={textRoleColor}
                       borderColor={outlineRoleColor}
                       borderWidth="1px"
