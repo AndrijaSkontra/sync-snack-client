@@ -18,6 +18,13 @@ export default function InviteButton({ context }: any) {
     disable = true;
   }
 
+  let groupName: string = context?.selectedGroup?.name;
+  if (groupName) {
+    if (groupName.length > 8) {
+      groupName = groupName.slice(0, 8) + "...";
+    }
+  }
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
@@ -26,14 +33,14 @@ export default function InviteButton({ context }: any) {
             <ClipboardDocumentCheckIcon />
             Send Invite Link
             <p className="text-xs dark:text-gray-600 text-gray-300">
-              {context?.selectedGroup ? context.selectedGroup.name : ""}
+              {context?.selectedGroup ? groupName : ""}
             </p>
           </Link>
         ) : (
           <Link aria-disabled href="">
             Send Invite Link
             <p className="text-xs dark:text-gray-600 text-gray-300">
-              {context?.selectedGroup ? context.selectedGroup.name : ""}
+              {context?.selectedGroup ? groupName : ""}
             </p>
           </Link>
         )}
