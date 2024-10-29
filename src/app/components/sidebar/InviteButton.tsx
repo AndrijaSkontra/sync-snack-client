@@ -22,7 +22,7 @@ export default function InviteButton({ context }: any) {
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
         {!disable ? (
-          <Link onClick={() => handleInvite(setUrl, session, toast)} href="#">
+          <Link onClick={() => handleInvite(setUrl, session, toast)} href="">
             <ClipboardDocumentCheckIcon />
             Send Invite Link
             <p className="text-xs dark:text-gray-600 text-gray-300">
@@ -30,7 +30,7 @@ export default function InviteButton({ context }: any) {
             </p>
           </Link>
         ) : (
-          <Link aria-disabled href="#">
+          <Link aria-disabled href="">
             Send Invite Link
             <p className="text-xs dark:text-gray-600 text-gray-300">
               {context?.selectedGroup ? context.selectedGroup.name : ""}
@@ -43,6 +43,7 @@ export default function InviteButton({ context }: any) {
 }
 
 function handleInvite(setUrl: any, session: any, toast: any) {
+  console.log("trying to get the invitation link");
   fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/sendInvitation?invitedBy=${session.user.userProfileId}`,
     {
