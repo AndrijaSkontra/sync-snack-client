@@ -7,12 +7,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EditProfileModal from "./EditProfileModal";
+import { UpdateGroupsSidebarContext } from "../Providers";
 
 export default function ProfileInfo({ userProfileData, session }: any) {
   // how should i handle if userProfile data doesnt have photoUrl?
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const context = useContext(UpdateGroupsSidebarContext);
 
   const [profilePicture, setProfilePicture] = useState(
     userProfileData?.photoUrl,
@@ -32,6 +34,8 @@ export default function ProfileInfo({ userProfileData, session }: any) {
         },
       ).then((res) => {
         if (res.status === 200) {
+          const newString = context.updateString + "1";
+          context.setUpdateString(newString);
           localStorage.setItem("code-rem", "DontRun --");
         }
       });
