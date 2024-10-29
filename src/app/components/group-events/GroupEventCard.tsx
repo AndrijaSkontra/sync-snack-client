@@ -2,11 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { GroupEvent } from "@/commons/types";
 import {
   Box,
+  Flex,
   Text,
   Progress,
   Button,
-  useDisclosure,
   Tag,
+  useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import CreateOrderModal from "../modals/CreateOrderModal";
@@ -22,87 +24,79 @@ export default function GroupEventCard({
   const [progressValue, setProgressValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const groupEventsContext = useContext(GroupEventsContext);
-  useCalculateRemainingTime(
-    setProgressValue,
-    setRemainingSeconds,
-    groupEvent,
-    groupEventsContext,
-  );
+
+  useCalculateRemainingTime(setProgressValue, setRemainingSeconds, groupEvent, groupEventsContext);
+
 
   return (
-    <Box className="border rounded-lg p-4 w-full mx-auto shadow-lg">
-      <Box className="flex justify-between mb-4">
-        <Box>
-          <Box className="flex md:flex-row flex-col md:space-x-2 space-y-2 md:space-y-0">
-            <Text fontWeight="bold" fontSize="lg">
+    <Box
+      
+      borderRadius="md"
+      boxShadow="md"
+      p={5}
+      w="full"
+      maxW={{ base: "100%", md: "320px" }}
+      mx="auto"
+      transition="transform 0.2s"
+      _hover={{ transform: "scale(1.03)" }}
+    >
+      <Flex flexDirection="column" gap={4}>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Box>
+            <Text fontWeight="bold" fontSize={{ base: "lg", md: "xl" }}>
               {groupEvent.title}
             </Text>
-            <Tag className="w-min" colorScheme="xblue">
-              {groupEvent.eventType}
-            </Tag>
+            <Text fontSize="sm" color="gray.500" mt={1}>
+              {groupEvent.description}
+            </Text>
           </Box>
-          <Text className="mt-2" fontSize="sm">
-            {groupEvent.description}
-          </Text>
-        </Box>
-        <Box>
-          <Text fontSize="sm">{groupEvent.userProfileFirstName}</Text>
-          <Text fontSize="sm">{groupEvent.userProfileLastName}</Text>
-        </Box>
-      </Box>
-      <Box className="flex justify-center mb-4">
-        <Button colorScheme="xorange" onClick={onOpen}>
+          <Tag size="sm" colorScheme="blue" ml={3}>
+            {groupEvent.eventType}
+          </Tag>
+        </Flex>
+
+        <Flex  alignItems="center" mt={4}>
+          <Text fontSize="md">{groupEvent.userProfileFirstName} {groupEvent.userProfileLastName}</Text>
+        </Flex>
+
+        <Button colorScheme="xorange" onClick={onOpen} size="sm" mt={4}>
           {t("Make Order")}
         </Button>
-      </Box>
-      <Progress
-        className="rounded-full"
-        size="sm"
-        colorScheme="xorange"
-        value={progressValue}
-      />
-      <Text className="text-sm mt-2 text-center">
-        {Math.floor(remainingSeconds / 60)}m {remainingSeconds % 60}s
-      </Text>
+        <Progress
+          mt={3}
+          value={progressValue}
+          colorScheme="green"
+          borderRadius="md"
+        />
+        <Text fontSize="sm" textAlign="center" mt={2}>
+          {Math.floor(remainingSeconds / 60)}m {remainingSeconds % 60}s
+        </Text>
+      </Flex>
       <CreateOrderModal onClose={onClose} isOpen={isOpen} event={groupEvent} />
     </Box>
   );
 }
 
 function useCalculateRemainingTime(
-  setProgressValue: any,
-  setRemainingSeconds: any,
-  groupEvent: any,
-  groupEventsContext: any,
+  setProgressValue: React.Dispatch<React.SetStateAction<number>>,
+  setRemainingSeconds: React.Dispatch<React.SetStateAction<number>>,
+  groupEvent: GroupEvent,
+  groupEventsContext: any
 ) {
   useEffect(() => {
     const updateRemainingTime = () => {
-      let now = new Date();
+      const now = new Date();
       const pendingUntil = new Date(groupEvent.pendingUntil + "Z");
-      const totalDuration = pendingUntil.getTime() - now.getTime();
-      const remaining = Math.max(0, totalDuration);
-      const seconds = Math.floor(remaining / 1000);
-      setRemainingSeconds(seconds);
-    
-      const elapsedTime =
-        now.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
-      const totalTime =
-        pendingUntil.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
-      const progress = (elapsedTime / totalTime) * 100;
-      console.log(progress, " - ", elapsedTime, " - ", totalTime);
-      setProgressValue(Math.min(100, Math.max(0, progress)));
-    
-      if (
-        progress > 100 &&
-        groupEventsContext.groupEvents.some(
-          (group: any) => group.eventId === groupEvent.eventId,
-        )
-      ) {
-        // Filter out the event with matching eventId
+      const remaining = Math.max(0, pendingUntil.getTime() - now.getTime());
+      setRemainingSeconds(Math.floor(remaining / 1000));
+
+      const elapsed = now.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
+      const total = pendingUntil.getTime() - new Date(groupEvent.createdAt + "Z").getTime();
+      setProgressValue((elapsed / total) * 100);
+
+      if (elapsed >= total) {
         groupEventsContext.setGroupEvents((prevEvents: any) =>
-          prevEvents.filter(
-            (group: any) => group.eventId !== groupEvent.eventId
-          )
+          prevEvents.filter((e: any) => e.eventId !== groupEvent.eventId)
         );
       }
     };
@@ -111,10 +105,5 @@ function useCalculateRemainingTime(
     const intervalId = setInterval(updateRemainingTime, 1000);
 
     return () => clearInterval(intervalId);
-  }, [
-    groupEvent.pendingUntil,
-    groupEvent.createdAt,
-    setRemainingSeconds,
-    setProgressValue,
-  ]);
+  }, [groupEvent, groupEventsContext, setProgressValue, setRemainingSeconds]);
 }
