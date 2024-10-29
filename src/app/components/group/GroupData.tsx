@@ -59,6 +59,9 @@ export default function GroupData({ session }: any) {
               borderRadius="full"
               maxWidth={150}
               maxHeight={150}
+              minWidth={100}
+              minHeight={100}
+              boxSize={150}
               border="solid"
               borderColor="xblue.400"
               borderWidth={3}

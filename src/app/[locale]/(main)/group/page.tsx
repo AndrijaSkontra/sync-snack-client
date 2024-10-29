@@ -23,6 +23,8 @@ function MvpMemberCard({ user }: { user: any }) {
     <Box className="flex rounded-xl shadow-lg overflow-hidden relative bg-orange-light-1">
       <Image
         className="rounded-l-xl mr-4"
+        maxWidth={150}
+        maxHeight={150}
         src={user.photoUrl}
         alt="Profile picture"
         fallbackSrc="/profile_picture.png"

@@ -7,13 +7,12 @@ import "@fontsource-variable/source-code-pro";
 export const theme = extendTheme({
   colors: {
     xblue: {
-      100: "#759feb",
-      200: "#618ad4",
-      300: "#5b86d4",
-      400: "#5078bf",
-      500: "#15408c",
-      600: "#0d2b68",
-      700: "#000000",
+      200: "hsl(200, 20%, 65%)", // dark mode base color
+      300: "hsl(210, 30%, 40%)", // dark mode hover
+      400: "hsl(220, 50%, 30%)", // dark mode click
+      500: "hsl(250, 100%, 60%)", // white mode base color
+      600: "hsl(240, 93%, 40%)", // white mode hover
+      700: "hsl(230, 93%, 30%)", // white  mode click
     },
     xorange: {
       100: "#edb591",
@@ -25,15 +24,12 @@ export const theme = extendTheme({
       700: "#8c3331",
     },
     xred: {
-      100: "hsl(40, 93%, 25%)", // dark mode base color
-      200: "hsl(4, 93%, 25%)", // dark mode base color
-      300: "#890b0b", // dark mode hover
-      400: "#af0e0e", // dark mode click
-      500: "#d51111", // white mode base color
-      600: "#ff3314", // white mode hover
-      700: "#ff4213", // white  mode click
-      800: "hsl(40, 93%, 25%)", // dark mode base color
-      900: "hsl(40, 93%, 25%)", // dark mode base color
+      200: "hsl(5, 60%, 65%)", // dark mode base color
+      300: "hsl(5, 30%, 40%)", // dark mode hover
+      400: "hsl(5, 50%, 30%)", // dark mode click
+      500: "hsl(5, 100%, 60%)", // white mode base color
+      600: "hsl(5, 93%, 40%)", // white mode hover
+      700: "hsl(5, 93%, 30%)", // white  mode click
     },
   },
   fonts: {
