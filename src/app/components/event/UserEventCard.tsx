@@ -11,7 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { IsMyEventVisibleContext } from "../Providers";
 
 export default function UserEventCard({ event, orders }: any) {
   // TODO: get orderId from orders
@@ -22,6 +23,7 @@ export default function UserEventCard({ event, orders }: any) {
   const { data: session, status }: any = useSession();
   const toast = useToast();
   const router = useRouter();
+  const context = useContext(IsMyEventVisibleContext);
 
   if (!event) {
     return (
@@ -91,7 +93,13 @@ export default function UserEventCard({ event, orders }: any) {
         >
           Finish
         </Button>
-        <Button onClick={() => handleAllOrders("CANCELLED")} colorScheme="xred">
+        <Button
+          onClick={() => {
+            context.setIsMyEventVisible(false);
+            handleAllOrders("CANCELLED");
+          }}
+          colorScheme="xred"
+        >
           Cancel
         </Button>
       </Box>

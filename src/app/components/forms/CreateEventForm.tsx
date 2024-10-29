@@ -12,8 +12,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useLayoutEffect, useState } from "react";
+import {
+  Suspense,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import { IsMyEventVisibleContext } from "../Providers";
 
 const initialState: any = {
   message: "",
@@ -30,7 +37,8 @@ export default function CreateEventForm({ onCloseModal }: any) {
   const groupId: any = localStorage.getItem("GroupId");
   const toast = useToast();
   const [state, formAction] = useFormState(handleCreateEvent, initialState);
-  useEventCreated(state, toast, onCloseModal);
+  const context = useContext(IsMyEventVisibleContext);
+  useEventCreated(state, toast, onCloseModal, context);
   const [eventType, setEventType] = useState("FOOD");
   const [timeInput, setTimeInput] = useState("10");
 
@@ -111,10 +119,11 @@ export default function CreateEventForm({ onCloseModal }: any) {
   );
 }
 
-function useEventCreated(state: any, toast: any, onCloseModal: any) {
+function useEventCreated(state: any, toast: any, onCloseModal: any, context) {
   useLayoutEffect(() => {
     if (state.message === "Event Created") {
       onCloseModal();
+      context.setIsMyEventVisible(true);
       toast({
         title: "Event Created",
         description: "",
