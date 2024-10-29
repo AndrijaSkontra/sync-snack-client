@@ -1,15 +1,25 @@
 import React from "react";
 import { Box, Image, Text, Tag } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
-/**
- * This code is absolute garbage, for some reason order and event notification
- * have their own Jsx so the code is duplicated, should refactor this in the future.
- */
-export default function NotificationCard({
-  notification,
-}: {
-  notification: any;
-}) {
+interface NotificationProps {
+  notification: {
+    notificationType: "ORDER" | string;
+    firstName: string;
+    lastName: string;
+    title?: string;
+    description?: string;
+    photoUri?: string;
+    profilePhoto?: string;
+    createdAt: string;
+    eventType?: string;
+    additionalOptions?: {
+      description: string;
+    };
+  };
+}
+
+export default function NotificationCard({ notification }: NotificationProps) {
   const {
     firstName,
     lastName,
@@ -18,112 +28,95 @@ export default function NotificationCard({
     photoUri,
     createdAt,
     eventType,
+    notificationType,
   } = notification;
+
+  const router = useRouter();
+  const isOrderNotification = notificationType === "ORDER";
 
   const formatTime = (isoString: string) => {
     const date = new Date(isoString);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  const isOrderNotification = notification.notificationType === "ORDER";
+  const handleNotificationClick = () => {
+    const route = isOrderNotification ? "/orders" : "/group-events";
+    router.push(route);
+  };
 
-  return (
+  // Common styles for both notification types
+  const cardStyles = {
+    transition: "all 0.2s ease-in-out",
+    cursor: "pointer",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: "lg",
+      bg: "gray.50",
+    },
+  };
+
+  const renderProfileImage = () => (
+    <Image
+      src={photoUri || notification.profilePhoto}
+      objectFit="cover"
+      fallbackSrc="/template-user.png"
+      alt={`${firstName} ${lastName}`}
+      boxSize="50px"
+      borderRadius="full"
+      mr="4"
+    />
+  );
+
+  const renderContent = () => (
     <>
-      {isOrderNotification ? (
-        <Box
-          className="flex justify-between items-center"
-          p="4"
-          borderRadius="lg"
-          boxShadow="md"
-          mb="4"
-        >
-          <Box className="flex items-center">
-            {photoUri ? (
-              <Image
-                src={photoUri}
-                objectFit="cover"
-                alt="nopic"
-                fallbackSrc="/template-user.png"
-                boxSize="50px"
-                borderRadius="full"
-                mr="4"
-              />
-            ) : (
-              <Image
-                src={notification.profilePhoto}
-                objectFit="cover"
-                fallbackSrc="/template-user.png"
-                alt={`${firstName} Profile`}
-                boxSize="50px"
-                borderRadius="full"
-                mr="4"
-              />
-            )}
-          </Box>
-
-          <Box className="flex-1 px-4">
+      <Box className="flex items-center">{renderProfileImage()}</Box>
+      <Box className="flex-1 px-4">
+        {isOrderNotification ? (
+          <>
             <Text>Order on your event:</Text>
             <Text fontSize="sm" color="gray.500">
-              {notification.additionalOptions.description}
+              {notification.additionalOptions?.description}
             </Text>
-          </Box>
-
-          <Box className="text-right">
-            <Tag size="md" variant="subtle" mb="2" colorScheme="xorange">
-              ORDER
-            </Tag>
-            <Text fontSize="sm">{formatTime(createdAt)}</Text>
-          </Box>
-        </Box>
-      ) : (
-        <Box
-          className="flex justify-between items-center"
-          p="4"
-          borderRadius="lg"
-          boxShadow="md"
-          mb="4"
-        >
-          <Box className="flex items-center">
-            {photoUri ? (
-              <Image
-                src={photoUri}
-                objectFit="cover"
-                fallbackSrc="/template-user.png"
-                alt={`${firstName} ${lastName}`}
-                boxSize="50px"
-                borderRadius="full"
-                mr="4"
-              />
-            ) : (
-              <Image
-                src={notification.profilePhoto}
-                objectFit="cover"
-                fallbackSrc="/template-user.png"
-                alt={`${firstName} ${lastName}`}
-                boxSize="50px"
-                borderRadius="full"
-                mr="4"
-              />
-            )}
-          </Box>
-
-          <Box className="flex-1 px-4">
+          </>
+        ) : (
+          <>
             <Text fontSize="xl" fontWeight="bold">
               {title}
             </Text>
             <Text fontSize="sm" color="gray.500">
               {description}
             </Text>
-          </Box>
-
-          <Box className="text-right">
-            <Tag size="md" variant="subtle" mb="2" colorScheme="xorange">
-              {eventType}
-            </Tag>
-            <Text fontSize="sm">{formatTime(createdAt)}</Text>
-          </Box>
-        </Box>
-      )}
+          </>
+        )}
+      </Box>
+      <Box className="text-right">
+        <Tag size="md" variant="subtle" mb="2" colorScheme="xorange">
+          {isOrderNotification ? "ORDER" : eventType}
+        </Tag>
+        <Text fontSize="sm">{formatTime(createdAt)}</Text>
+      </Box>
     </>
+  );
+
+  return (
+    <Box
+      className="flex justify-between items-center"
+      p="4"
+      borderRadius="lg"
+      boxShadow="md"
+      mb="4"
+      onClick={handleNotificationClick}
+      sx={cardStyles}
+      role="button"
+      tabIndex={0}
+      aria-label={`Notification: ${isOrderNotification ? "Order" : eventType}`}
+      onKeyPress={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleNotificationClick();
+        }
+      }}
+    >
+      {renderContent()}
+    </Box>
   );
 }
