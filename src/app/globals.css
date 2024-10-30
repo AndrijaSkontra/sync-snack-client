@@ -121,8 +121,20 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+  .dark body {
+    background-color: hsla(240, 55%, 17%, 1);
+    background-image: radial-gradient(
+        at 40% 20%,
+        hsla(239, 55%, 12%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 80% 0%, hsla(240, 33%, 28%, 1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(246, 62%, 18%, 1) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(229, 68%, 15%, 1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(240, 48%, 22%, 1) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, hsla(240, 53%, 9%, 1) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, hsla(343, 46%, 11%, 1) 0px, transparent 50%);
+    background-attachment: fixed;
   }
   svg {
     @apply stroke-[#234089];

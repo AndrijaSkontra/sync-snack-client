@@ -10,13 +10,8 @@ export default function StepsCard({
   title: string;
   description: string;
 }) {
-  const drawerBgColor = useColorModeValue("gray.200", "gray.700");
-
   return (
-    <Box
-      className="flex flex-col p-6 space-y-2 m-2 rounded-lg max-w-80"
-      bgColor={drawerBgColor}
-    >
+    <Box className="flex flex-col p-6 space-y-2 m-2 rounded-lg max-w-80 dark:bg-blue-950 bg-gray-100 shadow-lg">
       <Heading fontFamily="'Source Code Pro Variable', monospace;">
         {step}
       </Heading>

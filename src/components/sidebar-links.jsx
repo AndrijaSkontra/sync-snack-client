@@ -70,21 +70,14 @@ export default function SidebarLinks({ session }) {
           <SidebarMenu>
             <LinkItem
               title={"Events"}
-              context={selectedGroupContext}
               url="group-events"
               icon={<CalendarIcon />}
             />
             <LinkItem title="Orders" url="orders" icon={<CommandLineIcon />} />
             {isMyEventVisibleContext.isMyEventVisible && (
-              <LinkItem
-                context={selectedGroupContext}
-                title="My Event"
-                url="event"
-                icon={<CakeIcon />}
-              />
+              <LinkItem title="My Event" url="event" icon={<CakeIcon />} />
             )}
             <LinkItem
-              context={selectedGroupContext}
               title="Information"
               url="group"
               icon={<UserGroupIcon />}
@@ -100,7 +93,6 @@ export default function SidebarLinks({ session }) {
             <div onClick={onLeaveModalOpen}>
               <LinkItem
                 title="Leave Group"
-                context={selectedGroupContext}
                 url="#"
                 icon={<ArrowLeftCircleIcon />}
               />
