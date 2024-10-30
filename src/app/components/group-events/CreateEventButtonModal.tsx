@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Divider, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Divider, useColorMode, useDisclosure } from "@chakra-ui/react";
 import {
   Modal,
   Text,
@@ -13,7 +13,9 @@ import { useTranslations } from "next-intl";
 import CreateEventForm from "../forms/CreateEventForm";
 import { Suspense, useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import eventInProgressLight from "@/../public/you-are-brewing-coffee.json";
+import eventInProgressDark from "@/../public/coffeEventInProgressDark.json";
+import Lottie from "lottie-react";
 
 /**
  * This component is responsible for displaying
@@ -26,6 +28,8 @@ export default function CreateEventButtonModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [userHasEvent, setUserHasEvent] = useState(false);
   const { data: session, status }: any = useSession();
+  const { colorMode } = useColorMode();
+  const animationData = colorMode === "light" ? eventInProgressLight : eventInProgressDark
   useEffect(() => {
     if (status === "authenticated") {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/active`, {
@@ -50,7 +54,20 @@ export default function CreateEventButtonModal() {
           {t("Create event")}
         </Button>
       ) : (
-        <Text>You have an ongoing event already...</Text>
+        <Box className="text-center">
+          <Box className="w-32 h-32 mx-auto">
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </Box>
+          <Text className="mt-2 text-base font-medium ">
+            You have an ongoing event
+          </Text>
+          
+        </Box>
+        
       )}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

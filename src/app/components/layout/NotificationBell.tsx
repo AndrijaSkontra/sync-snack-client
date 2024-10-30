@@ -89,6 +89,7 @@ function useSubscribeToWS(
                 eventId: bodyObject.eventId,
                 title: "New order on your event",
                 eventType: "ORDER",
+                notificationType: "ORDER",
                 description: bodyObject.additionalOptions.description,
                 userProfileFirstName: bodyObject.firstName,
                 userProfileLastName: bodyObject.lastName,
