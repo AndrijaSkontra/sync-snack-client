@@ -61,14 +61,14 @@ function DataOrderBox({
   textColor,
 }: any) {
   return (
-    <Box bgColor={bgColorOut} className="p-4 mx-2 rounded-xl shadow-lg">
+    <Box className="p-4 mx-2 rounded-xl shadow-lg bg-blue-500 dark:bg-blue-900">
       <Box className="flex items-center">
         <WarningIcon color={textColor} className="size-5" />
         <Text textColor={textColor} className="p-1">
           Total {orderStatus} orders
         </Text>
       </Box>
-      <Box className="rounded-xl py-4" bgColor={bgColorIn}>
+      <Box className="rounded-xl py-4 bg-blue-200 dark:bg-blue-950">
         <Text className="flex justify-center">{count}</Text>
       </Box>
     </Box>

@@ -69,8 +69,8 @@
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
-    --chart-1: #5078bf;
-    --chart-2: #15408c;
+    --chart-1: hsl(220, 80%, 80%);
+    --chart-2: hsl(220, 80%, 70%);
     --chart-3: 360 100% 50%;
     --chart-4: 360 100% 50%;
     --chart-5: 360 100% 50%;
@@ -104,8 +104,8 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
-    --chart-1: hsl(144 100% 50%);
-    --chart-2: #15408c;
+    --chart-1: hsl(220, 80%, 20%);
+    --chart-2: hsl(220, 80%, 30%);
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
@@ -122,6 +122,7 @@
     @apply border-border;
   }
   .dark body {
+    text-rendering: optimizeLegibility;
     background-color: hsla(240, 55%, 17%, 1);
     background-image: radial-gradient(
         at 40% 20%,
@@ -135,10 +136,5 @@
       radial-gradient(at 80% 100%, hsla(240, 53%, 9%, 1) 0px, transparent 50%),
       radial-gradient(at 0% 0%, hsla(343, 46%, 11%, 1) 0px, transparent 50%);
     background-attachment: fixed;
-  }
-  svg {
-    @apply stroke-[#234089];
-    @apply dark:stroke-[#5978bc];
-    @apply dark:stroke-2;
   }
 }

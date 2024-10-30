@@ -71,16 +71,32 @@ export default function SidebarLinks({ session }) {
             <LinkItem
               title={"Events"}
               url="group-events"
-              icon={<CalendarIcon />}
+              icon={
+                <CalendarIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+              }
             />
-            <LinkItem title="Orders" url="orders" icon={<CommandLineIcon />} />
+            <LinkItem
+              title="Orders"
+              url="orders"
+              icon={
+                <CommandLineIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+              }
+            />
             {isMyEventVisibleContext.isMyEventVisible && (
-              <LinkItem title="My Event" url="event" icon={<CakeIcon />} />
+              <LinkItem
+                title="My Event"
+                url="event"
+                icon={
+                  <CakeIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+                }
+              />
             )}
             <LinkItem
               title="Information"
               url="group"
-              icon={<UserGroupIcon />}
+              icon={
+                <UserGroupIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+              }
             />
           </SidebarMenu>
         </SidebarGroupContent>
@@ -88,13 +104,21 @@ export default function SidebarLinks({ session }) {
         <SidebarGroupContent>
           <SidebarMenu>
             <div onClick={onGroupModalOpen}>
-              <LinkItem title="New Group" url="#" icon={<PlusCircleIcon />} />
+              <LinkItem
+                title="New Group"
+                url="#"
+                icon={
+                  <PlusCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+                }
+              />
             </div>
             <div onClick={onLeaveModalOpen}>
               <LinkItem
                 title="Leave Group"
                 url="#"
-                icon={<ArrowLeftCircleIcon />}
+                icon={
+                  <ArrowLeftCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+                }
               />
             </div>
             <InviteButton context={selectedGroupContext} />

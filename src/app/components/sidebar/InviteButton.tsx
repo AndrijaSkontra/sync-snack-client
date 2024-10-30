@@ -30,7 +30,7 @@ export default function InviteButton({ context }: any) {
       <SidebarMenuButton asChild>
         {!disable ? (
           <Link onClick={() => handleInvite(setUrl, session, toast)} href="">
-            <ClipboardDocumentCheckIcon />
+            <ClipboardDocumentCheckIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
             Send Invite Link
             <p className="text-xs dark:text-gray-600 text-gray-300">
               {context?.selectedGroup ? groupName : ""}
