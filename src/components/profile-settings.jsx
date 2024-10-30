@@ -4,7 +4,7 @@ import SignOutMenuItem from "./sign-out-menu-item.jsx";
 import * as React from "react";
 import { ChevronsUpDown } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
@@ -21,27 +21,19 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation.js";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 export function ProfileSettings({ session }) {
-  //  TODO: this should be context visible in server components as well
-  const [dark, setDark] = useState(true);
   const router = useRouter();
-
   const { colorMode, toggleColorMode } = useColorMode();
 
-  function darkModeHandler() {
-    if (localStorage.getItem("chakra-ui-color-mode")) {
-      if (localStorage.getItem("chakra-ui-color-mode") === "dark") {
-        document.documentElement.classList.add("dark");
-        setDark(true);
-      } else {
-        document.documentElement.classList.remove("dark");
-        setDark(false);
-      }
+  // Update the 'dark' class on the <html> element whenever colorMode changes
+  useEffect(() => {
+    if (colorMode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-  }
+  }, [colorMode]);
 
   return (
     <SidebarMenu>
@@ -82,10 +74,9 @@ export function ProfileSettings({ session }) {
             <DropdownMenuItem
               onSelect={() => {
                 toggleColorMode();
-                darkModeHandler();
               }}
             >
-              {dark ? (
+              {colorMode === "dark" ? (
                 <div className="flex items-center space-x-2">
                   <p>Light mode</p>
                   <SunIcon />

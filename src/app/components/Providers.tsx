@@ -1,6 +1,6 @@
 "use client";
 import { theme } from "@/commons/chakra-theme";
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import { createContext, useState } from "react";
 
@@ -41,13 +41,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [isMyEventVisible, setIsMyEventVisible] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [userGroups, setUserGroups] = useState([]);
-  if (localStorage.getItem("chakra-ui-color-mode")) {
-    if (localStorage.getItem("chakra-ui-color-mode") === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }
 
   return (
     <UserGroupContext.Provider value={{ userGroups, setUserGroups }}>
@@ -65,7 +58,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 value={{ groupEvents, setGroupEvents }}
               >
                 <SessionProvider>
-                  <ColorModeScript initialColorMode={"system"} />
                   <ChakraProvider theme={theme}>{children}</ChakraProvider>
                 </SessionProvider>
               </GroupEventsContext.Provider>

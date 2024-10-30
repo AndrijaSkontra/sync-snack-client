@@ -4,7 +4,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Footer from "../components/footer/Footer";
 import { Providers } from "../components/Providers";
-import { ThemeCheckProvider } from "../components/theme-check-provider";
+import { cookies } from "next/headers";
+import { ColorModeScript } from "@chakra-ui/react";
+import { theme } from "@/commons/chakra-theme";
 
 export const metadata: Metadata = {
   title: "SyncSnack",
@@ -18,18 +20,21 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  const messages = await getMessages();
+  const cookieStore = cookies();
+  const colorMode =
+    cookieStore.get("chakra-ui-color-mode")?.value ||
+    theme.config.initialColorMode ||
+    "light";
+  const isDarkMode = colorMode === "dark";
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={isDarkMode ? "dark" : ""}>
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        ></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       </head>
       <body className="h-screen antialiased">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={await getMessages()}>
           <Providers>
             {children}
             <Footer />
