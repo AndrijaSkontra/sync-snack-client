@@ -5,8 +5,10 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function InviteButton({ context }: any) {
+  const t = useTranslations("Sidebar");
   const { data: session, _ }: any = useSession();
   const [url, setUrl] = useState("...");
   const toast = useToast();
@@ -31,7 +33,7 @@ export default function InviteButton({ context }: any) {
         {!disable ? (
           <Link onClick={() => handleInvite(setUrl, session, toast)} href="">
             <ClipboardDocumentCheckIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
-            Send Invite Link
+            {t("Send Invite Link")}
             <p className="text-xs dark:text-gray-600 text-gray-300">
               {context?.selectedGroup ? groupName : ""}
             </p>

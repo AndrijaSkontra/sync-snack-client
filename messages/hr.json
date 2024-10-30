@@ -8,6 +8,15 @@
     "password": "Lozinka",
     "confirmPassword": "Potvrdi lozinku"
   },
+  "Sidebar": {
+    "Events": "Događaj",
+    "Orders": "Naružbe",
+    "Information": "Informacije",
+    "My Event": "Moj događaj",
+    "New Group": "Nova grupa",
+    "Leave Group": "Napusti grupu",
+    "Send Invite Link": "Pošalji inv. link"
+  },
   "SetUpProfilePage": {
     "title": "Registracija",
     "loading": "Učitavanje..."

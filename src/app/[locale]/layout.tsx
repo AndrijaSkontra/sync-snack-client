@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Footer from "../components/footer/Footer";
 import { Providers } from "../components/Providers";
+import { ThemeCheckProvider } from "../components/theme-check-provider";
 
 export const metadata: Metadata = {
   title: "SyncSnack",

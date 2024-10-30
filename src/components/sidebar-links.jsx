@@ -30,6 +30,7 @@ import { handleGroupJoin } from "@/app/server-actions/group-join";
 import JoinCreateGroupModal from "@/app/components/modals/JoinCreateGroupModal";
 import LeaveGroupModal from "@/app/components/modals/LeaveGroupModal";
 import InviteButton from "@/app/components/sidebar/InviteButton";
+import { useTranslations } from "next-intl";
 
 /**
  * Component that will show all the navigation links.
@@ -37,6 +38,8 @@ import InviteButton from "@/app/components/sidebar/InviteButton";
  * IsMyEventVisibleContext is important if we need to update is the My Event link visible.
  */
 export default function SidebarLinks({ session }) {
+  const t = useTranslations("Sidebar");
+
   const isMyEventVisibleContext = useContext(IsMyEventVisibleContext);
   useMyEventVisible(isMyEventVisibleContext);
 
@@ -69,14 +72,16 @@ export default function SidebarLinks({ session }) {
         <SidebarGroupContent>
           <SidebarMenu>
             <LinkItem
-              title={"Events"}
+              title={t("Events")}
               url="group-events"
+              context={selectedGroupContext}
               icon={
                 <CalendarIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
               }
             />
             <LinkItem
-              title="Orders"
+              title={t("Orders")}
+              context={selectedGroupContext}
               url="orders"
               icon={
                 <CommandLineIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
@@ -84,7 +89,8 @@ export default function SidebarLinks({ session }) {
             />
             {isMyEventVisibleContext.isMyEventVisible && (
               <LinkItem
-                title="My Event"
+                title={t("My Event")}
+                context={selectedGroupContext}
                 url="event"
                 icon={
                   <CakeIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
@@ -92,7 +98,8 @@ export default function SidebarLinks({ session }) {
               />
             )}
             <LinkItem
-              title="Information"
+              title={t("Information")}
+              context={selectedGroupContext}
               url="group"
               icon={
                 <UserGroupIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
@@ -105,7 +112,8 @@ export default function SidebarLinks({ session }) {
           <SidebarMenu>
             <div onClick={onGroupModalOpen}>
               <LinkItem
-                title="New Group"
+                title={t("New Group")}
+                context={selectedGroupContext}
                 url="#"
                 icon={
                   <PlusCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
@@ -114,7 +122,8 @@ export default function SidebarLinks({ session }) {
             </div>
             <div onClick={onLeaveModalOpen}>
               <LinkItem
-                title="Leave Group"
+                title={t("Leave Group")}
+                context={selectedGroupContext}
                 url="#"
                 icon={
                   <ArrowLeftCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
@@ -165,17 +174,11 @@ function LinkItem({ title, icon, url, context }) {
           <Link href={url}>
             {icon}
             {title}
-            <p className="text-xs dark:text-gray-600 text-gray-300">
-              {context?.selectedGroup ? groupName : ""}
-            </p>
           </Link>
         ) : (
           <Link aria-disabled href={url}>
             {icon}
             {title}
-            <p className="text-xs dark:text-gray-600 text-gray-300">
-              {context?.selectedGroup ? groupName : ""}
-            </p>
           </Link>
         )}
       </SidebarMenuButton>

@@ -3,6 +3,7 @@ import * as React from "react";
 import SidebarLinks from "@/components/sidebar-links.jsx";
 import { GroupSwitcher } from "./group-switcher";
 import { ProfileSettings } from "./profile-settings.jsx";
+import LanguageSwitcher from "./language-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -23,6 +24,7 @@ export async function AppSidebar({ accessToken, ...props }: any) {
       </SidebarContent>
       <SidebarFooter>
         {/* Profile options like sign out */}
+        <LanguageSwitcher />
         <ProfileSettings session={session} />{" "}
       </SidebarFooter>
     </Sidebar>

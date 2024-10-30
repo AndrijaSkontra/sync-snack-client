@@ -2,6 +2,15 @@
   "HomePage": {
     "title": "Nothing to see here."
   },
+  "Sidebar": {
+    "Events": "Events",
+    "Orders": "Orders",
+    "Information": "Information",
+    "My Event": "My Event",
+    "New Group": "New Group",
+    "Leave Group": "Leave Group",
+    "Send Invite Link": "Send Invite Link"
+  },
   "RegisterPage": {
     "title": "Register",
     "email": "Email",

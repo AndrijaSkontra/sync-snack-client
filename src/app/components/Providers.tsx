@@ -41,6 +41,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [isMyEventVisible, setIsMyEventVisible] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [userGroups, setUserGroups] = useState([]);
+  if (localStorage.getItem("chakra-ui-color-mode")) {
+    if (localStorage.getItem("chakra-ui-color-mode") === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }
 
   return (
     <UserGroupContext.Provider value={{ userGroups, setUserGroups }}>
