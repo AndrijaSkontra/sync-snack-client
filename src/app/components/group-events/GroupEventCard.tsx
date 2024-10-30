@@ -9,6 +9,7 @@ import {
   Tag,
   useDisclosure,
   useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import CreateOrderModal from "../modals/CreateOrderModal";
@@ -27,10 +28,14 @@ export default function GroupEventCard({
 
   useCalculateRemainingTime(setProgressValue, setRemainingSeconds, groupEvent, groupEventsContext);
 
+  const truncatedDescription =
+    groupEvent.description.length > 50
+      ? `${groupEvent.description.slice(0, 30)}...`
+      : groupEvent.description;
+
 
   return (
     <Box
-      
       borderRadius="md"
       boxShadow="md"
       p={5}
@@ -46,17 +51,21 @@ export default function GroupEventCard({
             <Text fontWeight="bold" fontSize={{ base: "lg", md: "xl" }}>
               {groupEvent.title}
             </Text>
-            <Text fontSize="sm" color="gray.500" mt={1}>
-              {groupEvent.description}
-            </Text>
+            <Tooltip label={groupEvent.description} placement="bottom-start" hasArrow>
+              <Text fontSize="sm" color="gray.500" mt={1} noOfLines={1}>
+                {truncatedDescription}
+              </Text>
+            </Tooltip>
           </Box>
           <Tag size="sm" colorScheme="blue" ml={3}>
             {groupEvent.eventType}
           </Tag>
         </Flex>
 
-        <Flex  alignItems="center" mt={4}>
-          <Text fontSize="md">{groupEvent.userProfileFirstName} {groupEvent.userProfileLastName}</Text>
+        <Flex alignItems="center" mt={4}>
+          <Text fontSize="md">
+            {groupEvent.userProfileFirstName} {groupEvent.userProfileLastName}
+          </Text>
         </Flex>
 
         <Button colorScheme="xorange" onClick={onOpen} size="sm" mt={4}>
