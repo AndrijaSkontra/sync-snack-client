@@ -31,7 +31,7 @@ export default function NotificationBell() {
     groupEventContext.setGroupEvents,
   );
 
-  const bellIsNotNotifiedColors = useColorModeValue("blue.100", "blue.700");
+  const bellIsNotNotifiedColors = useColorModeValue("blue.100", "blue.500");
   const bellNotifiedColors = useColorModeValue("yellow.500", "yellow.400");
   const bellColor = useColorModeValue("white", "black");
 

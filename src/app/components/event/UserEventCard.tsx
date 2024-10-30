@@ -7,6 +7,7 @@ import {
   Spinner,
   Tag,
   Text,
+  Tooltip,
   useToast,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
@@ -73,32 +74,43 @@ export default function UserEventCard({ event, orders }: any) {
 
   return (
     <Box
-      className="mt-20 mx-2 md:mt-2 border shadow-lg rounded-lg py-6 px-12 w-max"
+      mt={{ base: 20, md: 2 }}
+      mx={2}
+      p={6}
       borderWidth="1px"
+      shadow="lg"
       borderRadius="lg"
       overflow="hidden"
+      maxWidth="md"
+      width="full"
     >
-      <Box className="mb-4">
-        <Text className="font-bold text-2xl">{event.title}</Text>
+      <Box mb={4}>
+        <Text fontSize="2xl" fontWeight="bold">{event.title}</Text>
       </Box>
 
-      <Box className="mb-4">
-        <Text className="text-gray-400">{event.description}</Text>
+      <Box mb={4}>
+        <Tooltip label={event.description} isDisabled={event.description.length <= 50}>
+          <Text color="gray.500">
+            {event.description.length > 50 
+              ? `${event.description.slice(0, 50)}...`
+              : event.description}
+          </Text>
+        </Tooltip>
       </Box>
 
-      <Box className="flex justify-between space-x-2">
+      <Box display="flex" justifyContent="space-between" gap={2}>
         <Button
           onClick={() => {
             context.setIsMyEventVisible(false);
             handleAllOrders("CANCELLED");
           }}
-          colorScheme="xred"
+          colorScheme="red"
         >
           Cancel
         </Button>
         <Button
           onClick={() => handleAllOrders("COMPLETED")}
-          colorScheme="xblue"
+          colorScheme="blue"
         >
           Finish
         </Button>
