@@ -19,18 +19,13 @@ export default function OrderRowMobile({ order, accessToken }: any) {
     setRateModalOpen(false);
   };
 
-  const bgGradient = useColorModeValue(
-    "linear(to-r, white.200, white.400)",
-    "linear(to-r, gray.700, gray.900)",
-  );
   const boxShadowColor = useColorModeValue("xorange.400", "xorange.600");
   const textColor = useColorModeValue("gray.900", "white");
 
   return (
     <>
       <Box
-        className="p-6 mb-6 rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
-        bgGradient={bgGradient}
+        className="bg-gray-50 dark:bg-gray-800 p-6 mb-6 rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
         boxShadow={`0 6px 20px ${boxShadowColor}`}
         borderRadius="lg"
         _hover={{
@@ -47,7 +42,10 @@ export default function OrderRowMobile({ order, accessToken }: any) {
           >
             <OrderTypePretty orderType={order.eventType} />
           </Text>
-          <Text color={useColorModeValue("gray.600", "gray.400")}>
+          <Text
+            className="text-sm"
+            color={useColorModeValue("gray.600", "gray.400")}
+          >
             {formatDate(order.createdAt)}
           </Text>
         </Box>
@@ -66,19 +64,16 @@ export default function OrderRowMobile({ order, accessToken }: any) {
             : JSON.stringify(order.additionalOptions.description)}
         </Text>
 
-        <Box className="mt-4 flex justify-end">
+        <Box className="mt-4 flex justify-center">
           {orderRating ? (
             <RatingPretty rating={orderRating} />
           ) : (
             <Button
-              colorScheme="yellow"
-              size="md"
-              variant="solid"
+              colorScheme="xorange"
               onClick={(e) => {
                 e.stopPropagation();
                 setRateModalOpen(true);
               }}
-              fontFamily="heading"
             >
               {t("RateButton")}
             </Button>

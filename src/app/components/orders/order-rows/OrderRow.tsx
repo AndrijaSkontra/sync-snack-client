@@ -59,7 +59,9 @@ export default function OrderRow({ order, accessToken }: any) {
   return (
     <>
       <Tr>
-        <Td>{order.eventType}</Td>
+        <Td>
+          <OrderTypePretty orderType={order.eventType} />
+        </Td>
         <Td className="w-96 font-semibold">{formatDate(order.createdAt)}</Td>
         <Td>
           <Box className="flex">

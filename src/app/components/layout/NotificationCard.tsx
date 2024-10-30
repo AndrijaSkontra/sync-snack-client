@@ -44,7 +44,6 @@ export default function NotificationCard({ notification }: NotificationProps) {
     router.push(route);
   };
 
-
   const { colorMode, toggleColorMode } = useColorMode();
   // Common styles for both notification types
   const cardStyles = {
@@ -53,8 +52,7 @@ export default function NotificationCard({ notification }: NotificationProps) {
     "&:hover": {
       transform: "translateY(-2px)",
       boxShadow: "lg",
-      bg: colorMode === 'light' ?  "gray.100": "gray.800"
-      
+      bg: colorMode === "light" ? "gray.100" : "gray.800",
     },
   };
 
@@ -93,7 +91,7 @@ export default function NotificationCard({ notification }: NotificationProps) {
         )}
       </Box>
       <Box className="text-right">
-        <Tag size="md" variant="subtle" mb="2" colorScheme="xorange">
+        <Tag size="md" variant="subtle" mb="2" colorScheme="orange">
           {isOrderNotification ? "ORDER" : eventType}
         </Tag>
         <Text fontSize="sm">{formatTime(createdAt)}</Text>
@@ -113,9 +111,9 @@ export default function NotificationCard({ notification }: NotificationProps) {
       role="button"
       tabIndex={0}
       aria-label={`Notification: ${isOrderNotification ? "Order" : eventType}`}
-      
     >
       {renderContent()}
     </Box>
   );
 }
+

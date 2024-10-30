@@ -1,4 +1,17 @@
-import { Box, Text, keyframes } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  Text,
+  keyframes,
+} from "@chakra-ui/react";
+import {
+  ArrowPathIcon,
+  ExclamationCircleIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 
 // Define the keyframes for the shining animation
 const shineAnimation = keyframes`
@@ -11,21 +24,24 @@ export default function StatusPretty({ statusType }: any) {
   switch (statusType) {
     case "IN_PROGRESS":
       return (
-        <Box className="px-4 py-2 rounded-md text-white dark:bg-yellow-700 bg-yellow-400">
-          <Text>In Progress</Text>
-        </Box>
+        <Tag variant="subtle" colorScheme="yellow">
+          <TagLeftIcon boxSize="12px" as={ArrowPathIcon} />
+          <TagLabel>In progress</TagLabel>
+        </Tag>
       );
     case "COMPLETED":
       return (
-        <Box className="px-4 py-2 bg-blue-1 rounded-md text-white dark:bg-green-800 bg-green-500">
-          <Text>Completed</Text>
-        </Box>
+        <Tag variant="subtle" colorScheme="blue">
+          <TagLeftIcon boxSize="12px" as={CheckCircleIcon} />
+          <TagLabel>Completed</TagLabel>
+        </Tag>
       );
     case "CANCELLED":
       return (
-        <Box className="px-4 py-2 bg-orange-dark-2 rounded-md text-white dark:bg-red-800 bg-red-500">
-          <Text>Canceled</Text>
-        </Box>
+        <Tag variant="subtle" colorScheme="red">
+          <TagLeftIcon boxSize="12px" as={ExclamationCircleIcon} />
+          <TagLabel>Cancelled</TagLabel>
+        </Tag>
       );
     default:
       return null;
