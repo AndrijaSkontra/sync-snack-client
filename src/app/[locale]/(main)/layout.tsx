@@ -27,7 +27,7 @@ export default async function Layout({
       >
         {/*<SidebarGroups accessToken={activeUser.accessToken} />*/}
         <Box></Box>
-        <Box className="grow p-10">{children}</Box>
+        <Box className="grow px-10 pt-10">{children}</Box>
       </Box>
       <Box className="fixed top-4 right-4 flex items-center space-x-6">
         <NotificationBell />

@@ -134,6 +134,14 @@ function LinkItem({ title, icon, url, context }) {
   ) {
     disable = true;
   }
+
+  let groupName = context?.selectedGroup?.name;
+  if (groupName) {
+    if (groupName.length > 8) {
+      groupName = groupName.slice(0, 8) + "...";
+    }
+  }
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
@@ -142,7 +150,7 @@ function LinkItem({ title, icon, url, context }) {
             {icon}
             {title}
             <p className="text-xs dark:text-gray-600 text-gray-300">
-              {context?.selectedGroup ? context.selectedGroup.name : ""}
+              {context?.selectedGroup ? groupName : ""}
             </p>
           </Link>
         ) : (
@@ -150,7 +158,7 @@ function LinkItem({ title, icon, url, context }) {
             {icon}
             {title}
             <p className="text-xs dark:text-gray-600 text-gray-300">
-              {context?.selectedGroup ? context.selectedGroup.name : ""}
+              {context?.selectedGroup ? groupName : ""}
             </p>
           </Link>
         )}

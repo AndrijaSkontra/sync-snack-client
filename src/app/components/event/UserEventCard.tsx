@@ -27,7 +27,7 @@ export default function UserEventCard({ event, orders }: any) {
 
   if (!event) {
     return (
-      <Box className="mt-20 mx-2 px-40 py-16 border rounded-lg md:mt-4">
+      <Box className="mt-20 mx-2 p-4 border rounded-lg md:mt-4">
         <Spinner />
       </Box>
     );
@@ -79,20 +79,14 @@ export default function UserEventCard({ event, orders }: any) {
       overflow="hidden"
     >
       <Box className="mb-4">
-        <Text className="font-bold text-xl">{event.title}</Text>
+        <Text className="font-bold text-2xl">{event.title}</Text>
       </Box>
 
       <Box className="mb-4">
-        <Text className="text-sm">{event.description}</Text>
+        <Text className="text-gray-400">{event.description}</Text>
       </Box>
 
-      <Box className="flex justify-center space-x-2">
-        <Button
-          onClick={() => handleAllOrders("COMPLETED")}
-          colorScheme="xblue"
-        >
-          Finish
-        </Button>
+      <Box className="flex justify-between space-x-2">
         <Button
           onClick={() => {
             context.setIsMyEventVisible(false);
@@ -101,6 +95,12 @@ export default function UserEventCard({ event, orders }: any) {
           colorScheme="xred"
         >
           Cancel
+        </Button>
+        <Button
+          onClick={() => handleAllOrders("COMPLETED")}
+          colorScheme="xblue"
+        >
+          Finish
         </Button>
       </Box>
     </Box>

@@ -8,10 +8,10 @@ export default async function GroupPage() {
   const session: any = await auth();
 
   return (
-    <Box className="pt-16 md:pt-4 md:grid md:grid-cols-2 md:gap-10 md:grid-rows-[1fr_70%] md:h-screen md:ml-6">
+    <Box className="pt-2 md:grid md:grid-cols-2 md:gap-10 md:grid-rows-[1fr_70%] md:ml-6">
       <GroupData session={session} />
       <AdminButtons />
-      <Box className="flex flex-col p-10 border rounded-2xl shadow-lg">
+      <Box className="flex flex-col p-10 border rounded-2xl shadow-lg md:col-span-2 col-span-1">
         <MembersTable session={session} />
       </Box>
     </Box>
@@ -22,7 +22,9 @@ function MvpMemberCard({ user }: { user: any }) {
   return (
     <Box className="flex rounded-xl shadow-lg overflow-hidden relative bg-orange-light-1">
       <Image
-        className="h-[150px] w-[150px] rounded-l-xl mr-4"
+        className="rounded-l-xl mr-4"
+        maxWidth={150}
+        maxHeight={150}
         src={user.photoUrl}
         alt="Profile picture"
         fallbackSrc="/profile_picture.png"
