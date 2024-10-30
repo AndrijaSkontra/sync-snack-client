@@ -1,17 +1,18 @@
 import { Box, Image, Text } from "@chakra-ui/react";
+import { IoBeerOutline } from "react-icons/io5";
+import { IoFastFoodOutline } from "react-icons/io5";
+import { VscCoffee } from "react-icons/vsc";
 
 export default function OrderTypePretty({ orderType }: any) {
   switch (orderType) {
     case "COFFEE":
-      return (
-        <Image src="/coffee_green_circle.png" alt="coffee" boxSize="30px" />
-      );
+      return <VscCoffee className="size-7" />;
     case "ALL":
       return <Image src="/orange_drink.png" alt="mix" boxSize="30px" />;
     case "FOOD":
-      return <Image src="/pizza.png" alt="food" boxSize="30px" />;
+      return <IoFastFoodOutline className="size-7" />;
     case "BEVERAGE":
-      return <Image src="/beer.png" alt="drinks" boxSize="30px" />;
+      return <IoBeerOutline className="size-7" />;
     default:
       return null;
   }
