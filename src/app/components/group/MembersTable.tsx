@@ -35,7 +35,6 @@ export default function MembersTable({ session }: any) {
   const [userRoles, setUserRoles]: any = useState([]);
   const userRolesContext = useContext(UserRolesContext);
   const pageSize = 3;
-  console.log(window.screen.height, "😀");
   useMembersData(
     currentPage,
     jwtToken,

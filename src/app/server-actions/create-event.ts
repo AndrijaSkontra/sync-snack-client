@@ -29,7 +29,6 @@ async function sendCreateEventRequest(
     " > ",
     formData.get("groupId"),
   );
-  console.log(`${process.env.BACKEND_URL}/api/events/create`);
 
   const session = await auth();
   const activeUser: any = session?.user;

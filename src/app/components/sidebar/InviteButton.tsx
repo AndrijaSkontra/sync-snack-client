@@ -50,7 +50,6 @@ export default function InviteButton({ context }: any) {
 }
 
 function handleInvite(setUrl: any, session: any, toast: any) {
-  console.log("trying to get the invitation link");
   fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/sendInvitation?invitedBy=${session.user.userProfileId}`,
     {

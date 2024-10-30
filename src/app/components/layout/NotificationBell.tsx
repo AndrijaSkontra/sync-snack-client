@@ -74,15 +74,6 @@ function useSubscribeToWS(
           client.subscribe(
             `/topic/orders.${activeUser.userProfileId}`,
             (message: any) => {
-              console.log("message", JSON.parse(message.body));
-              console.log(JSON.parse(message.body).userProfileId);
-              console.log(activeUser.userProfileId);
-
-              // if (
-              //   JSON.parse(message.body).userProfileId !==
-              //   activeUser.userProfileId
-              // ) {
-
               setIsBellNotified(true);
               const bodyObject = JSON.parse(message.body);
               const groupOrderObject = {
@@ -95,11 +86,7 @@ function useSubscribeToWS(
                 createdAt: bodyObject.createdAt,
               };
 
-              setNotifications((prev: any) => [
-                groupOrderObject,
-                ...prev,
-              ]);
-              
+              setNotifications((prev: any) => [groupOrderObject, ...prev]);
 
               toast({
                 title: "Order",

@@ -45,7 +45,6 @@ export default function DragAndDropProfilePicture({
 
       try {
         setLoading(true);
-        console.log("does this exe");
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`, {
           method: "PATCH",
           headers: {

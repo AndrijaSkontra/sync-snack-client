@@ -1,4 +1,5 @@
 "use client";
+import "client-only";
 import { handleRolesChange } from "@/app/server-actions/change-role-names";
 import { Text, Box, Button, Input, Spinner, Heading } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";

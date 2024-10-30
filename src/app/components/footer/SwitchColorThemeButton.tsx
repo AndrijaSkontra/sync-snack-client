@@ -1,4 +1,5 @@
 "use client";
+import "client-only";
 import { IconButton, useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";

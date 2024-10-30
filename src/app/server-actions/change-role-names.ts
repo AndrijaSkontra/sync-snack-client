@@ -19,10 +19,6 @@ export async function handleRolesChange(prevState: any, formData: FormData) {
       message: `${validatedFields.error.flatten().fieldErrors.user}${validatedFields.error.flatten().fieldErrors.admin}${validatedFields.error.flatten().fieldErrors.president}`,
     };
   }
-  console.log(
-    `${process.env.NEXT_PUBLIC_DOMAIN}/api/roles`,
-    "this endpoint 🤡",
-  );
   const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/roles`, {
     headers: {
       "Content-Type": "application/json",

@@ -1,3 +1,4 @@
+import "client-only";
 import { UpdateGroupsSidebarContext } from "@/app/components/Providers";
 import { useState, useEffect, useContext } from "react";
 
