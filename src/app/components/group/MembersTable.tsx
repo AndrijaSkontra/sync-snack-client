@@ -120,7 +120,9 @@ export default function MembersTable({ session }: any) {
                       <Button
                         variant="outline"
                         colorScheme="xred"
-                        onClick={() => kickUser(member, jwtToken, toast)}
+                        onClick={() =>
+                          kickUser(member, jwtToken, toast, members, setMembers)
+                        }
                       >
                         Kick user
                       </Button>
@@ -250,7 +252,13 @@ export default function MembersTable({ session }: any) {
   );
 }
 
-function kickUser(toKickUser: any, jwtToken: any, toast: any): void {
+function kickUser(
+  toKickUser: any,
+  jwtToken: any,
+  toast: any,
+  members: any,
+  setMembers: any,
+): void {
   fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/kick?userProfileId=${toKickUser.userProfileId}`,
     {
@@ -271,6 +279,11 @@ function kickUser(toKickUser: any, jwtToken: any, toast: any): void {
           duration: 3000,
         });
       } else {
+        setMembers((members: any[]) =>
+          members.filter(
+            (member) => member.userProfileId !== toKickUser.userProfileId,
+          ),
+        );
         toast({
           title: "Kicked user",
           description: "User has been kicked from the group",
