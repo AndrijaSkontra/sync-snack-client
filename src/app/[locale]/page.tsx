@@ -9,7 +9,7 @@ import ClientCodeToRun from "../components/client-code-to-run";
 export default function HomePage() {
   // const t = useTranslations("landing-page");
   return (
-    <div className="overflow-y-hidden h-screen">
+    <div className="h-screen">
       <Box className="flex justify-end p-4 space-x-2">
         <Link href="/login">
           <Button colorScheme="xorange" variant="outline">

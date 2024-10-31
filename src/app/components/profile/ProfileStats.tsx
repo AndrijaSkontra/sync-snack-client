@@ -7,7 +7,7 @@ import {
   ChartLegendContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 export default function ProfileStats({ stats }: any) {
@@ -43,7 +43,10 @@ export default function ProfileStats({ stats }: any) {
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 3)}
           />
-          <ChartTooltip content={<ChartTooltipContent />} />
+          <ChartTooltip
+            cursor={<CustomCursor />}
+            content={<ChartTooltipContent />}
+          />
           <ChartLegend content={<ChartLegendContent />} />
           <Bar dataKey="orders" fill="var(--color-orders)" radius={4} />
           <Bar dataKey="events" fill="var(--color-events)" radius={4} />
@@ -94,3 +97,18 @@ const chartConfig = {
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
+
+const CustomCursor = (props: any) => {
+  const { x, y, width, height } = props;
+  return (
+    <Rectangle
+      fill="#000000"
+      opacity={0.3}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      radius={10}
+    />
+  );
+};
