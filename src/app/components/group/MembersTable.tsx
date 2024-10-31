@@ -212,7 +212,7 @@ export default function MembersTable({ session }: any) {
                     variant="outline"
                     colorScheme="xred"
                     size="sm"
-                    onClick={() => kickUser(member, jwtToken, toast)}
+                    onClick={() => kickUser(member, jwtToken, toast, members, setMembers)}
                   >
                     Kick user
                   </Button>
