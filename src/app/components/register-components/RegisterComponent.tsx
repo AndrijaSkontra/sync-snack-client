@@ -8,6 +8,7 @@ import {
   FormLabel,
   Flex,
   Input,
+  Text,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import CustomPasswordInput from "../change-password/CustomPasswordInput";
@@ -35,7 +36,7 @@ export default function RegisterComponent() {
   const [state, formAction] = useFormState(handleRegisterUser, initialState);
 
   // Handle input changes
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -51,7 +52,7 @@ export default function RegisterComponent() {
   // Show toast based on state
   useEffect(() => {
     if (state.message) {
-      if (state.message === "Succesfully registered, please check your email") {
+      if (state.message === "Successfully registered, please check your email") {
         toast({
           title: state.message,
           status: "success",
@@ -68,12 +69,12 @@ export default function RegisterComponent() {
         });
       }
     }
-  }, [state, toast]);
+  }, [state, toast, router]);
 
   return (
     <Box className="max-w-md mx-auto mt-10 p-6 rounded-lg shadow-md">
       <form action={formAction}>
-        <FormControl className="mb-4">
+        <FormControl className="mb-4" isInvalid={!!state.errors?.email}>
           <FormLabel>{t("email")}: </FormLabel>
           <Input
             id="email"
@@ -85,9 +86,14 @@ export default function RegisterComponent() {
             onChange={handleInputChange}
             required
           />
+          {state.errors?.email && (
+            <Text color="red.500" fontSize="sm">
+              {state.errors.email}
+            </Text>
+          )}
         </FormControl>
 
-        <FormControl className="mb-4">
+        <FormControl className="mb-4" isInvalid={!!state.errors?.password}>
           <FormLabel>{t("password")}: </FormLabel>
           <CustomPasswordInput
             name="password"
@@ -95,9 +101,14 @@ export default function RegisterComponent() {
             value={formData.password}
             onChange={handleInputChange}
           />
+          {state.errors?.password && (
+            <Text color="red.500" fontSize="sm">
+              {state.errors.password}
+            </Text>
+          )}
         </FormControl>
 
-        <FormControl className="mb-4">
+        <FormControl className="mb-4" isInvalid={!!state.errors?.confirmPassword}>
           <FormLabel>{t("confirmPassword")}: </FormLabel>
           <CustomPasswordInput
             name="confirmPassword"
@@ -105,6 +116,11 @@ export default function RegisterComponent() {
             value={formData.confirmPassword}
             onChange={handleInputChange}
           />
+          {state.errors?.confirmPassword && (
+            <Text color="red.500" fontSize="sm">
+              {state.errors.confirmPassword}
+            </Text>
+          )}
         </FormControl>
 
         <Flex justifyContent="center" mt={6}>

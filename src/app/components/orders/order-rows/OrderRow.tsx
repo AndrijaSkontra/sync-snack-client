@@ -41,9 +41,11 @@ export default function OrderRow({ order, accessToken }: any) {
         </Td>
         <Td className="font-semibold">
           <Tooltip label={order.additionalOptions.description} hasArrow>
-            <Text cursor="pointer">
-              {truncateDescription(order.additionalOptions.description)}
-            </Text>
+            <Box display="inline-block" textAlign="center">
+              <Text cursor="pointer" noOfLines={1}>
+                {truncateDescription(order.additionalOptions.description)}
+              </Text>
+            </Box>
           </Tooltip>
         </Td>
         <Td>
