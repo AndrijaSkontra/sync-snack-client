@@ -42,6 +42,8 @@ export default function GroupEventCard({
       w="full"
       maxW={{ base: "100%", md: "320px" }}
       mx="auto"
+      border="2px solid"
+      borderColor="gray.200"
       transition="transform 0.2s"
       _hover={{ transform: "scale(1.03)" }}
     >
