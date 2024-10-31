@@ -3,12 +3,13 @@ import LandingImage from "../components/landing/LandingImage";
 import StepsCard from "../components/landing/StepsCard";
 import HeadingSyncSnack from "../components/landing/HeadingSyncSnack";
 import Link from "next/link";
+import ClientCodeToRun from "../components/client-code-to-run";
 // import { useTranslations } from "next-intl";
 
 export default function HomePage() {
   // const t = useTranslations("landing-page");
   return (
-    <div className="bg-fixed overflow-y-hidden h-screen">
+    <div className="overflow-y-hidden h-screen">
       <Box className="flex justify-end p-4 space-x-2">
         <Link href="/login">
           <Button colorScheme="xorange" variant="outline">
@@ -22,6 +23,7 @@ export default function HomePage() {
         </Link>
       </Box>
       <Box className="flex flex-col items-center mb-10">
+        <ClientCodeToRun />
         <Box className="flex flex-col items-center md:flex-row-reverse">
           <LandingImage />
           <HeadingSyncSnack />
