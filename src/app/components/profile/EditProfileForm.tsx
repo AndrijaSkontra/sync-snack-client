@@ -17,7 +17,7 @@ export default function EditProfileForm({
   session,
   setProfilePicture,
   setFirstName,
-  setLastName,
+  setLastName
 }: any) {
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
@@ -26,6 +26,8 @@ export default function EditProfileForm({
   const [profileImageURL, setProfileImageURL] = useState<string | null>(null);
   const [isSubmitShown, setIsSubmitShown] = useState(false);
 
+  const toast = useToast();
+
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     setProfileImage(file);
@@ -33,16 +35,15 @@ export default function EditProfileForm({
     setIsSubmitShown(true);
   }, []);
 
-  const toast = useToast();
   const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
     noClick: true,  // Prevents default file browser on zone click
   });
 
-  function handleClick(): void {
-    if (!firstName || !lastName) {
+  const handleClick = (): void => {
+    if (!firstName && !lastName && !profileImage) {
       toast({
-        title: "Please fill in all fields.",
+        title: "Please update at least one field.",
         status: "warning",
         duration: 3000,
         isClosable: true,
@@ -51,9 +52,9 @@ export default function EditProfileForm({
     }
 
     const formData = new FormData();
+    if (firstName) formData.append("firstName", firstName);
+    if (lastName) formData.append("lastName", lastName);
     if (profileImage) formData.append("file", profileImage);
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
 
     setLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`, {
@@ -66,7 +67,9 @@ export default function EditProfileForm({
       .then((response) => response.json())
       .then((data) => {
         onClose();
-        setProfilePicture(profileImageURL);
+        if (profileImageURL) setProfilePicture(profileImageURL);
+        if (firstName) setFirstName(firstName);
+        if (lastName) setLastName(lastName);
         setLoading(false);
         toast({
           title: "Profile updated successfully!",
@@ -79,7 +82,11 @@ export default function EditProfileForm({
         setLoading(false);
         console.error("Error when updating profile:", error);
       });
-  }
+  };
+
+  useEffect(() => {
+    setIsSubmitShown(!!firstName || !!lastName || !!profileImage);
+  }, [firstName, lastName, profileImage]);
 
   useEffect(() => {
     return () => {
