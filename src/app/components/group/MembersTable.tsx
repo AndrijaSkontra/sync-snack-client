@@ -60,101 +60,190 @@ export default function MembersTable({ session }: any) {
 
   return (
     <>
-      <TableContainer>
-        <Table variant="unstyled" colorScheme="xblue" className="shadow-lg">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Role</Th>
-              {userRoles.includes("PRESIDENT") ||
-              userRoles.includes("ADMIN") ? (
-                <Th>Actions</Th>
-              ) : null}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {members.map((member: any, index: any) => (
-              <Tr key={index} className="border">
-                <Td className="flex space-x-1 items-center">
-                  <Image
-                    key={index}
-                    borderRadius="full"
-                    border="solid 1px"
-                    objectFit="cover"
-                    src={member.photoUrl}
-                    alt="no-picture"
-                    fallbackSrc="/fallback-group.png"
-                    boxSize={14}
-                  />
-                  <Text className="font-semibold">{member.firstName}</Text>
-                  <Text className="font-semibold">{member.lastName}</Text>
-                </Td>
-                <Td>
-                  {member.roles.map((role: any, index: any) => (
-                    <Text
-                      key={index}
-                      className="inline rounded-xl font-semibold mr-1"
-                      paddingX={3}
-                      paddingY={2}
-                      color={textRoleColor}
-                      borderColor={outlineRoleColor}
-                      borderWidth="1px"
-                    >
-                      {transformRoles
-                        ? role === "USER"
-                          ? transformRoles.user
-                          : role === "ADMIN"
-                            ? transformRoles.admin
-                            : role === "PRESIDENT"
-                              ? transformRoles.president
-                              : role
-                        : role}
-                    </Text>
-                  ))}
-                </Td>
-                {(userRoles.includes("PRESIDENT") ||
-                  userRoles.includes("ADMIN")) &&
-                member.userProfileId !== session.user.userProfileId ? (
-                  <Td className="space-x-1">
-                    <Button
-                      variant="outline"
-                      colorScheme="xred"
-                      onClick={() => kickUser(member, jwtToken, toast)}
-                    >
-                      Kick user
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => giveAdmin(member, jwtToken, toast)}
-                    >
-                      Give Admin
-                    </Button>
-                  </Td>
+      <Box className="hidden md:flex flex-col p-10 border rounded-2xl shadow-lg ">
+        <TableContainer>
+          <Table variant="unstyled" colorScheme="xblue" className="shadow-lg">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Role</Th>
+                {userRoles.includes("PRESIDENT") ||
+                userRoles.includes("ADMIN") ? (
+                  <Th>Actions</Th>
                 ) : null}
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
-      <Box mt={4} className="mr-4 mb-2 grow flex justify-center items-end">
-        <Box className="flex space-x-2 items-center">
-          <IconButton
-            aria-label="Previous page"
-            icon={<ChevronLeftIcon />}
-            colorScheme="xblue"
-            size="sm"
-            isDisabled={currentPage === 0}
-            onClick={() => setCurrentPage(currentPage - 1)}
-          />
-          <Text>Page {currentPage + 1}</Text>
-          <IconButton
-            aria-label="Next page"
-            icon={<ChevronRightIcon />}
-            size="sm"
-            colorScheme="xblue"
-            isDisabled={disableForward}
-            onClick={() => setCurrentPage(currentPage + 1)}
-          />
+            </Thead>
+            <Tbody>
+              {members.map((member: any, index: any) => (
+                <Tr key={index} className="border">
+                  <Td className="flex space-x-1 items-center">
+                    <Image
+                      key={index}
+                      borderRadius="full"
+                      border="solid 1px"
+                      objectFit="cover"
+                      src={member.photoUrl}
+                      alt="no-picture"
+                      fallbackSrc="/fallback-group.png"
+                      boxSize={14}
+                    />
+                    <Text className="font-semibold">{member.firstName}</Text>
+                    <Text className="font-semibold">{member.lastName}</Text>
+                  </Td>
+                  <Td>
+                    {member.roles.map((role: any, index: any) => (
+                      <Text
+                        key={index}
+                        className="inline rounded-xl font-semibold mr-1"
+                        paddingX={3}
+                        paddingY={2}
+                        color={textRoleColor}
+                        borderColor={outlineRoleColor}
+                        borderWidth="1px"
+                      >
+                        {transformRoles
+                          ? role === "USER"
+                            ? transformRoles.user
+                            : role === "ADMIN"
+                              ? transformRoles.admin
+                              : role === "PRESIDENT"
+                                ? transformRoles.president
+                                : role
+                          : role}
+                      </Text>
+                    ))}
+                  </Td>
+                  {(userRoles.includes("PRESIDENT") ||
+                    userRoles.includes("ADMIN")) &&
+                  member.userProfileId !== session.user.userProfileId ? (
+                    <Td className="space-x-1">
+                      <Button
+                        variant="outline"
+                        colorScheme="xred"
+                        onClick={() => kickUser(member, jwtToken, toast)}
+                      >
+                        Kick user
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => giveAdmin(member, jwtToken, toast)}
+                      >
+                        Give Admin
+                      </Button>
+                    </Td>
+                  ) : null}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+        <Box mt={4} className="mr-4 mb-2 grow flex justify-center items-end">
+          <Box className="flex space-x-2 items-center">
+            <IconButton
+              aria-label="Previous page"
+              icon={<ChevronLeftIcon />}
+              colorScheme="xblue"
+              size="sm"
+              isDisabled={currentPage === 0}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            />
+            <Text>Page {currentPage + 1}</Text>
+            <IconButton
+              aria-label="Next page"
+              icon={<ChevronRightIcon />}
+              size="sm"
+              colorScheme="xblue"
+              isDisabled={disableForward}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            />
+          </Box>
+        </Box>
+      </Box>
+      <Box className="mobile-cards-for-group-info">
+        <Box className="flex flex-col space-y-4 p-4 md:hidden">
+          {members.map((member: any, index: any) => (
+            <Box key={index} className="border rounded-xl p-4 shadow-lg">
+              <Box className="flex items-center space-x-3">
+                <Image
+                  borderRadius="full"
+                  border="solid 1px"
+                  objectFit="cover"
+                  src={member.photoUrl}
+                  alt="no-picture"
+                  fallbackSrc="/fallback-group.png"
+                  boxSize={12}
+                />
+                <Box>
+                  <Text className="font-semibold">
+                    {member.firstName} {member.lastName}
+                  </Text>
+                  <Box className="flex flex-wrap mt-1">
+                    {member.roles.map((role: any, index: any) => (
+                      <Text
+                        key={index}
+                        className="inline rounded-xl font-semibold mr-1 mt-1"
+                        paddingX={2}
+                        paddingY={1}
+                        color={textRoleColor}
+                        borderColor={outlineRoleColor}
+                        borderWidth="1px"
+                      >
+                        {transformRoles
+                          ? role === "USER"
+                            ? transformRoles.user
+                            : role === "ADMIN"
+                              ? transformRoles.admin
+                              : role === "PRESIDENT"
+                                ? transformRoles.president
+                                : role
+                          : role}
+                      </Text>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+              {(userRoles.includes("PRESIDENT") ||
+                userRoles.includes("ADMIN")) &&
+              member.userProfileId !== session.user.userProfileId ? (
+                <Box className="mt-3 flex space-x-2">
+                  <Button
+                    variant="outline"
+                    colorScheme="xred"
+                    size="sm"
+                    onClick={() => kickUser(member, jwtToken, toast)}
+                  >
+                    Kick user
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => giveAdmin(member, jwtToken, toast)}
+                  >
+                    Give Admin
+                  </Button>
+                </Box>
+              ) : null}
+            </Box>
+          ))}
+          <Box mt={4} className="flex justify-center items-center">
+            <IconButton
+              aria-label="Previous page"
+              icon={<ChevronLeftIcon />}
+              colorScheme="xblue"
+              size="sm"
+              isDisabled={currentPage === 0}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            />
+            <Text mx={2}>Page {currentPage + 1}</Text>
+            <IconButton
+              aria-label="Next page"
+              icon={<ChevronRightIcon />}
+              size="sm"
+              colorScheme="xblue"
+              isDisabled={disableForward}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            />
+          </Box>
         </Box>
       </Box>
     </>

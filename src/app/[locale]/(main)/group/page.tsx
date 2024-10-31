@@ -3,6 +3,7 @@ import GroupData from "@/app/components/group/GroupData";
 import MembersTable from "@/app/components/group/MembersTable";
 import { auth } from "@/commons/auth";
 import { Box, Image, Text } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 export default async function GroupPage() {
   const session: any = await auth();
@@ -10,14 +11,17 @@ export default async function GroupPage() {
   return (
     <Box className="pt-2 md:grid md:grid-cols-2 md:gap-10 md:grid-rows-[1fr_70%] md:ml-6">
       <GroupData session={session} />
-      <AdminButtons />
-      <Box className="flex flex-col p-10 border rounded-2xl shadow-lg md:col-span-2 col-span-1">
+      <Suspense fallback={<p>loading...</p>}>
+        <AdminButtons />
+      </Suspense>
+      <Box className="md:col-span-2 col-span-1">
         <MembersTable session={session} />
       </Box>
     </Box>
   );
 }
 
+// not used
 function MvpMemberCard({ user }: { user: any }) {
   return (
     <Box className="flex rounded-xl shadow-lg overflow-hidden relative bg-orange-light-1">

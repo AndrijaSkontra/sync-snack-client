@@ -12,6 +12,9 @@ const initialState = {
 };
 
 export default function AdminButtons() {
+  if (typeof localStorage === "undefined") {
+    throw Error("This should not be visible on the server");
+  }
   const router = useRouter();
   const groupId: any = localStorage.getItem("GroupId");
   const [state, formAction] = useFormState(handleRolesChange, initialState);
