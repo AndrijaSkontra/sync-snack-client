@@ -1,9 +1,7 @@
 import ProfileInfo from "@/app/components/profile/ProfileInfo";
 import ProfileStats from "@/app/components/profile/ProfileStats";
 import { auth } from "@/commons/auth";
-import { Button } from "@/components/ui/button";
 import { Box } from "@chakra-ui/react";
-import { cookies } from "next/headers";
 
 export default async function ProfilePage() {
   const session: any = await auth();

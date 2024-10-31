@@ -9,15 +9,16 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { UserProfilePictureContext } from "../Providers";
 
 export default function EditProfileForm({
   onClose,
   session,
   setProfilePicture,
   setFirstName,
-  setLastName
+  setLastName,
 }: any) {
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
@@ -25,6 +26,7 @@ export default function EditProfileForm({
   const [lastName, setLName] = useState<string>("");
   const [profileImageURL, setProfileImageURL] = useState<string | null>(null);
   const [isSubmitShown, setIsSubmitShown] = useState(false);
+  const context = useContext(UserProfilePictureContext);
 
   const toast = useToast();
 
@@ -37,7 +39,7 @@ export default function EditProfileForm({
 
   const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
-    noClick: true,  // Prevents default file browser on zone click
+    noClick: true, // Prevents default file browser on zone click
   });
 
   const handleClick = (): void => {
@@ -55,6 +57,8 @@ export default function EditProfileForm({
     if (firstName) formData.append("firstName", firstName);
     if (lastName) formData.append("lastName", lastName);
     if (profileImage) formData.append("file", profileImage);
+    const url: any = profileImageURL?.split(":");
+    console.log(url[1] + url[2] + url[3], "😎");
 
     setLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`, {
@@ -67,6 +71,8 @@ export default function EditProfileForm({
       .then((response) => response.json())
       .then((data) => {
         onClose();
+        const url: any = profileImageURL?.split(":");
+        context.setUserProfilePicture(url[1] + url[2] + url[3]);
         if (profileImageURL) setProfilePicture(profileImageURL);
         if (firstName) setFirstName(firstName);
         if (lastName) setLastName(lastName);

@@ -113,14 +113,14 @@ export default function SidebarLinks({ session }) {
         <SidebarGroupContent>
           <SidebarMenu>
             <div onClick={onGroupModalOpen}>
-              <LinkItem
-                title={t("New Group")}
-                context={selectedGroupContext}
-                url="#"
-                icon={
-                  <PlusCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
-                }
-              />
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="#">
+                    <PlusCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
+                    New Group
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </div>
             <div onClick={onLeaveModalOpen}>
               <LinkItem
