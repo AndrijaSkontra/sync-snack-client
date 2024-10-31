@@ -22,44 +22,57 @@ export default function LeaveGroupModal({ isOpen, onClose, session }: any) {
   const userGroupContext = useContext(UserGroupContext);
 
   function leaveGroup() {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/leaveGroup`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user.accessToken}`,
-        groupId: `${localStorage.getItem("GroupId")}`,
-      },
-    }).then((res) => {
-      if (res.status === 200) {
-        toast({
-          title: "Left Group",
-          description: "Group left success.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-          colorScheme: "xblue",
-        });
-        onClose();
-        const groupIdToRemove = localStorage.getItem("GroupId");
-        const newGroups = userGroupContext.userGroups.filter(
-          (group: any) => group.groupId !== groupIdToRemove,
-        );
-        userGroupContext.setUserGroups(newGroups);
-        localStorage.setItem("GroupId", "");
-        selectedGroupContext.setSelectedGroup({ name: "Select Group" });
-        router.push("/profile");
-      } else {
-        toast({
-          title: "Fail",
-          description: "Failed leaving group.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          colorScheme: "xred",
-        });
-        onClose();
-      }
-    });
+
+    if(!(localStorage.getItem("GroupId") === null || localStorage.getItem("GroupId") === "" )) {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/leaveGroup`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+          groupId: `${localStorage.getItem("GroupId")}`,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          toast({
+            title: "Left Group",
+            description: "Group left success.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            colorScheme: "xblue",
+          });
+          onClose();
+          const groupIdToRemove = localStorage.getItem("GroupId");
+          const newGroups = userGroupContext.userGroups.filter(
+            (group: any) => group.groupId !== groupIdToRemove,
+          );
+          userGroupContext.setUserGroups(newGroups);
+          localStorage.setItem("GroupId", "");
+          selectedGroupContext.setSelectedGroup({ name: "Select Group" });
+          router.push("/profile");
+        } else {
+          toast({
+            title: "Fail",
+            description: "Failed leaving group.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+            colorScheme: "xred",
+          });
+          onClose();
+        }
+      });
+    } else {
+      toast({
+        title: "Fail",
+        description: "Group is not defined.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        colorScheme: "xred",
+      });
+      onClose();
+    }
   }
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
