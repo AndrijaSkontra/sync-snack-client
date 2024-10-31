@@ -22,6 +22,7 @@ import { useSession } from "next-auth/react";
 import {
   IsMyEventVisibleContext,
   SelectedGroupContext,
+  UpdateGroupsSidebarContext,
 } from "@/app/components/Providers";
 import { useDisclosure } from "@chakra-ui/react";
 import { useFormState } from "react-dom";
@@ -39,9 +40,10 @@ import { useTranslations } from "next-intl";
  */
 export default function SidebarLinks({ session }) {
   const t = useTranslations("Sidebar");
+  const context = useContext(UpdateGroupsSidebarContext);
 
   const isMyEventVisibleContext = useContext(IsMyEventVisibleContext);
-  useMyEventVisible(isMyEventVisibleContext);
+  useMyEventVisible(isMyEventVisibleContext, context);
 
   const selectedGroupContext = useContext(SelectedGroupContext);
   const [state, formAction] = useFormState(handleGroupCreate, {
@@ -186,10 +188,11 @@ function LinkItem({ title, icon, url, context }) {
   );
 }
 
-function useMyEventVisible(isMyEventVisibleContext) {
+function useMyEventVisible(isMyEventVisibleContext, context) {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    console.log(context.updateString, "😀");
     if (status === "authenticated") {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/active`, {
         headers: {
@@ -198,12 +201,13 @@ function useMyEventVisible(isMyEventVisibleContext) {
           groupId: `${localStorage.getItem("GroupId")}`,
         },
       })
-        .then((response) => {
-          if (response.status === 200) {
-            isMyEventVisibleContext.setIsMyEventVisible(true);
-          }
+        .then((res) => res.json())
+        .then((data) => {
+          isMyEventVisibleContext.setIsMyEventVisible(true);
         })
-        .catch((e) => console.log("no my event"));
+        .catch((e) => {
+          isMyEventVisibleContext.setIsMyEventVisible(false);
+        });
     }
-  }, [session, status]);
+  }, [session, status, context.updateString]);
 }

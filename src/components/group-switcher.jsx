@@ -24,6 +24,7 @@ import {
   UpdateGroupsSidebarContext,
 } from "@/app/components/Providers";
 import { UserGroupContext } from "@/app/components/Providers";
+import { useMyEventVisible } from "./sidebar-links";
 
 export function GroupSwitcher({ accessToken }) {
   const router = useRouter();
@@ -115,6 +116,9 @@ export function GroupSwitcher({ accessToken }) {
                   onSelect={() => {
                     selectedGroupContext.setSelectedGroup(group);
                     localStorage.setItem("GroupId", group.groupId);
+                    updateGroupSidebarContext.setUpdateString(
+                      (prev) => prev + "1",
+                    );
                     router.push("/group");
                     router.refresh();
                   }}
