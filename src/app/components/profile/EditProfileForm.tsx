@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Button, Spinner, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Image,
+  Input,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -8,10 +16,13 @@ export default function EditProfileForm({
   onClose,
   session,
   setProfilePicture,
+  setFirstName,
+  setLastName,
 }: any) {
   const [loading, setLoading] = useState(false);
-
-  const [profileImage, setProfileImage]: any = useState();
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [firstName, setFname] = useState<string>("");
+  const [lastName, setLName] = useState<string>("");
   const [profileImageURL, setProfileImageURL] = useState<string | null>(null);
   const [isSubmitShown, setIsSubmitShown] = useState(false);
 
@@ -23,20 +34,32 @@ export default function EditProfileForm({
   }, []);
 
   const toast = useToast();
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, open } = useDropzone({
+    onDrop,
+    noClick: true,  // Prevents default file browser on zone click
+  });
 
   function handleClick(): void {
-    const formData = new FormData();
+    if (!firstName || !lastName) {
+      toast({
+        title: "Please fill in all fields.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
 
-    formData.append("file", profileImage);
+    const formData = new FormData();
+    if (profileImage) formData.append("file", profileImage);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
 
     setLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${session.user.accessToken}`,
-        // "Content-Type": "multipart/form-data"
       },
       body: formData,
     })
@@ -46,7 +69,7 @@ export default function EditProfileForm({
         setProfilePicture(profileImageURL);
         setLoading(false);
         toast({
-          title: "Profile image uploaded successfully!",
+          title: "Profile updated successfully!",
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -54,7 +77,7 @@ export default function EditProfileForm({
       })
       .catch((error) => {
         setLoading(false);
-        console.error("Error when uploading group image:", error);
+        console.error("Error when updating profile:", error);
       });
   }
 
@@ -67,30 +90,53 @@ export default function EditProfileForm({
   }, [profileImageURL]);
 
   return (
-    <div className="flex flex-col h-full">
-      <div
-        className="border-dashed border p-10 rounded-xl "
+    <div className="flex flex-col h-full space-y-4">
+      <Box>
+        <Text>First name:</Text>
+        <Input
+          type="text"
+          placeholder="Enter your new first name"
+          value={firstName}
+          onChange={(e) => setFname(e.target.value)}
+        />
+      </Box>
+      <Box>
+        <Text>Last Name:</Text>
+        <Input
+          type="text"
+          placeholder="Enter your new last name"
+          value={lastName}
+          onChange={(e) => setLName(e.target.value)}
+        />
+      </Box>
+
+      <Box
         {...getRootProps()}
+        className="border-dashed border p-4 rounded-lg flex flex-col items-center justify-center space-y-2 cursor-pointer"
+        onClick={open}
       >
         <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : !profileImage ? (
-          <p className="font-semibold text-gray-300 flex justify-center">
-            Drag &apos;n&apos; drop image
-          </p>
+        {profileImageURL ? (
+          <Image
+            src={profileImageURL}
+            alt="Selected profile preview"
+            boxSize="100px"
+            objectFit="cover"
+            borderRadius="full"
+          />
         ) : (
-          <p className="font-semibold text-gray-300 flex justify-center">
-            Image selected
-          </p>
+          <Text color="gray.500">Click or drag & drop an image</Text>
         )}
-      </div>
+      </Box>
+
       {isSubmitShown && (
         <Box className="mt-4 flex justify-center">
           {loading ? (
             <Spinner />
           ) : (
-            <Button onClick={handleClick}>Submit</Button>
+            <Button colorScheme="blue" onClick={handleClick}>
+              Submit
+            </Button>
           )}
         </Box>
       )}
