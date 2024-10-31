@@ -1,38 +1,39 @@
 "use client";
 import { Tr, Td, Button, Box, Text, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
-import Modal from "../../modals/Modal";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import OrderTypePretty from "../order-type-preatty/OrderTypePretty";
 import StatusPretty from "../status-preatty/StatusPretty";
 import RatingPretty from "../rating-preatty/RatingPretty";
 import OrderRateModalComponent from "../order-modal-component/OrderRateModalComponent";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/commons/formatDate";
+import { useDisclosure } from "@chakra-ui/react";
 
 export default function OrderRowMobile({ order, accessToken }: any) {
   const t = useTranslations("OrdersPage");
-  const [isRateModalOpened, setRateModalOpen] = useState(false);
-  const [isDescriptionModalOpened, setDescriptionModalOpen] = useState(false);
   const [orderRating, setOrderRating] = useState(order.rating);
-
-  const handleRateCloseModal = () => {
-    setRateModalOpen(false);
-  };
-
   const boxShadowColor = useColorModeValue("xorange.400", "xorange.600");
   const textColor = useColorModeValue("gray.900", "white");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenDesc,
+    onOpen: onOpenDesc,
+    onClose: onCloseDesc,
+  } = useDisclosure();
 
   return (
     <>
       <Box
-        className="bg-gray-50 dark:bg-gray-800 p-6 mb-6 rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
-        boxShadow={`0 6px 20px ${boxShadowColor}`}
+        className="bg-red-300 p-30 dark:bg-gray-800 p-6 mb-6 rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
         borderRadius="lg"
-        _hover={{
-          transform: "scale(1.05)",
-          boxShadow: `0 8px 25px ${boxShadowColor}`,
-        }}
-        onClick={() => setDescriptionModalOpen(true)}
       >
         <Box className="flex justify-between items-center">
           <Text
@@ -58,12 +59,16 @@ export default function OrderRowMobile({ order, accessToken }: any) {
           className="mt-4 text-lg leading-relaxed"
           color={useColorModeValue("gray.800", "gray.300")}
           fontFamily="body"
+          onClick={onOpenDesc}
         >
           {order.additionalOptions?.orderDetails
-            ? JSON.stringify(order.additionalOptions.orderDetails)
-            : JSON.stringify(order.additionalOptions.description)}
+            ? JSON.stringify(order.additionalOptions.orderDetails).slice(
+                0,
+                16,
+              ) + "..."
+            : JSON.stringify(order.additionalOptions.description).slice(0, 13) +
+              "..."}
         </Text>
-
         <Box className="mt-4 flex justify-center">
           {orderRating ? (
             <RatingPretty rating={orderRating} />
@@ -72,7 +77,7 @@ export default function OrderRowMobile({ order, accessToken }: any) {
               colorScheme="xorange"
               onClick={(e) => {
                 e.stopPropagation();
-                setRateModalOpen(true);
+                onOpen();
               }}
             >
               {t("RateButton")}
@@ -80,17 +85,35 @@ export default function OrderRowMobile({ order, accessToken }: any) {
           )}
         </Box>
       </Box>
-
-      {isRateModalOpened && (
-        <Modal isOpen={isRateModalOpened} onClose={handleRateCloseModal}>
-          <OrderRateModalComponent
-            setRating={setOrderRating}
-            accessToken={accessToken}
-            coffeeOrderId={order.orderId}
-            onClose={handleRateCloseModal}
-          />
-        </Modal>
-      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Rate Order</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <OrderRateModalComponent
+              setRating={setOrderRating}
+              accessToken={accessToken}
+              coffeeOrderId={order.orderId}
+              onClose={onClose}
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpenDesc} onClose={onCloseDesc}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Description</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box className="p-6">
+              {order.additionalOptions?.orderDetails
+                ? JSON.stringify(order.additionalOptions.orderDetails)
+                : JSON.stringify(order.additionalOptions.description)}
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

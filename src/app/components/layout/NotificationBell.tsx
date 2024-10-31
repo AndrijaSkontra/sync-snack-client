@@ -1,6 +1,7 @@
 "use client";
 import {
   Box,
+  useColorMode,
   useColorModeValue,
   useDisclosure,
   useToast,
@@ -30,6 +31,17 @@ export default function NotificationBell() {
     setNotifications,
     groupEventContext.setGroupEvents,
   );
+
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  // Update the 'dark' class on the <html> element whenever colorMode changes
+  useEffect(() => {
+    if (colorMode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [colorMode]);
 
   const bellIsNotNotifiedColors = useColorModeValue("blue.100", "blue.500");
   const bellNotifiedColors = useColorModeValue("yellow.500", "yellow.400");

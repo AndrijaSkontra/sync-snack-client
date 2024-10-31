@@ -76,16 +76,16 @@ export default function NotificationCard({ notification }: NotificationProps) {
           <>
             <Text>Order on your event:</Text>
             <Text fontSize="sm" color="gray.500">
-              {notification.additionalOptions?.description}
+              {notification.additionalOptions?.description.slice(0, 15)}
             </Text>
           </>
         ) : (
           <>
             <Text fontSize="xl" fontWeight="bold">
-              {title}
+              {title && description?.slice(0, 15)}
             </Text>
             <Text fontSize="sm" color="gray.500">
-              {description}
+              {description && description.slice(0, 15)}
             </Text>
           </>
         )}
@@ -116,4 +116,3 @@ export default function NotificationCard({ notification }: NotificationProps) {
     </Box>
   );
 }
-

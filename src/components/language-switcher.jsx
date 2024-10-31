@@ -31,13 +31,12 @@ export default function LanguageSwitcher() {
   return (
     <Box className="flex justify-around mb-4">
       <Image
-        className={clsx("hover:scale-125 transition ease-in", {
+        className={clsx("size-8 hover:scale-125 transition ease-in", {
           "grayscale-[0.8]": !croatianSelected,
         })}
         objectFit="cover"
         rounded="full"
         borderRadius="full"
-        boxSize={50}
         alt="croatia"
         src="/croatia.png"
         onMouseDown={() => {
@@ -49,13 +48,12 @@ export default function LanguageSwitcher() {
         }}
       />
       <Image
-        className={clsx("hover:scale-125 transition ease-in", {
+        className={clsx("size-8 hover:scale-125 transition ease-in", {
           "grayscale-[0.8]": croatianSelected,
         })}
         objectFit="cover"
         rounded="full"
         borderRadius="full"
-        boxSize={50}
         alt="english"
         src="/uk.png"
         onMouseDown={() => {
