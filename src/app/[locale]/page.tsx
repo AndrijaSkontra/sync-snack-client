@@ -18,7 +18,7 @@ export default function HomePage() {
         </Link>
         <Link href="/register">
           <Button colorScheme="xorange" variant="outline">
-            Sign in
+            Register
           </Button>
         </Link>
       </Box>

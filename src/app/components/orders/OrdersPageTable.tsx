@@ -22,6 +22,7 @@ export default function OrdersPageTable({
 }) {
   const [orders, setOrders] = useState([]);
   const router = useRouter();
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   useEffect(() => {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/all?size=${calculateOrderSizeBasedOnScreenHeight()}&page=${currentPage}&search=${input}&rating=${rateFilter}&status=${statusFilter}`;
@@ -35,6 +36,12 @@ export default function OrdersPageTable({
       .then((response) => response.json())
       .then((data) => setOrders(data))
       .catch(() => setOrders([]));
+    console.log(rateFilter, statusFilter, input, "😀");
+    if (rateFilter === 0 && statusFilter === "" && input === "") {
+      setIsFilterApplied(false);
+    } else {
+      setIsFilterApplied(true);
+    }
   }, [currentPage, input, rateFilter, statusFilter, accessToken]);
 
   const updateUrlParams = (key: string, value: string | number) => {
@@ -55,6 +62,7 @@ export default function OrdersPageTable({
         />
       </Box>
       <OrdersTable
+        isFilterApplied={isFilterApplied}
         accessToken={accessToken}
         orders={orders}
         setCurrentPage={(page: number) => updateUrlParams("page", page)}
