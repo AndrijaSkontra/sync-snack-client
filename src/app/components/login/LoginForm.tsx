@@ -1,4 +1,5 @@
 "use client";
+
 import { 
   Box, 
   Button, 
@@ -10,17 +11,15 @@ import {
   FormErrorMessage,
   useToast 
 } from "@chakra-ui/react";
+
 import PasswordInput from "./PasswordInput";
 import { useFormState, useFormStatus } from "react-dom";
 import { useTranslations } from "next-intl";
 import { handleLogin } from "@/app/server-actions/login";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 const initialState: any = {
   message: null,
   errors: null,
-  userId: null,
 };
 
 /**
@@ -30,8 +29,8 @@ const initialState: any = {
  */
 export default function LoginForm() {
   const t = useTranslations("LoginPage");
-  const router = useRouter();
   const [state, formAction] = useFormState(handleLogin, initialState);
+
   const toast = useToast();
   const showToast = (toast: any, { title, description, status }: { title: string, description: string, status: "error" | "warning" | "success" | "info" }) => {
     toast({
@@ -83,35 +82,20 @@ export default function LoginForm() {
     }
   }, [state, router, toast]);
 
+
   return (
     <form action={formAction}>
-      <FormControl isInvalid={!!state.errors?.email} mb={4}>
-        <FormLabel>Email</FormLabel>
-        <Input
-          id="email"
-          name="email"
-          focusBorderColor="xblue.500"
-          placeholder="Email"
-        />
-        {state.errors?.email && (
-          <FormErrorMessage>{state.errors.email}</FormErrorMessage>
-        )}
-      </FormControl>
-
-      <FormControl isInvalid={!!state.errors?.password} mb={4}>
-        <FormLabel>Password</FormLabel>
-        <PasswordInput />
-        {state.errors?.password && (
-          <FormErrorMessage>{state.errors.password}</FormErrorMessage>
-        )}
-      </FormControl>
-
+      <Input
+        id="email"
+        name="email"
+        focusBorderColor="xblue.500"
+        className="mb-2"
+        placeholder="Email"
+      />
+      <PasswordInput />
       <Box className="flex justify-center items-center mt-2">
-        {state.message && !state.errors && (
-          <Text textColor="red.500">{state.message}</Text>
-        )}
+        {state && <Text textColor={"red.500"}>{state.message}</Text>}
       </Box>
-
       <Box className="flex justify-center items-center">
         <SubmitButton />
       </Box>
@@ -122,15 +106,11 @@ export default function LoginForm() {
 function SubmitButton() {
   const { pending } = useFormStatus();
   const t = useTranslations("LoginPage");
-  
+
   return (
     <>
       {!pending ? (
-        <Button 
-          type="submit" 
-          className="w-full mt-4" 
-          colorScheme="xblue"
-        >
+        <Button type="submit" className="w-full mt-4" colorScheme="xblue">
           {t("Login")}
         </Button>
       ) : (

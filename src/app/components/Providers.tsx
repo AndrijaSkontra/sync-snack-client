@@ -34,8 +34,14 @@ export const UserGroupContext = createContext({
   setUserGroups: (value: any) => {},
 });
 
+export const UserProfilePictureContext = createContext({
+  userProfilePicture: null,
+  setUserProfilePicture: (value: any) => {},
+});
+
 export function Providers({ children }: { children: React.ReactNode }) {
   const [groupEvents, setGroupEvents] = useState([]);
+  const [userProfilePicture, setUserProfilePicture] = useState(null);
   const [userRoles, setUserRoles] = useState([]);
   const [updateString, setUpdateString] = useState("");
   const [isMyEventVisible, setIsMyEventVisible] = useState(false);
@@ -43,28 +49,32 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [userGroups, setUserGroups] = useState([]);
 
   return (
-    <UserGroupContext.Provider value={{ userGroups, setUserGroups }}>
-      <SelectedGroupContext.Provider
-        value={{ selectedGroup, setSelectedGroup }}
-      >
-        <UpdateGroupsSidebarContext.Provider
-          value={{ updateString, setUpdateString }}
+    <UserProfilePictureContext.Provider
+      value={{ userProfilePicture, setUserProfilePicture }}
+    >
+      <UserGroupContext.Provider value={{ userGroups, setUserGroups }}>
+        <SelectedGroupContext.Provider
+          value={{ selectedGroup, setSelectedGroup }}
         >
-          <UserRolesContext.Provider value={{ userRoles, setUserRoles }}>
-            <IsMyEventVisibleContext.Provider
-              value={{ isMyEventVisible, setIsMyEventVisible }}
-            >
-              <GroupEventsContext.Provider
-                value={{ groupEvents, setGroupEvents }}
+          <UpdateGroupsSidebarContext.Provider
+            value={{ updateString, setUpdateString }}
+          >
+            <UserRolesContext.Provider value={{ userRoles, setUserRoles }}>
+              <IsMyEventVisibleContext.Provider
+                value={{ isMyEventVisible, setIsMyEventVisible }}
               >
-                <SessionProvider>
-                  <ChakraProvider theme={theme}>{children}</ChakraProvider>
-                </SessionProvider>
-              </GroupEventsContext.Provider>
-            </IsMyEventVisibleContext.Provider>
-          </UserRolesContext.Provider>
-        </UpdateGroupsSidebarContext.Provider>
-      </SelectedGroupContext.Provider>
-    </UserGroupContext.Provider>
+                <GroupEventsContext.Provider
+                  value={{ groupEvents, setGroupEvents }}
+                >
+                  <SessionProvider>
+                    <ChakraProvider theme={theme}>{children}</ChakraProvider>
+                  </SessionProvider>
+                </GroupEventsContext.Provider>
+              </IsMyEventVisibleContext.Provider>
+            </UserRolesContext.Provider>
+          </UpdateGroupsSidebarContext.Provider>
+        </SelectedGroupContext.Provider>
+      </UserGroupContext.Provider>
+    </UserProfilePictureContext.Provider>
   );
 }

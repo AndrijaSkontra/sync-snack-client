@@ -21,10 +21,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation.js";
+import { useContext } from "react";
+import { UserProfilePictureContext } from "@/app/components/Providers";
 
 export function ProfileSettings({ session }) {
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
+  const context = useContext(UserProfilePictureContext);
 
   // Update the 'dark' class on the <html> element whenever colorMode changes
   useEffect(() => {
@@ -34,6 +37,8 @@ export function ProfileSettings({ session }) {
       document.documentElement.classList.remove("dark");
     }
   }, [colorMode]);
+
+  context.setUserProfilePicture(session?.user.profileUri);
 
   return (
     <SidebarMenu>
@@ -46,7 +51,7 @@ export function ProfileSettings({ session }) {
             >
               <Avatar>
                 <AvatarImage
-                  src={`${session?.user.profileUri}`}
+                  src={context.userProfilePicture}
                   className="h-10 w-10 rounded-full border-2 border-black object-cover dark:border-gray-300"
                 />
                 <AvatarFallback>

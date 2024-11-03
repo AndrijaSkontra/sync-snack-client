@@ -18,6 +18,7 @@ import z from "zod";
 export async function handleLogin(prevState: any, formData: FormData) {
   try {
     const validatedFields = validateUserInput(formData);
+
     const isverified = await checkIfUserVerified(validatedFields);
     if (isverified) {
       await checkDoesUserHaveProfile(validatedFields);
@@ -33,16 +34,19 @@ export async function handleLogin(prevState: any, formData: FormData) {
       }
     }
    
+
   } catch (e: any) {
     const message: string = e.message;
     const messageList = message.split(":");
     if (messageList[0] === "Next redirect handle") {
       redirect(`/setprofile?userId=${messageList[2]}`);
     }
+
     if (e.message[0] === "E" || e.message[0] === "W") {
       return { message: "Wrong credentials" };
     }
     return { message: e.message };
+
   }
   redirect("/profile");
 }

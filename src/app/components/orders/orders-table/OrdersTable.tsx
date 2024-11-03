@@ -25,15 +25,17 @@ export default function OrdersTable({
   accessToken,
   currentPage,
   setCurrentPage,
+  isFilterApplied,
 }: {
   orders: any[];
   accessToken: any;
   currentPage: number;
   setCurrentPage: any;
+  isFilterApplied: any;
 }) {
   const t = useTranslations("OrdersPage");
 
-  if (orders.length === 0) {
+  if (orders.length === 0 && !isFilterApplied) {
     return (
       <Box className="flex justify-center items-center p-10">
         <Box className="rounded-xl border-2 border-black dark:border-white px-10 py-4 min-w-[60%] flex justify-center items-center flex-col">
