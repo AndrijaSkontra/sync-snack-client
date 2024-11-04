@@ -122,10 +122,12 @@ export default function SidebarLinks({ session }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </div>
-            <div onClick={onLeaveModalOpen}>
+            <div>
               <LinkItem
                 title={t("Leave Group")}
                 context={selectedGroupContext}
+                isLeaveGroup={true}
+                onOpenLeaveGroupModal={onLeaveModalOpen}
                 url="#"
                 icon={
                   <ArrowLeftCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
@@ -153,7 +155,14 @@ export default function SidebarLinks({ session }) {
   );
 }
 
-function LinkItem({ title, icon, url, context }) {
+function LinkItem({
+  title,
+  icon,
+  url,
+  context,
+  isLeaveGroup,
+  onOpenLeaveGroupModal,
+}) {
   let disable = false;
   if (
     context?.selectedGroup === null ||
@@ -167,6 +176,26 @@ function LinkItem({ title, icon, url, context }) {
     if (groupName.length > 8) {
       groupName = groupName.slice(0, 8) + "...";
     }
+  }
+
+  if (isLeaveGroup) {
+    return (
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild>
+          {disable ? (
+            <Link aria-disabled href={url} onClick={onOpenLeaveGroupModal}>
+              {icon}
+              {title}
+            </Link>
+          ) : (
+            <Link href={url} onClick={onOpenLeaveGroupModal}>
+              {icon}
+              {title}
+            </Link>
+          )}
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
   }
 
   return (
