@@ -18,19 +18,35 @@ import z from "zod";
 export async function handleLogin(prevState: any, formData: FormData) {
   try {
     const validatedFields = validateUserInput(formData);
-    await checkDoesUserHaveProfile(validatedFields);
-    await signInUser(validatedFields);
+
+    const isverified = await checkIfUserVerified(validatedFields);
+    if (isverified) {
+      await checkDoesUserHaveProfile(validatedFields);
+      
+    } else {
+      try {
+        await signInUser(validatedFields);
+      } catch (e) {
+        return {
+          message: "User is not verified, please check your email",
+          type: "verification_required"
+        };
+      }
+    }
+   
+
   } catch (e: any) {
     const message: string = e.message;
     const messageList = message.split(":");
     if (messageList[0] === "Next redirect handle") {
       redirect(`/setprofile?userId=${messageList[2]}`);
     }
-    console.log("error:", e.message[0])
+
     if (e.message[0] === "E" || e.message[0] === "W") {
-      return { message: "Wrong credentials" }
+      return { message: "Wrong credentials" };
     }
-    return { message: e.message[0] };
+    return { message: e.message };
+
   }
   redirect("/profile");
 }
@@ -50,6 +66,30 @@ function validateUserInput(formData: FormData) {
     throw new Error("Email or Pass bad input");
   }
   return validatedFields;
+}
+
+async function checkIfUserVerified(validatedFields: any): Promise<boolean> {
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/api/users/verify?email=${validatedFields.data.email}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.isVerified; // This will return the boolean value directly
+  } catch (error) {
+    console.error('Error checking user verification:', error);
+    throw error;
+  }
 }
 
 async function checkDoesUserHaveProfile(validatedFields: any) {

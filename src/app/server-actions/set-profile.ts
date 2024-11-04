@@ -135,7 +135,7 @@ export async function setupProfile(userId: string | null, formData: any) {
     }
     return { success: true, groupId: joinResult.groupId };
   }
-  redirect("/profile");
+  
 
   return { success: true };
 }
