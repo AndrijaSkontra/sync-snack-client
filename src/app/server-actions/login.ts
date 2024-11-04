@@ -20,9 +20,10 @@ export async function handleLogin(prevState: any, formData: FormData) {
     const validatedFields = validateUserInput(formData);
 
     const isverified = await checkIfUserVerified(validatedFields);
+    console.log("is verified, ", isverified)
     if (isverified) {
       await checkDoesUserHaveProfile(validatedFields);
-      
+      await signInUser(validatedFields);
     } else {
       try {
         await signInUser(validatedFields);
@@ -134,6 +135,8 @@ async function checkDoesUserHaveProfile(validatedFields: any) {
 }
 
 async function signInUser(validatedFields: any) {
+  console.log("Doslo dovde");
+  console.log(validatedFields);
   try {
     await signIn("credentials", {
       email: validatedFields.data.email,
