@@ -18,6 +18,7 @@ import { useTranslations } from "next-intl";
 import { handleLogin } from "@/app/server-actions/login";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 const initialState: any = {
   message: null,
   errors: null,
@@ -31,6 +32,7 @@ const initialState: any = {
 export default function LoginForm() {
   const t = useTranslations("LoginPage");
   const [state, formAction] = useFormState(handleLogin, initialState);
+  const router = useRouter();
 
   const toast = useToast();
   const showToast = (
