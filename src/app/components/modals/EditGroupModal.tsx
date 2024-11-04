@@ -16,6 +16,8 @@ export default function EditGroupModal({
   onClose,
   session,
   setReload,
+  setGroupName,
+  setGroupDescription
 }: any) {
   return (
     <>
@@ -29,6 +31,7 @@ export default function EditGroupModal({
               session={session}
               onClose={onClose}
               setReload={setReload}
+              
             />
           </ModalBody>
         </ModalContent>
