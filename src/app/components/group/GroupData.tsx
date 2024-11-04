@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import EditGroupModal from "../modals/EditGroupModal";
 import { UserRolesContext } from "../Providers";
+import { group } from "console";
 
 export default function GroupData({ session }: any) {
   const [reload, setReload] = useState("");
@@ -20,10 +21,13 @@ export default function GroupData({ session }: any) {
   const [group, setGroup]: any = useState();
   const [isLoading, setLoading] = useState(true);
   const [isLoadingRoles, setIsLoadingRoles] = useState(true);
+
   useGroupData(jwtToken, setGroup, setLoading, session, reload);
   const [userRoles, setUserRoles]: any = useState();
   const [transfromRoles, setTransfromRoles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  
+
   useMemberRole(
     jwtToken,
     setUserRoles,
@@ -113,6 +117,7 @@ export default function GroupData({ session }: any) {
             isOpen={isOpen}
             session={session}
             setReload={setReload}
+            
           />
         </Box>
       )}
