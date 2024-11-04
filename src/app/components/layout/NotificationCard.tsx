@@ -40,7 +40,7 @@ export default function NotificationCard({ notification }: NotificationProps) {
   };
 
   const handleNotificationClick = () => {
-    const route = isOrderNotification ? "/orders" : "/group-events";
+    const route = isOrderNotification ? "/event" : "/group-events";
     router.push(route);
   };
 
