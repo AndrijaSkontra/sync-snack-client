@@ -58,7 +58,6 @@ export default function EditProfileForm({
     if (lastName) formData.append("lastName", lastName);
     if (profileImage) formData.append("file", profileImage);
     const url: any = profileImageURL?.split(":");
-    console.log(url[1] + url[2] + url[3], "😎");
 
     setLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profiles/edit`, {
