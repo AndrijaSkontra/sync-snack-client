@@ -4,13 +4,25 @@ import { useEffect, useState } from "react";
 import UserEventCard from "./UserEventCard";
 import { Box, Button, Divider, Heading, Text, useToast } from "@chakra-ui/react";
 import { OrderEventCardComponent } from "./OrderForEventCardComponent";
+import useNewOrdersStore from "@/app/server-actions/zustandscripts/fetchNewOrders";
 
 export default function EventGridWithOrders() {
   const { data: session, status }: any = useSession();
   const [event, setEvent]: any = useState();
   const [orders, setOrders]: any = useState([]);
   const toast = useToast();
+  const shouldRefetchOrders = useNewOrdersStore((state) => state.value);
+  const setRefetchOrders = useNewOrdersStore((state) => state.setValue);
 
+  useEffect(() => {
+    console.log(shouldRefetchOrders)
+    if (status === "authenticated" && (shouldRefetchOrders || !event)) {
+      useEventData(setEvent, setOrders, status, session)
+      setRefetchOrders(false);
+    }
+  }, [status, shouldRefetchOrders, session, setRefetchOrders]);
+
+  
   useEventData(setEvent, setOrders, status, session);
 
   const cancelOrder = (orderId: any) => {
@@ -56,8 +68,11 @@ export default function EventGridWithOrders() {
   );
 }
 
-function useEventData(setEvent: any, setOrders: any, status: any, session: any) {
-  useEffect(() => {
+function useEventData(setEvent: any,
+   setOrders: any,
+    status: any,
+    session: any) {
+  
     if (status === "authenticated") {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/active`, {
         headers: {
@@ -80,5 +95,7 @@ function useEventData(setEvent: any, setOrders: any, status: any, session: any) 
         .then(setOrders)
         .catch(console.error);
     }
-  }, [status]);
+  
+
 }
+
