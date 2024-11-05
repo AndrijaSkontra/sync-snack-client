@@ -20,7 +20,7 @@ export async function handleLogin(prevState: any, formData: FormData) {
     const validatedFields = validateUserInput(formData);
 
     const isverified = await checkIfUserVerified(validatedFields);
-    console.log("is verified, ", isverified)
+    console.log("is verified, ", isverified);
     if (isverified) {
       await checkDoesUserHaveProfile(validatedFields);
       await signInUser(validatedFields);
@@ -30,12 +30,10 @@ export async function handleLogin(prevState: any, formData: FormData) {
       } catch (e) {
         return {
           message: "User is not verified, please check your email",
-          type: "verification_required"
+          type: "verification_required",
         };
       }
     }
-   
-
   } catch (e: any) {
     const message: string = e.message;
     const messageList = message.split(":");
@@ -47,7 +45,6 @@ export async function handleLogin(prevState: any, formData: FormData) {
       return { message: "Wrong credentials" };
     }
     return { message: e.message };
-
   }
   redirect("/profile");
 }
@@ -78,7 +75,7 @@ async function checkIfUserVerified(validatedFields: any): Promise<boolean> {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -88,7 +85,7 @@ async function checkIfUserVerified(validatedFields: any): Promise<boolean> {
     const data = await res.json();
     return data.isVerified; // This will return the boolean value directly
   } catch (error) {
-    console.error('Error checking user verification:', error);
+    console.error("Error checking user verification:", error);
     throw error;
   }
 }
@@ -135,7 +132,6 @@ async function checkDoesUserHaveProfile(validatedFields: any) {
 }
 
 async function signInUser(validatedFields: any) {
-  console.log("Doslo dovde");
   console.log(validatedFields);
   try {
     await signIn("credentials", {

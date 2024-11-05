@@ -72,7 +72,12 @@ export default function ClientLeave({ session }: any) {
   return (
     <div className="flex flex-col space-y-2 items-center">
       <Text>Are you sure you want to leave this group?</Text>
-      <Button onClick={leaveGroup}>Yes</Button>
+      <div className="flex space-x-4">
+        <Button onClick={() => router.push("/profile")} variant="outline">
+          No
+        </Button>
+        <Button onClick={leaveGroup}>Yes</Button>
+      </div>
     </div>
   );
 }

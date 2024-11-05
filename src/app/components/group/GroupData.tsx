@@ -26,7 +26,6 @@ export default function GroupData({ session }: any) {
   const [userRoles, setUserRoles]: any = useState();
   const [transfromRoles, setTransfromRoles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
 
   useMemberRole(
     jwtToken,
@@ -117,7 +116,6 @@ export default function GroupData({ session }: any) {
             isOpen={isOpen}
             session={session}
             setReload={setReload}
-            
           />
         </Box>
       )}

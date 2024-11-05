@@ -69,7 +69,6 @@ export default function SidebarLinks({ session }) {
   } = useDisclosure();
 
   const { isMobile } = useSidebar();
-  console.log(isMobile, "is mobile");
 
   return (
     <>
@@ -229,7 +228,6 @@ function useMyEventVisible(isMyEventVisibleContext, context) {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    console.log(context.updateString, "😀");
     if (status === "authenticated") {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/active`, {
         headers: {
