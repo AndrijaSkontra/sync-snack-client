@@ -117,7 +117,7 @@ export default function SidebarLinks({ session }) {
           <SidebarMenu>
             <div
               onClick={() => {
-                if (!isMobile) onGroupModalOpen;
+                if (!isMobile) onGroupModalOpen();
               }}
             >
               <SidebarMenuItem>
