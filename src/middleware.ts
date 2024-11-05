@@ -24,6 +24,8 @@ export const config = {
   matcher: [
     "/",
     "/login",
+    "/new-group",
+    "/leave-group",
     "/join",
     "/register",
     "/profile",

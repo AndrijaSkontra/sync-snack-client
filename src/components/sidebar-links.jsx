@@ -15,6 +15,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
@@ -67,6 +68,9 @@ export default function SidebarLinks({ session }) {
     onClose: onLeaveModalClose,
   } = useDisclosure();
 
+  const { isMobile } = useSidebar();
+  console.log(isMobile, "is mobile");
+
   return (
     <>
       <SidebarGroup>
@@ -112,10 +116,14 @@ export default function SidebarLinks({ session }) {
         <SidebarGroupLabel>Group Management</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            <div onClick={onGroupModalOpen}>
+            <div
+              onClick={() => {
+                if (!isMobile) onGroupModalOpen;
+              }}
+            >
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href="#">
+                  <Link href={isMobile ? "/new-group" : "#"}>
                     <PlusCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
                     New Group
                   </Link>
@@ -127,8 +135,8 @@ export default function SidebarLinks({ session }) {
                 title={t("Leave Group")}
                 context={selectedGroupContext}
                 isLeaveGroup={true}
-                onOpenLeaveGroupModal={onLeaveModalOpen}
-                url="#"
+                onOpenLeaveGroupModal={!isMobile && onLeaveModalOpen}
+                url={isMobile ? "/leave-group" : "#"}
                 icon={
                   <ArrowLeftCircleIcon className="dark:stroke-2 stroke-[#234089] dark:stroke-[#5978bc]" />
                 }
