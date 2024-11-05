@@ -1,34 +1,13 @@
-import UserNoSession from "@/app/components/user-no-session";
-import { auth } from "@/commons/auth";
-import { Box, Link, Text } from "@chakra-ui/react";
+"use client"
+import { Box, Link, Text, useToast } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
-export default async function JoinGroupPage({ searchParams }: any) {
-  const session = await auth();
-  const activeUser: any = session?.user;
-  if (!activeUser?.accessToken) {
-    return <UserNoSession code={searchParams.code} />;
-  }
-  const groupStatus = await fetch(
-    `${process.env.BACKEND_URL}/api/groups/joinViaInvitation/${searchParams.code}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${activeUser.accessToken}`,
-      },
-    },
-  )
-    .then((res) => res.status)
-    .catch((e) => console.log(e));
-
-  if (groupStatus === 404) {
-    return "you are already a member of this group";
-  }
-
-  if (groupStatus === 200) {
+export default function JoinGroupPage({ searchParams }: any) {
+  
+  localStorage.setItem("code-rem", `Run ${searchParams.code}`);
     redirect("/profile");
-    return "successful join redirecting...";
-  }
+    
+  
 
   return (
     <Box>
