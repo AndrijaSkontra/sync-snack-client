@@ -15,6 +15,8 @@ import NotificationDrawer from "./NotificationDrawer";
 import { NotificationType } from "@/commons/types";
 import { GroupEventsContext } from "../Providers";
 import { BellIcon } from "@chakra-ui/icons";
+import useNewOrdersStore from "@/app/server-actions/zustandscripts/fetchNewOrders";
+
 
 export default function NotificationBell() {
   const { data: session, status }: any = useSession();
@@ -23,6 +25,7 @@ export default function NotificationBell() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const groupEventContext = useContext(GroupEventsContext);
+  const setRefetchOrders = useNewOrdersStore((state) => state.setValue);
   useSubscribeToWS(
     session,
     setIsBellNotified,
@@ -30,6 +33,7 @@ export default function NotificationBell() {
     status,
     setNotifications,
     groupEventContext.setGroupEvents,
+    setRefetchOrders
   );
 
   const { colorMode, toggleColorMode } = useColorMode();
@@ -76,6 +80,7 @@ function useSubscribeToWS(
   status: any,
   setNotifications: any,
   setGroupEvents: any,
+  setRefetchOrders: any
 ) {
   useEffect(() => {
     if (status === "authenticated") {
@@ -87,6 +92,7 @@ function useSubscribeToWS(
             `/topic/orders.${activeUser.userProfileId}`,
             (message: any) => {
               setIsBellNotified(true);
+              setRefetchOrders(true);
               const bodyObject = JSON.parse(message.body);
               const groupOrderObject = {
                 eventId: bodyObject.eventId,
