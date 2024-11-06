@@ -1,5 +1,11 @@
 "use client";
-import { Box, Button, Divider, useColorMode, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  useColorMode,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   Modal,
   Text,
@@ -23,13 +29,14 @@ import Lottie from "lottie-react";
  * The button won't be displayed if the user already has
  * an active event.
  */
-export default function CreateEventButtonModal() {
+export default function CreateEventButtonModal({ activeEvent }: any) {
   const t = useTranslations("Group events page");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [userHasEvent, setUserHasEvent] = useState(false);
   const { data: session, status }: any = useSession();
   const { colorMode } = useColorMode();
-  const animationData = colorMode === "light" ? eventInProgressLight : eventInProgressDark
+  const animationData =
+    colorMode === "light" ? eventInProgressLight : eventInProgressDark;
   useEffect(() => {
     if (status === "authenticated") {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/active`, {
@@ -47,6 +54,23 @@ export default function CreateEventButtonModal() {
     }
   }, [status, isOpen]);
 
+  if (activeEvent) {
+    return (
+      <Box className="text-center">
+        <Box className="w-32 h-32 mx-auto">
+          <Lottie
+            animationData={animationData}
+            loop={true}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </Box>
+        <Text className="mt-2 text-base font-semibold">
+          You have an ongoing event
+        </Text>
+      </Box>
+    );
+  }
+
   return (
     <Box className="flex justify-center">
       {!userHasEvent ? (
@@ -59,15 +83,13 @@ export default function CreateEventButtonModal() {
             <Lottie
               animationData={animationData}
               loop={true}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: "100%", height: "100%" }}
             />
           </Box>
           <Text className="mt-2 text-base font-medium ">
             You have an ongoing event
           </Text>
-          
         </Box>
-        
       )}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

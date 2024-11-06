@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { IsMyEventVisibleContext } from "../Providers";
+import revalidateStuff from "@/app/server-actions/revalidate-action";
 
 export default function UserEventCard({ event, orders }: any) {
   // TODO: get orderId from orders
@@ -85,13 +86,18 @@ export default function UserEventCard({ event, orders }: any) {
       width="full"
     >
       <Box mb={4}>
-        <Text fontSize="2xl" fontWeight="bold">{event.title}</Text>
+        <Text fontSize="2xl" fontWeight="bold">
+          {event.title}
+        </Text>
       </Box>
 
       <Box mb={4}>
-        <Tooltip label={event.description} isDisabled={event.description.length <= 50}>
+        <Tooltip
+          label={event.description}
+          isDisabled={event.description.length <= 50}
+        >
           <Text color="gray.500">
-            {event.description.length > 50 
+            {event.description.length > 50
               ? `${event.description.slice(0, 50)}...`
               : event.description}
           </Text>
@@ -102,6 +108,7 @@ export default function UserEventCard({ event, orders }: any) {
         <Button
           onClick={() => {
             context.setIsMyEventVisible(false);
+            revalidateStuff();
             handleAllOrders("CANCELLED");
           }}
           colorScheme="red"
@@ -109,7 +116,10 @@ export default function UserEventCard({ event, orders }: any) {
           Cancel
         </Button>
         <Button
-          onClick={() => handleAllOrders("COMPLETED")}
+          onClick={() => {
+            revalidateStuff();
+            handleAllOrders("COMPLETED");
+          }}
           colorScheme="blue"
         >
           Finish
