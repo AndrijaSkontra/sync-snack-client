@@ -29,8 +29,6 @@ export default function EventGridWithOrders() {
     }
   }, [status, shouldRefetchOrders, session, setRefetchOrders]);
 
-  getEventData(setEvent, setOrders, status, session);
-
   const cancelOrder = (orderId: any) => {
     fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/update?orderId=${orderId}&status=CANCELLED`,
@@ -113,6 +111,7 @@ function getEventData(
   session: any,
 ) {
   if (status === "authenticated") {
+    console.log("helloo");
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/active`, {
       headers: {
         "Content-Type": "application/json",
