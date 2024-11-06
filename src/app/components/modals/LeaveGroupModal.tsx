@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { SelectedGroupContext, UserGroupContext } from "../Providers";
+import { setGroupIdServer } from "@/components/group-switcher";
 
 export default function LeaveGroupModal({ isOpen, onClose, session }: any) {
   const toast = useToast();
@@ -22,8 +23,12 @@ export default function LeaveGroupModal({ isOpen, onClose, session }: any) {
   const userGroupContext = useContext(UserGroupContext);
 
   function leaveGroup() {
-
-    if(!(localStorage.getItem("GroupId") === null || localStorage.getItem("GroupId") === "" )) {
+    if (
+      !(
+        localStorage.getItem("GroupId") === null ||
+        localStorage.getItem("GroupId") === ""
+      )
+    ) {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/groups/leaveGroup`, {
         method: "DELETE",
         headers: {
@@ -48,6 +53,7 @@ export default function LeaveGroupModal({ isOpen, onClose, session }: any) {
           );
           userGroupContext.setUserGroups(newGroups);
           localStorage.setItem("GroupId", "");
+          setGroupIdServer("");
           selectedGroupContext.setSelectedGroup({ name: "Select Group" });
           router.push("/profile");
         } else {

@@ -24,25 +24,25 @@ import {
 } from "@/app/components/Providers";
 import { UserGroupContext } from "@/app/components/Providers";
 
+export async function setGroupIdServer(groupId) {
+  await fetch("/api/groupId", {
+    method: "POST",
+    body: JSON.stringify({
+      groupId: String(groupId),
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
+}
+
 export function GroupSwitcher({ accessToken }) {
   const router = useRouter();
 
   const selectedGroupContext = useContext(SelectedGroupContext);
   const userGroupsContext = useContext(UserGroupContext);
   const updateGroupSidebarContext = useContext(UpdateGroupsSidebarContext);
-
-  async function setGroupIdServer(groupId) {
-    await fetch("/api/groupId", {
-      method: "POST",
-      body: JSON.stringify({
-        groupId: String(groupId),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-  }
 
   useEffect(() => {
     function fetchCurrentGroup() {

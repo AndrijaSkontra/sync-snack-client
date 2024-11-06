@@ -8,6 +8,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
+import { setGroupIdServer } from "@/components/group-switcher";
 
 export default function ClientLeave({ session }: any) {
   const toast = useToast();
@@ -45,6 +46,7 @@ export default function ClientLeave({ session }: any) {
           );
           userGroupContext.setUserGroups(newGroups);
           localStorage.setItem("GroupId", "");
+          setGroupIdServer("");
           selectedGroupContext.setSelectedGroup({ name: "Select Group" });
           router.push("/profile");
         } else {

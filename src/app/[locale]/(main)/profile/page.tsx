@@ -5,7 +5,6 @@ import { Box } from "@chakra-ui/react";
 
 export default async function ProfilePage() {
   const session: any = await auth();
-  console.log("Session-------->", session);
   const activeUser: any = session?.user;
   const userProfileData = await fetchProfileData(activeUser);
   const userProfileOrderStats = await fetchProfileOrdersStats(activeUser);

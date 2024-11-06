@@ -16,6 +16,7 @@ import { useFormState } from "react-dom";
 import { handleGroupCreate } from "@/app/server-actions/create-group";
 import { useSession } from "next-auth/react";
 import { handleGroupJoin } from "@/app/server-actions/group-join";
+import { setGroupIdServer } from "@/components/group-switcher";
 
 const initialState: any = {
   message: null,
@@ -80,6 +81,7 @@ export default function SidebarGroups({ accessToken }: any) {
             setActiveGroup(group);
             onDrawerOpen();
             localStorage.setItem("GroupId", group.groupId);
+            setGroupIdServer(group.groupId);
           }}
         />
       ))}

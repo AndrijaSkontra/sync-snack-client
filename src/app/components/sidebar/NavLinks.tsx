@@ -7,6 +7,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
+import { setGroupIdServer } from "@/components/group-switcher";
 
 export default function NavLinks({ groupId, onClose }: any) {
   const links = useLinks(groupId);
@@ -20,6 +21,7 @@ export default function NavLinks({ groupId, onClose }: any) {
           href={link.goto}
           onClick={() => {
             localStorage.setItem("GroupId", groupId);
+            setGroupIdServer("");
             onClose();
           }}
         >
