@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 
 export default async function ProfilePage() {
   const session: any = await auth();
-  console.log("Session-------->",session)
+  console.log("Session-------->", session);
   const activeUser: any = session?.user;
   const userProfileData = await fetchProfileData(activeUser);
   const userProfileOrderStats = await fetchProfileOrdersStats(activeUser);
@@ -19,7 +19,7 @@ export default async function ProfilePage() {
 }
 
 async function fetchProfileData(activeUser: any) {
-  console.log(activeUser)
+  console.log(activeUser);
   const userProfileData = await fetch(
     `${process.env.BACKEND_URL}/api/profiles/${activeUser.userProfileId}`,
     {

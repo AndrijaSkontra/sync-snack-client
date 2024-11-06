@@ -3,7 +3,6 @@
 import * as React from "react";
 import { ChevronsUpDown, GalleryVerticalEnd } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 
 import {
   DropdownMenu,
@@ -24,7 +23,6 @@ import {
   UpdateGroupsSidebarContext,
 } from "@/app/components/Providers";
 import { UserGroupContext } from "@/app/components/Providers";
-import { useMyEventVisible } from "./sidebar-links";
 
 export function GroupSwitcher({ accessToken }) {
   const router = useRouter();
@@ -32,6 +30,19 @@ export function GroupSwitcher({ accessToken }) {
   const selectedGroupContext = useContext(SelectedGroupContext);
   const userGroupsContext = useContext(UserGroupContext);
   const updateGroupSidebarContext = useContext(UpdateGroupsSidebarContext);
+
+  async function setGroupIdServer(groupId) {
+    await fetch("/api/groupId", {
+      method: "POST",
+      body: JSON.stringify({
+        groupId: String(groupId),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+  }
 
   useEffect(() => {
     function fetchCurrentGroup() {
@@ -116,6 +127,7 @@ export function GroupSwitcher({ accessToken }) {
                 <DropdownMenuItem
                   key={group.groupId}
                   onSelect={() => {
+                    setGroupIdServer(group.groupId);
                     selectedGroupContext.setSelectedGroup(group);
                     localStorage.setItem("GroupId", group.groupId);
                     updateGroupSidebarContext.setUpdateString(
